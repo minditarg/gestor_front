@@ -26,6 +26,7 @@ import Today from "@material-ui/icons/Today";
 import Notes from "@material-ui/icons/Notes";
 import DirectionsBike from "@material-ui/icons/DirectionsBike";
 import ExposureIcon from '@material-ui/icons/Exposure';
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 
 
 
@@ -44,6 +45,7 @@ import CompensatoriosPorEmpleados from 'views/Compensatorios/CompensatoriosPorEm
 import FaltasPorEmpleados from 'views/ControlFaltas/FaltasPorEmpleados.js';
 import ControlFaltasEmpleados from 'views/ControlFaltasEmpleados/ControlFaltas.js';
 import CompensatoriosEmpleados from 'views/CompensatoriosEmpleados/Compensatorios.js';
+import Clientes from 'views/Clientes/Clientes.js';
 
 
 const dashboardRoutes = [
@@ -257,6 +259,28 @@ const dashboardRoutes = [
         component: CompensatoriosPorEmpleados,
         layout: "/admin"
       },
+    ]
+  },
+
+  {
+    show:false,
+    accesos: [101],
+    groupComponent: true,
+    name: 'Hospital',
+    open: 'open23',
+    icon: LocalHospitalIcon,
+    dependences: [
+      {
+        show:false,
+        accesos: [101],
+        path: "/clientes",
+        name: "Clientes",
+        rtlName: "CL",
+        icon: Person,
+        component: Clientes,
+        layout: "/admin"
+      },
+
     ]
   },
 
