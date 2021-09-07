@@ -48,6 +48,7 @@ import ControlFaltasEmpleados from 'views/ControlFaltasEmpleados/ControlFaltas.j
 import CompensatoriosEmpleados from 'views/CompensatoriosEmpleados/Compensatorios.js';
 import Clientes from 'views/Clientes/Clientes.js';
 import Pacientes from 'views/Pacientes/Pacientes.js';
+import Clases from 'views/Clases/Clases.js';
 
 
 const dashboardRoutes = [
@@ -266,7 +267,7 @@ const dashboardRoutes = [
 
   {
     show:false,
-    accesos: [101, 102],
+    accesos: [101, 102, 105],
     groupComponent: true,
     name: 'Hospital',
     open: 'open23',
@@ -287,9 +288,19 @@ const dashboardRoutes = [
         accesos: [102],
         path: "/pacientes",
         name: "Pacientes",
-        rtlName: "CL",
+        rtlName: "PA",
         icon: PetsIcon,
         component: Pacientes,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [105],
+        path: "/clases",
+        name: "Clases",
+        rtlName: "CA",
+        icon: PetsIcon,
+        component: Clases,
         layout: "/admin"
       },
 
