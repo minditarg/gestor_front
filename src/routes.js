@@ -50,6 +50,7 @@ import Clientes from 'views/Clientes/Clientes.js';
 import Pacientes from 'views/Pacientes/Pacientes.js';
 import Clases from 'views/Clases/Clases.js';
 import Especies from 'views/Especies/Especies.js';
+import Razas from 'views/Razas/Razas.js';
 
 
 const dashboardRoutes = [
@@ -268,7 +269,7 @@ const dashboardRoutes = [
 
   {
     show:false,
-    accesos: [101, 102, 103, 105],
+    accesos: [101, 102, 103, 104, 105],
     groupComponent: true,
     name: 'Hospital',
     open: 'open23',
@@ -312,6 +313,16 @@ const dashboardRoutes = [
         rtlName: "ES",
         icon: PetsIcon,
         component: Especies,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [104],
+        path: "/razas",
+        name: "Razas",
+        rtlName: "RZ",
+        icon: PetsIcon,
+        component: Razas,
         layout: "/admin"
       },
 
