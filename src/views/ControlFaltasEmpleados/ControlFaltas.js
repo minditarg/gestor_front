@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import Database from "variables/Database.js";
-import Prueba from "variables/Prueba.js";
 import moment from 'moment';
 
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch} from 'react-router-dom';
 // core components
-import MaterialTable, { MTableCell, MTableBodyRow } from "material-table";
-import Typography from '@material-ui/core/Typography';
+import MaterialTable from "material-table";
+// import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -14,20 +13,19 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import Card from "components/Card/Card.js";
 import Paper from '@material-ui/core/Paper';
+import SearchIcon from '@material-ui/icons/Search';
 import Button from "components/CustomButtons/Button.js";
 import AddIcon from '@material-ui/icons/Add';
 
-import NewUser from "./components/NewUser";
-import EditUser from "./components/EditUser";
+import NewUser from "./components/NewControlFalta";
+import ControlFaltaDetalle from "./components/EditControlFalta";
 import ModalDelete from "./components/ModalDelete"
 import { localization } from "variables/general.js";
 
 import { toast } from 'react-toastify';
 
 
-
-
-import { StateListUsers, ColumnsListado } from "./VariablesState";
+import { StateListControlFaltas, ColumnsListado } from "./VariablesState";
 
 import lightGreen from '@material-ui/core/colors/lightGreen';
 
@@ -64,13 +62,12 @@ const styles = {
 };
 
 
-class Users extends Component {
-  state = { ...StateListUsers };
+class ControlFaltas extends Component {
+  state = { ...StateListControlFaltas };
 
 
   componentDidMount() {
-    this.getUsersAdmin();
-    Prueba.sumar();
+    this.getControlFaltasAdmin();
   }
 
 
@@ -88,7 +85,7 @@ class Users extends Component {
     }
     if (newChecked.length > 0) {
       deleteEnabled = true;
-      if (newChecked.length == 1)
+      if (newChecked.length === 1)
         editEnabled = true;
     }
     botonesAcc.editar.enabled = editEnabled;
@@ -112,19 +109,19 @@ class Users extends Component {
     if (newItem.enabled) {
       menuContext = null;
 
-      if (value == 'nuevo') {
+      if (value === 'nuevo') {
         this.setState({
           menuContext: menuContext
         })
-        this.props.history.push(this.props.match.url + '/nuevousuario');
+        this.props.history.push(this.props.match.url + '/nuevocontrolfalta');
       }
 
-      if (value == 'editar' && this.state.checked.length == 1) {
+      if (value === 'editar' && this.state.checked.length === 1) {
         this.setState({
           menuContext: menuContext
         })
         let idUser = this.state.checked[0].id;
-        this.props.history.push(this.props.match.url + '/editarusuario/' + idUser);
+        this.props.history.push(this.props.match.url + '/editarcontrolfalta/' + idUser);
       }
     }
   }
@@ -134,23 +131,28 @@ class Users extends Component {
       menuContext: event.currentTarget
     })
   }
-  ////////////////////////
-  ////////////////////////
-  //METODOS PARA LISTADO DE USUARIOS
-  ////////////////////////
-  ////////////////////////
-  getUsersAdmin = () => {
+
+  getControlFaltasAdmin = () => {
     this.setState({
       isLoading: true
     })
 
-    Database.get('/list-users',this,null,true)
+    Database.get('/list-controlfaltas-empleados',this,null,true)
       .then(res => {
-        let resultado = [...res.result];
+        let resultado = [...res.result[0]];
         console.log(resultado);
+
+        resultado = resultado.map(elem => {
+            return {
+              ...elem,
+              inicio_licencia_mostrar: (( moment(elem.inicio_licencia).isValid()) ? moment(elem.inicio_licencia).format("DD/MM/YYYY") : ''),
+              fin_licencia_mostrar: (( moment(elem.fin_licencia).isValid()) ? moment(elem.fin_licencia).format("DD/MM/YYYY") : ''),
+            }
+          })
+
         this.setState({
           isLoading:false,
-          users: resultado,
+          controlfaltas: resultado,
           checked: [],
           menuContext: null,
           botonesAcciones: {
@@ -182,7 +184,7 @@ class Users extends Component {
 
 
   editSingleUser = value => {
-    this.props.history.push(this.props.match.url + '/editarusuario/' + value);
+    this.props.history.push(this.props.match.url + '/editarcontrolfalta/' + value);
   }
 
   handlePagination = offset => {
@@ -192,12 +194,12 @@ class Users extends Component {
 
   }
 
-  handleDeleteUser = rowData => {
-
-    Database.post('/delete-user', { id: rowData.id },this).then(res => {
-        let users = [...this.state.users]
-        users = users.filter(elem => {
-          if (elem.id == rowData.id)
+  handleDeleteControlFalta = rowData => {
+    console.log(rowData);
+    Database.post('/delete-controlfalta', { id: rowData.id },this).then(res => {
+        let controlfaltas = [...this.state.controlfaltas]
+        controlfaltas = controlfaltas.filter(elem => {
+          if (elem.id === rowData.id)
             return false;
 
           return true
@@ -205,10 +207,10 @@ class Users extends Component {
         })
 
         this.setState({
-          users: users,
+          controlfaltas: controlfaltas,
           openDeleteDialog:false
         },()=>{
-          toast.success("El usuario se ha eliminado con exito!");
+          toast.success("La falta se ha eliminado con exito!");
         })
 
 
@@ -241,7 +243,7 @@ class Users extends Component {
 
   render() {
     let style = {}
-    if (this.props.match.url != this.props.location.pathname) {
+    if (this.props.match.url !== this.props.location.pathname) {
       style = { display: 'none' }
     }
     return (
@@ -249,28 +251,27 @@ class Users extends Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card style={style}>
             <CardHeader color="primary">
-              <h4 className={this.props.classes.cardTitleWhite} >Usuarios</h4>
+              <h4 className={this.props.classes.cardTitleWhite} >Faltas</h4>
               <p className={this.props.classes.cardCategoryWhite} >
-                Listado de Usuarios
+                Listado de Faltas
                       </p>
             </CardHeader>
             <CardBody>
-              <Button style={{ marginTop: '25px' }} onClick={() => this.props.history.push(this.props.match.url + '/nuevousuario')} color="primary"><AddIcon /> Nuevo Usuario</Button>
               <MaterialTable
                 isLoading={this.state.isLoading}
                 columns={ColumnsListado}
-                data={this.state.users}
+                data={this.state.controlfaltas}
                 title=""
                 localization={localization}
 
                 actions={[{
-                  icon: 'edit',
-                  tooltip: 'Editar Usuario',
-                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarusuario/' + rowData.id)
+                icon: SearchIcon,
+                tooltip: 'Ver Detalle',
+                onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/detallecompensatorio/' + rowData.id_empleado)
                 },
                 {
                   icon: 'delete',
-                  tooltip: 'Borrar Ususario',
+                  tooltip: 'Borrar Falta',
                   onClick: (event, rowData) => this.handleDeleteButton(rowData)
 
                 }]}
@@ -281,9 +282,10 @@ class Users extends Component {
                 }}
 
                 options={{
+                  actionsColumnIndex: -1,
                   exportButton: true,
                   exportAllData:true,
-                  exportFileName:"Usuarios " + moment().format("DD-MM-YYYY"),
+                  exportFileName:"ControlFaltas " + moment().format("DD-MM-YYYY"),
                   exportDelimiter:";",
                   headerStyle: {
                     backgroundColor: lightGreen[700],
@@ -295,31 +297,31 @@ class Users extends Component {
           </Card>
 
           <Switch>
-            <Route path={this.props.match.url + "/nuevousuario"} render={() =>
+            <Route path={this.props.match.url + "/nuevocontrolfalta"} render={() =>
 
               <NewUser
 
-                getUsersAdmin={() => this.getUsersAdmin()}
+                getControlFaltasAdmin={() => this.getControlFaltasAdmin()}
                 handleListNewUser={(rowData) => this.handleListNewUser(rowData)}
 
 
                 />}
               />
 
-            <Route path={this.props.match.url + "/editarusuario/:iduser"} render={() =>
+            <Route path={this.props.match.url + "/detallecompensatorio/:idcontrolfalta"} render={() =>
 
-              <EditUser
-                orderForm={this.state.editUserForm}
+              <ControlFaltaDetalle
+                orderForm={this.state.editControlFaltaForm}
                 editFormIsValid={this.state.editFormIsValid}
                 successSubmitEdit={this.state.successSubmitEdit}
 
 
-                handleSubmitEditUser={(event) => { this.handleSubmitEditUser(event) } }
+                handleSubmitEditControlFalta={(event) => { this.handleSubmitEditControlFalta(event) } }
                 inputEditChangedHandler={(event, inputIdentifier) => this.inputEditChangedHandler(event, inputIdentifier)}
                 getUserEdit={(id) => { this.getUserEdit(id) } }
                 resetEditForm={this.resetEditForm}
-                reloadUsers={this.reloadUsers}
-                getUsersAdmin={() => this.getUsersAdmin()}
+                reloadControlFaltas={this.reloadControlFaltas}
+                getControlFaltasAdmin={() => this.getControlFaltasAdmin()}
 
 
 
@@ -333,9 +335,8 @@ class Users extends Component {
         <ModalDelete
           openDeleteDialog={this.state.openDeleteDialog}
           deleteRowData={this.state.deleteRowData}
-
           handleClose={() => this.handleModalClose()}
-          handleDelete={(rowData) => this.handleDeleteUser(rowData)}
+          handleDelete={(rowData) => this.handleDeleteControlFalta(rowData)}
           />
 
 
@@ -346,4 +347,4 @@ class Users extends Component {
 }
 
 
-export default withStyles(styles)(Users);
+export default withStyles(styles)(ControlFaltas);

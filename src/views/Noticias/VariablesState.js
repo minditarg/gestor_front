@@ -233,6 +233,7 @@ export const StateNewEditNoticiaTransparente = {
         { value: 2, displayValue: 'Disertaciones y charlas' },
         { value: 3, displayValue: 'Congresos y jornadas' },
         { value: 4, displayValue: 'Cursos' },
+        { value: 11, displayValue: 'Exámenes Parciales' },
         { value: 10, displayValue: 'Exámenes Finales' },
         { value: 5, displayValue: 'Reuniones de consejo' },
         { value: 6, displayValue: 'Defensa de tesis' },

@@ -25,6 +25,9 @@ import Person from "@material-ui/icons/Person";
 import Today from "@material-ui/icons/Today";
 import Notes from "@material-ui/icons/Notes";
 import DirectionsBike from "@material-ui/icons/DirectionsBike";
+import ExposureIcon from '@material-ui/icons/Exposure';
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
+import PetsIcon from '@material-ui/icons/Pets';
 
 
 
@@ -35,6 +38,16 @@ import Files from "views/Files/Files.js";
 import TiposUsuarios from "views/Users/TiposUsuarios.js";
 import Users from "views/Users/Users.js";
 import Noticias from "views/Noticias/Noticias.js";
+import TiposFaltas from 'views/TiposFaltas/TiposFaltas.js';
+import Empleados from 'views/Empleados/Empleados.js';
+import ControlFaltas from 'views/ControlFaltas/ControlFaltas.js';
+import Compensatorios from 'views/Compensatorios/Compensatorios.js';
+import CompensatoriosPorEmpleados from 'views/Compensatorios/CompensatoriosPorEmpleados.js';
+import FaltasPorEmpleados from 'views/ControlFaltas/FaltasPorEmpleados.js';
+import ControlFaltasEmpleados from 'views/ControlFaltasEmpleados/ControlFaltas.js';
+import CompensatoriosEmpleados from 'views/CompensatoriosEmpleados/Compensatorios.js';
+import Clientes from 'views/Clientes/Clientes.js';
+import Pacientes from 'views/Pacientes/Pacientes.js';
 
 
 const dashboardRoutes = [
@@ -159,6 +172,129 @@ const dashboardRoutes = [
     },
     layout: "/admin"
   }, 
+
+  {
+    show:false,
+    accesos: [91,92,93,94,95,96,97,98],
+    groupComponent: true,
+    name: 'Personal',
+    open: 'open22',
+    icon: Person,
+    dependences: [
+      {
+        show:false,
+        accesos: [91],
+        path: "/empleados",
+        name: "Empleados",
+        rtlName: "EM",
+        icon: Person,
+        component: Empleados,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [92],
+        path: "/tiposfaltas",
+        name: "Tipos Faltas",
+        rtlName: "TF",
+        icon: Person,
+        component: TiposFaltas,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [93],
+        path: "/controlfaltas",
+        name: "Control Faltas",
+        rtlName: "CF",
+        icon: Person,
+        component: ControlFaltas,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [94],
+        path: "/compensatorios",
+        name: "Compensatorios",
+        rtlName: "C",
+        icon: ExposureIcon,
+        component: Compensatorios,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [95],
+        path: "/controlfaltasempleados",
+        name: "Control Faltas",
+        rtlName: "CFE",
+        icon: Person,
+        component: ControlFaltasEmpleados,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [96],
+        path: "/compensatoriosempleados",
+        name: "Compensatorios",
+        rtlName: "COE",
+        icon: ExposureIcon,
+        component: CompensatoriosEmpleados,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [97],
+        path: "/controlfaltasxempleado",
+        name: "Faltas por Empleado",
+        rtlName: "FXE",
+        icon: Person,
+        component: FaltasPorEmpleados,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [98],
+        path: "/compensatoriosxempleado",
+        name: "Compensatorios por Empleado",
+        rtlName: "CXE",
+        icon: ExposureIcon,
+        component: CompensatoriosPorEmpleados,
+        layout: "/admin"
+      },
+    ]
+  },
+
+  {
+    show:false,
+    accesos: [101, 102],
+    groupComponent: true,
+    name: 'Hospital',
+    open: 'open23',
+    icon: LocalHospitalIcon,
+    dependences: [
+      {
+        show:false,
+        accesos: [101],
+        path: "/clientes",
+        name: "Clientes",
+        rtlName: "CL",
+        icon: Person,
+        component: Clientes,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [102],
+        path: "/pacientes",
+        name: "Pacientes",
+        rtlName: "CL",
+        icon: PetsIcon,
+        component: Pacientes,
+        layout: "/admin"
+      },
+
+    ]
+  },
 
   {
     show:false,

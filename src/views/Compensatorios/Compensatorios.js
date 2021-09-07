@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import Database from "variables/Database.js";
-import Prueba from "variables/Prueba.js";
 import moment from 'moment';
 
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch} from 'react-router-dom';
 // core components
-import MaterialTable, { MTableCell, MTableBodyRow } from "material-table";
-import Typography from '@material-ui/core/Typography';
+import MaterialTable from "material-table";
+// import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -16,18 +15,18 @@ import Card from "components/Card/Card.js";
 import Paper from '@material-ui/core/Paper';
 import Button from "components/CustomButtons/Button.js";
 import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 
-import NewUser from "./components/NewUser";
-import EditUser from "./components/EditUser";
+import AddCompensatorio from "./components/NewCompensatorio";
+import RemoveCompensatorio from "./components/NewCompensatorio";
+import EditCompensatorio from "./components/EditCompensatorio";
 import ModalDelete from "./components/ModalDelete"
 import { localization } from "variables/general.js";
 
 import { toast } from 'react-toastify';
 
 
-
-
-import { StateListUsers, ColumnsListado } from "./VariablesState";
+import { StateListCompensatorios, ColumnsListado } from "./VariablesState";
 
 import lightGreen from '@material-ui/core/colors/lightGreen';
 
@@ -64,13 +63,14 @@ const styles = {
 };
 
 
-class Users extends Component {
-  state = { ...StateListUsers };
+class Compensatorios extends Component {
+  state = { ...StateListCompensatorios };
 
 
   componentDidMount() {
-    this.getUsersAdmin();
-    Prueba.sumar();
+    //console.log("ROWDATA :");
+    //console.log(rowData.id);
+    this.getCompensatoriosAdmin();
   }
 
 
@@ -88,7 +88,7 @@ class Users extends Component {
     }
     if (newChecked.length > 0) {
       deleteEnabled = true;
-      if (newChecked.length == 1)
+      if (newChecked.length === 1)
         editEnabled = true;
     }
     botonesAcc.editar.enabled = editEnabled;
@@ -112,19 +112,19 @@ class Users extends Component {
     if (newItem.enabled) {
       menuContext = null;
 
-      if (value == 'nuevo') {
+      if (value === 'nuevo') {
         this.setState({
           menuContext: menuContext
         })
-        this.props.history.push(this.props.match.url + '/nuevousuario');
+        this.props.history.push(this.props.match.url + '/nuevocompensatorio');
       }
 
-      if (value == 'editar' && this.state.checked.length == 1) {
+      if (value === 'editar' && this.state.checked.length === 1) {
         this.setState({
           menuContext: menuContext
         })
         let idUser = this.state.checked[0].id;
-        this.props.history.push(this.props.match.url + '/editarusuario/' + idUser);
+        this.props.history.push(this.props.match.url + '/editarcompensatorio/' + idUser);
       }
     }
   }
@@ -134,23 +134,27 @@ class Users extends Component {
       menuContext: event.currentTarget
     })
   }
-  ////////////////////////
-  ////////////////////////
-  //METODOS PARA LISTADO DE USUARIOS
-  ////////////////////////
-  ////////////////////////
-  getUsersAdmin = () => {
+
+  getCompensatoriosAdmin = () => {
     this.setState({
       isLoading: true
     })
 
-    Database.get('/list-users',this,null,true)
+    Database.get('/list-compensatorios',this,null,true)
       .then(res => {
-        let resultado = [...res.result];
+        let resultado = [...res.result[0]];
         console.log(resultado);
+
+        resultado = resultado.map(elem => {
+            return {
+              ...elem,
+              fecha_mostrar: (( moment(elem.fecha).isValid()) ? moment(elem.fecha).format("DD/MM/YYYY") : '')
+            }
+          })
+
         this.setState({
           isLoading:false,
-          users: resultado,
+          compensatorios: resultado,
           checked: [],
           menuContext: null,
           botonesAcciones: {
@@ -182,7 +186,7 @@ class Users extends Component {
 
 
   editSingleUser = value => {
-    this.props.history.push(this.props.match.url + '/editarusuario/' + value);
+    this.props.history.push(this.props.match.url + '/editarcompensatorio/' + value);
   }
 
   handlePagination = offset => {
@@ -192,12 +196,13 @@ class Users extends Component {
 
   }
 
-  handleDeleteUser = rowData => {
-
-    Database.post('/delete-user', { id: rowData.id },this).then(res => {
-        let users = [...this.state.users]
-        users = users.filter(elem => {
-          if (elem.id == rowData.id)
+  handleDeleteCompensatorio = rowData => {
+    console.log(rowData);
+    console.log(rowData.tableData.id);
+    Database.post('/delete-compensatorio', { id: rowData.id },this).then(res => {
+        let compensatorios = [...this.state.compensatorios]
+        compensatorios = compensatorios.filter(elem => {
+          if (elem.id === rowData.id)
             return false;
 
           return true
@@ -205,10 +210,10 @@ class Users extends Component {
         })
 
         this.setState({
-          users: users,
+          compensatorios: compensatorios,
           openDeleteDialog:false
         },()=>{
-          toast.success("El usuario se ha eliminado con exito!");
+          toast.success("El compensatorio se ha eliminado con exito!");
         })
 
 
@@ -241,7 +246,7 @@ class Users extends Component {
 
   render() {
     let style = {}
-    if (this.props.match.url != this.props.location.pathname) {
+    if (this.props.match.url !== this.props.location.pathname) {
       style = { display: 'none' }
     }
     return (
@@ -249,28 +254,29 @@ class Users extends Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card style={style}>
             <CardHeader color="primary">
-              <h4 className={this.props.classes.cardTitleWhite} >Usuarios</h4>
+              <h4 className={this.props.classes.cardTitleWhite} >Compensatorios</h4>
               <p className={this.props.classes.cardCategoryWhite} >
-                Listado de Usuarios
+                Listado de Compensatorios
                       </p>
             </CardHeader>
             <CardBody>
-              <Button style={{ marginTop: '25px' }} onClick={() => this.props.history.push(this.props.match.url + '/nuevousuario')} color="primary"><AddIcon /> Nuevo Usuario</Button>
+              <Button style={{ marginTop: '25px' }} onClick={() => this.props.history.push(this.props.match.url + '/sumarcompensatorio')} color="primary"><AddIcon /> Sumar Horas</Button>
+              <Button style={{ marginTop: '25px' }} onClick={() => this.props.history.push(this.props.match.url + '/restarcompensatorio')} color="primary"><RemoveIcon /> Restar Horas</Button>
               <MaterialTable
                 isLoading={this.state.isLoading}
                 columns={ColumnsListado}
-                data={this.state.users}
+                data={this.state.compensatorios}
                 title=""
                 localization={localization}
 
                 actions={[{
                   icon: 'edit',
-                  tooltip: 'Editar Usuario',
-                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarusuario/' + rowData.id)
+                  tooltip: 'Editar Compensatorio',
+                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarcompensatorio/' + rowData.id)
                 },
                 {
                   icon: 'delete',
-                  tooltip: 'Borrar Ususario',
+                  tooltip: 'Borrar Compensatorio',
                   onClick: (event, rowData) => this.handleDeleteButton(rowData)
 
                 }]}
@@ -281,9 +287,10 @@ class Users extends Component {
                 }}
 
                 options={{
+                  actionsColumnIndex: -1,
                   exportButton: true,
                   exportAllData:true,
-                  exportFileName:"Usuarios " + moment().format("DD-MM-YYYY"),
+                  exportFileName:"Compensatorios " + moment().format("DD-MM-YYYY"),
                   exportDelimiter:";",
                   headerStyle: {
                     backgroundColor: lightGreen[700],
@@ -295,31 +302,44 @@ class Users extends Component {
           </Card>
 
           <Switch>
-            <Route path={this.props.match.url + "/nuevousuario"} render={() =>
+            <Route path={this.props.match.url + "/sumarcompensatorio"} render={() =>
 
-              <NewUser
+              <AddCompensatorio
 
-                getUsersAdmin={() => this.getUsersAdmin()}
+                getCompensatoriosAdmin={() => this.getCompensatoriosAdmin()}
                 handleListNewUser={(rowData) => this.handleListNewUser(rowData)}
+                Testing={() => 1}
 
 
                 />}
               />
 
-            <Route path={this.props.match.url + "/editarusuario/:iduser"} render={() =>
+            <Route path={this.props.match.url + "/restarcompensatorio"} render={() =>
 
-              <EditUser
-                orderForm={this.state.editUserForm}
+            <RemoveCompensatorio
+
+              getCompensatoriosAdmin={() => this.getCompensatoriosAdmin()}
+              handleListNewUser={(rowData) => this.handleListNewUser(rowData)}
+              Testing={() => -1}
+
+
+              />}
+            />
+
+            <Route path={this.props.match.url + "/editarcompensatorio/:idcompensatorio"} render={() =>
+
+              <EditCompensatorio
+                orderForm={this.state.editCompensatorioForm}
                 editFormIsValid={this.state.editFormIsValid}
                 successSubmitEdit={this.state.successSubmitEdit}
 
 
-                handleSubmitEditUser={(event) => { this.handleSubmitEditUser(event) } }
+                handleSubmitEditCompensatorio={(event) => { this.handleSubmitEditCompensatorio(event) } }
                 inputEditChangedHandler={(event, inputIdentifier) => this.inputEditChangedHandler(event, inputIdentifier)}
                 getUserEdit={(id) => { this.getUserEdit(id) } }
                 resetEditForm={this.resetEditForm}
-                reloadUsers={this.reloadUsers}
-                getUsersAdmin={() => this.getUsersAdmin()}
+                reloadCompensatorios={this.reloadCompensatorios}
+                getCompensatoriosAdmin={() => this.getCompensatoriosAdmin()}
 
 
 
@@ -333,9 +353,8 @@ class Users extends Component {
         <ModalDelete
           openDeleteDialog={this.state.openDeleteDialog}
           deleteRowData={this.state.deleteRowData}
-
           handleClose={() => this.handleModalClose()}
-          handleDelete={(rowData) => this.handleDeleteUser(rowData)}
+          handleDelete={(rowData) => this.handleDeleteCompensatorio(rowData)}
           />
 
 
@@ -346,4 +365,4 @@ class Users extends Component {
 }
 
 
-export default withStyles(styles)(Users);
+export default withStyles(styles)(Compensatorios);

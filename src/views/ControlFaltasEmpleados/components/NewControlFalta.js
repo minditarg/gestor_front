@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Input from 'components/Input/Input';
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/styles';
-import { StateNewUser } from "../VariablesState";
+import { StateNewControlFalta } from "../VariablesState";
 
 import Database from "variables/Database.js";
 
@@ -14,6 +14,14 @@ import Card from "components/Card/Card.js";
 import Button from '@material-ui/core/Button';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import Save from '@material-ui/icons/Save';
+
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+import esLocale from "date-fns/locale/es";
 
 
 
@@ -48,22 +56,26 @@ const styles = {
 };
 
 
-class NewUser extends Component {
-  state =JSON.parse(JSON.stringify(StateNewUser));
+class NewControlFalta extends Component {
+  state =JSON.parse(JSON.stringify(StateNewControlFalta));
 
 
-  handleSubmitNewUser = (event) => {
+  handleSubmitNewControlFalta = (event) => {
     event.preventDefault();
 
-    Database.post(`/signup-json`, { username: this.state.newUserForm.username.value, password: this.state.newUserForm.password.value, nombre: this.state.newUserForm.nombre.value, id_users_type: this.state.newUserForm.tipoUser.value, id_empleado: this.state.newUserForm.id_empleado.value },this)
+    Database.post(`/insert-controlfaltas`, {id_empleado: this.state.newControlFaltaForm.id_empleado.value,
+                                        id_tipo_falta: this.state.newControlFaltaForm.id_tipo_falta.value,
+                                        inicio_licencia: this.state.fechaInicioLicencia,
+                                        fin_licencia: this.state.fechaFinLicencia
+                                        },this)
       .then(res => {
 
-          toast.success("El usuario se ha creado con exito!");
+          toast.success("La falta se ha creado con exito!");
           this.setState({
             successSubmit: true,
             formIsValid: false,
           },()=>{
-              this.props.getUsersAdmin();
+              this.props.getControlFaltasAdmin();
           })
           this.resetNewForm();
 
@@ -78,7 +90,7 @@ class NewUser extends Component {
   inputChangedHandler = (event, inputIdentifier) => {
     let checkValid;
     const updatedOrderForm = {
-      ...this.state.newUserForm
+      ...this.state.newControlFaltaForm
     };
     const updatedFormElement = {
       ...updatedOrderForm[inputIdentifier]
@@ -95,17 +107,17 @@ class NewUser extends Component {
       formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
     }
     this.setState({
-      newUserForm: updatedOrderForm,
+      newControlFaltaForm: updatedOrderForm,
       formIsValid: formIsValidAlt
     })
 
   }
 
   resetNewForm = (all) => {
-    let newUserFormAlt = { ...this.state.newUserForm };
+    let newControlFaltaFormAlt = { ...this.state.newControlFaltaForm };
     let successSubmit = this.state.successSubmit;
-    for (let key in newUserFormAlt) {
-      newUserFormAlt[key].value = ''
+    for (let key in newControlFaltaFormAlt) {
+      newControlFaltaFormAlt[key].value = ''
     }
     if (all)
       successSubmit = false;
@@ -114,61 +126,51 @@ class NewUser extends Component {
       successSubmit: successSubmit,
       formIsValid: false
     })
-    this.getUsersType("new", newUserFormAlt);
+    //this.getControlFaltasType("new", newControlFaltaFormAlt);
 
   }
 
-  getUsersType = () => {
-    Database.get('/list-users_type',this)
-      .then(res => {
-
-          let resultadoUserType = [...res.result];
-          let a = [];
-          resultadoUserType.forEach(function (entry) {
-            a.push({
-              value: entry.id,
-              displayValue: entry.descripcion
-            });
-          })
-          let formulario = { ...this.state.newUserForm }
-          formulario.tipoUser.elementConfig.options = [...a];
-          this.setState({
-            newUserForm: formulario
-          })
-
-
-
-
-      },err => {
-        toast.error(err.message);
-      })
-
-      Database.get('/list-empleado-user', this)
+  getTipoControlFalta = () => {
+    Database.get('/list-empleado', this)
       .then(res => {
 
         let resultado = [...res.result];
         let a = [];
-
-        a.push({
-          value: "",
-          displayValue: "Quitar Empleado"
-        });
-
         resultado.forEach(function (entry) {
           a.push({
             value: entry.id,
             displayValue: entry.apellido + ", " + entry.nombre
           });
         })
-        let formulario = { ...this.state.newUserForm }
+        let formulario = { ...this.state.newControlFaltaForm }
         formulario.id_empleado.elementConfig.options = [...a];
         this.setState({
-            newUserForm: formulario
+            newControlFaltaForm: formulario
         })
       }, err => {
         toast.error(err.message);
       })
 
+
+    Database.get('/list-tipo-falta', this)
+    .then(res => {
+
+      let resultado = [...res.result];
+      let a = [];
+      resultado.forEach(function (entry) {
+        a.push({
+          value: entry.id,
+          displayValue: entry.descripcion
+        });
+      })
+      let formulario = { ...this.state.newControlFaltaForm }
+      formulario.id_tipo_falta.elementConfig.options = [...a];
+      this.setState({
+          newControlFaltaForm: formulario
+      })
+    }, err => {
+      toast.error(err.message);
+    })
   }
 
 
@@ -197,24 +199,40 @@ class NewUser extends Component {
 
   componentDidMount() {
 
-    this.getUsersType();
+    this.getTipoControlFalta();
   }
+
+  handleFechaInicio = (date) => {
+    this.setState(
+      {
+        fechaInicioLicencia: date
+      }
+    )
+  };
+
+  handleFechaFin = (date) => {
+    this.setState(
+      {
+        fechaFinLicencia: date
+      }
+    )
+  };
 
 
 
   render() {
 
     const formElementsArray = [];
-    for (let key in this.state.newUserForm) {
+    for (let key in this.state.newControlFaltaForm) {
       formElementsArray.push({
         id: key,
-        config: this.state.newUserForm[key]
+        config: this.state.newControlFaltaForm[key]
       });
     }
     return (
 
       <form onSubmit={(event) => {
-        this.handleSubmitNewUser(event)
+        this.handleSubmitNewControlFalta(event)
 
       } }>
 
@@ -224,9 +242,9 @@ class NewUser extends Component {
 
         <Card>
           <CardHeader color="primary">
-            <h4 className={this.props.classes.cardTitleWhite}>Nuevo Usuario</h4>
+            <h4 className={this.props.classes.cardTitleWhite}>Nueva Falta</h4>
             <p className={this.props.classes.cardCategoryWhite}>
-              Formulario de un usuario nuevo
+              Formulario de alta de falta
       </p>
           </CardHeader>
           <CardBody>
@@ -234,7 +252,7 @@ class NewUser extends Component {
             <div className="mt-3 mb-3">
               {formElementsArray.map(formElement => (
                 <Input
-                  key={"edituser-" + formElement.id}
+                  key={"editcontrolfalta-" + formElement.id}
                   elementType={formElement.config.elementType}
                   elementConfig={formElement.config.elementConfig}
                   value={formElement.config.value}
@@ -245,9 +263,46 @@ class NewUser extends Component {
                   changed={(event) => this.inputChangedHandler(event, formElement.id)}
                   />
               ))}
+
+              <MuiPickersUtilsProvider locale={esLocale} utils={DateFnsUtils}>
+                <div>
+                  <KeyboardDatePicker
+                    margin="normal"
+                    id="fechainicio"
+                    label="Inicio Licencia"
+                    format="dd/MM/yyyy"
+                    value={this.state.fechaInicioLicencia}
+                    onChange={this.handleFechaInicio}
+                    autoOk={true}
+                    cancelLabel={"Cancelar"}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                    }}
+                  />
+                </div>
+              </MuiPickersUtilsProvider>
+
+              <MuiPickersUtilsProvider locale={esLocale} utils={DateFnsUtils}>
+                <div>
+                  <KeyboardDatePicker
+                    margin="normal"
+                    id="fechafin"
+                    label="Fin Licencia"
+                    format="dd/MM/yyyy"
+                    value={this.state.fechaFinLicencia}
+                    onChange={this.handleFechaFin}
+                    autoOk={true}
+                    cancelLabel={"Cancelar"}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                    }}
+                  />
+                </div>
+              </MuiPickersUtilsProvider>
             </div>
 
-            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/usuarios')} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
+            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/controlfaltas')} ><ArrowBack />Volver</Button>
+            <Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
 
 
           </CardBody>
@@ -264,4 +319,4 @@ class NewUser extends Component {
 
 };
 
-export default withRouter(withStyles(styles)(NewUser));
+export default withRouter(withStyles(styles)(NewControlFalta));

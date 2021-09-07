@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Input from 'components/Input/Input';
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/styles';
-import { StateNewUser } from "../VariablesState";
+import { StateNewTipoFalta } from "../VariablesState";
 
 import Database from "variables/Database.js";
 
@@ -48,22 +48,22 @@ const styles = {
 };
 
 
-class NewUser extends Component {
-  state =JSON.parse(JSON.stringify(StateNewUser));
+class NewTipoFalta extends Component {
+  state =JSON.parse(JSON.stringify(StateNewTipoFalta));
 
 
-  handleSubmitNewUser = (event) => {
+  handleSubmitNewTipoFalta = (event) => {
     event.preventDefault();
 
-    Database.post(`/signup-json`, { username: this.state.newUserForm.username.value, password: this.state.newUserForm.password.value, nombre: this.state.newUserForm.nombre.value, id_users_type: this.state.newUserForm.tipoUser.value, id_empleado: this.state.newUserForm.id_empleado.value },this)
+    Database.post(`/insert-tiposfaltas`, { descripcion: this.state.newTipoFaltaForm.descripcion.value, cantidad_dias: this.state.newTipoFaltaForm.cantidad_dias.value},this)
       .then(res => {
 
-          toast.success("El usuario se ha creado con exito!");
+          toast.success("El tipo de falta se ha creado con exito!");
           this.setState({
             successSubmit: true,
             formIsValid: false,
           },()=>{
-              this.props.getUsersAdmin();
+              this.props.getTiposFaltasAdmin();
           })
           this.resetNewForm();
 
@@ -78,7 +78,7 @@ class NewUser extends Component {
   inputChangedHandler = (event, inputIdentifier) => {
     let checkValid;
     const updatedOrderForm = {
-      ...this.state.newUserForm
+      ...this.state.newTipoFaltaForm
     };
     const updatedFormElement = {
       ...updatedOrderForm[inputIdentifier]
@@ -95,17 +95,17 @@ class NewUser extends Component {
       formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
     }
     this.setState({
-      newUserForm: updatedOrderForm,
+      newTipoFaltaForm: updatedOrderForm,
       formIsValid: formIsValidAlt
     })
 
   }
 
   resetNewForm = (all) => {
-    let newUserFormAlt = { ...this.state.newUserForm };
+    let newTipoFaltaFormAlt = { ...this.state.newTipoFaltaForm };
     let successSubmit = this.state.successSubmit;
-    for (let key in newUserFormAlt) {
-      newUserFormAlt[key].value = ''
+    for (let key in newTipoFaltaFormAlt) {
+      newTipoFaltaFormAlt[key].value = ''
     }
     if (all)
       successSubmit = false;
@@ -114,62 +114,11 @@ class NewUser extends Component {
       successSubmit: successSubmit,
       formIsValid: false
     })
-    this.getUsersType("new", newUserFormAlt);
+    //this.getTiposFaltasType("new", newTipoFaltaFormAlt);
 
   }
 
-  getUsersType = () => {
-    Database.get('/list-users_type',this)
-      .then(res => {
 
-          let resultadoUserType = [...res.result];
-          let a = [];
-          resultadoUserType.forEach(function (entry) {
-            a.push({
-              value: entry.id,
-              displayValue: entry.descripcion
-            });
-          })
-          let formulario = { ...this.state.newUserForm }
-          formulario.tipoUser.elementConfig.options = [...a];
-          this.setState({
-            newUserForm: formulario
-          })
-
-
-
-
-      },err => {
-        toast.error(err.message);
-      })
-
-      Database.get('/list-empleado-user', this)
-      .then(res => {
-
-        let resultado = [...res.result];
-        let a = [];
-
-        a.push({
-          value: "",
-          displayValue: "Quitar Empleado"
-        });
-
-        resultado.forEach(function (entry) {
-          a.push({
-            value: entry.id,
-            displayValue: entry.apellido + ", " + entry.nombre
-          });
-        })
-        let formulario = { ...this.state.newUserForm }
-        formulario.id_empleado.elementConfig.options = [...a];
-        this.setState({
-            newUserForm: formulario
-        })
-      }, err => {
-        toast.error(err.message);
-      })
-
-  }
 
 
 
@@ -197,7 +146,7 @@ class NewUser extends Component {
 
   componentDidMount() {
 
-    this.getUsersType();
+    //this.getTiposFaltasType();
   }
 
 
@@ -205,16 +154,16 @@ class NewUser extends Component {
   render() {
 
     const formElementsArray = [];
-    for (let key in this.state.newUserForm) {
+    for (let key in this.state.newTipoFaltaForm) {
       formElementsArray.push({
         id: key,
-        config: this.state.newUserForm[key]
+        config: this.state.newTipoFaltaForm[key]
       });
     }
     return (
 
       <form onSubmit={(event) => {
-        this.handleSubmitNewUser(event)
+        this.handleSubmitNewTipoFalta(event)
 
       } }>
 
@@ -224,9 +173,9 @@ class NewUser extends Component {
 
         <Card>
           <CardHeader color="primary">
-            <h4 className={this.props.classes.cardTitleWhite}>Nuevo Usuario</h4>
+            <h4 className={this.props.classes.cardTitleWhite}>Nuevo Tipo de Falta</h4>
             <p className={this.props.classes.cardCategoryWhite}>
-              Formulario de un usuario nuevo
+              Formulario de alta de tipo de falta
       </p>
           </CardHeader>
           <CardBody>
@@ -234,7 +183,7 @@ class NewUser extends Component {
             <div className="mt-3 mb-3">
               {formElementsArray.map(formElement => (
                 <Input
-                  key={"edituser-" + formElement.id}
+                  key={"edittipofalta-" + formElement.id}
                   elementType={formElement.config.elementType}
                   elementConfig={formElement.config.elementConfig}
                   value={formElement.config.value}
@@ -247,7 +196,8 @@ class NewUser extends Component {
               ))}
             </div>
 
-            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/usuarios')} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
+            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/tiposfaltas')} ><ArrowBack />Volver</Button>
+            <Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
 
 
           </CardBody>
@@ -264,4 +214,4 @@ class NewUser extends Component {
 
 };
 
-export default withRouter(withStyles(styles)(NewUser));
+export default withRouter(withStyles(styles)(NewTipoFalta));
