@@ -49,6 +49,7 @@ import CompensatoriosEmpleados from 'views/CompensatoriosEmpleados/Compensatorio
 import Clientes from 'views/Clientes/Clientes.js';
 import Pacientes from 'views/Pacientes/Pacientes.js';
 import Clases from 'views/Clases/Clases.js';
+import Especies from 'views/Especies/Especies.js';
 
 
 const dashboardRoutes = [
@@ -267,7 +268,7 @@ const dashboardRoutes = [
 
   {
     show:false,
-    accesos: [101, 102, 105],
+    accesos: [101, 102, 103, 105],
     groupComponent: true,
     name: 'Hospital',
     open: 'open23',
@@ -301,6 +302,16 @@ const dashboardRoutes = [
         rtlName: "CA",
         icon: PetsIcon,
         component: Clases,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [103],
+        path: "/especies",
+        name: "Especies",
+        rtlName: "ES",
+        icon: PetsIcon,
+        component: Especies,
         layout: "/admin"
       },
 
