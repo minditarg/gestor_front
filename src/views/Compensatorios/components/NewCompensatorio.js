@@ -70,7 +70,7 @@ class NewCompensatorio extends Component {
     fechaCompensatorio = moment(this.state.fechaCompensatorio).format("YYYY-MM-DD HH:mm");
 
     Database.post(`/insert-compensatorios`, {id_empleado: this.state.newCompensatorioForm.id_empleado.value, horas: this.state.newCompensatorioForm.horas.value * this.props.Testing(), 
-                                            minutos: this.state.newCompensatorioForm.minutos.value * this.props.Testing(), fecha: this.state.fechaCompensatorio},this)
+                                            minutos: this.state.newCompensatorioForm.minutos.value * this.props.Testing(), fecha: fechaCompensatorio},this)
       .then(res => {
 
           toast.success("El compensatorio se ha creado con exito!");
