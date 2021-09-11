@@ -47,7 +47,8 @@ export const StateListadoListModules = {
         }
     },
         
-  
+    imagen: 'white.png',
+    listaImagenes: [],
     openDeleteDialog: false,
     deleteRowData: null,
     isLoading: false,

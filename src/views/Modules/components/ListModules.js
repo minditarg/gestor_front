@@ -169,15 +169,19 @@ class ListModules extends Component {
             .then(res => {
 
                 let orderForm = { ...this.state.orderForm };
+                let listaImagenesCopy = this.state.listaImagenes ;
+                console.log(listaImagenesCopy);
                 res.result.forEach(elem => {
                     orderForm.tipoModulo.elementConfig.options.push({ value: elem.id, displayValue: elem.descripcion });
-
+                    listaImagenesCopy.push({  value: elem.id, imagen: elem.imagen  });
                 })
                 if (orderForm.tipoModulo.value && orderForm.tipoModulo.value != '')
                     orderForm.tipoModulo.valid = true;
 
+                    console.log(listaImagenesCopy);
                 this.setState({
-                    orderForm: orderForm
+                    orderForm: orderForm,
+                    listaImagenes: listaImagenesCopy
                 })
 
 
@@ -247,6 +251,7 @@ class ListModules extends Component {
         const updatedFormElement = {
             ...updatedOrderForm[inputIdentifier]
         };
+        let imagenSeleccionada = "";
         updatedFormElement.value = event.target.value;
         checkValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.valid = checkValid.isValid;
@@ -254,12 +259,25 @@ class ListModules extends Component {
         updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
 
+        //console.log(inputIdentifier);
+        if(inputIdentifier == "tipoModulo")
+        {
+            console.log(event.target.value);
+            console.log(this.state.listaImagenes);
+            console.log(this.state.listaImagenes.find((element) => { return element.value === event.target.value; }).imagen);
+            console.log(this.state.listaImagenes[event.target.value]);
+
+            //cargo la imagen
+            imagenSeleccionada = this.state.listaImagenes.find((element) => { return element.value === event.target.value; }).imagen;
+        }
+
         let formIsValidAlt = true;
         for (let inputIdentifier in updatedOrderForm) {
             formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
         }
         this.setState({
             orderForm: updatedOrderForm,
+            imagen: imagenSeleccionada,
             formIsValid: formIsValidAlt
         })
 
@@ -410,7 +428,9 @@ class ListModules extends Component {
                             />
                         ))}
 
-
+                            <br />
+                    <img src={process.env.REACT_APP_GESTOR_URL + '/' + process.env.REACT_APP_UPLOADS_FOLDER + '/imagenes_modulos/' + this.state.imagen } height="300" width="300" />
+                 
                     </DialogContent>
 
 
