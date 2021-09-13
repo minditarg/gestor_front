@@ -48,6 +48,7 @@ export const StateListadoListModules = {
     },
         
     imagen: 'white.png',
+    imagenSeleccionada: "",
     listaImagenes: [],
     openDeleteDialog: false,
     deleteRowData: null,

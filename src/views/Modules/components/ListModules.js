@@ -251,7 +251,7 @@ class ListModules extends Component {
         const updatedFormElement = {
             ...updatedOrderForm[inputIdentifier]
         };
-        let imagenSeleccionada = "";
+        //let imagenSeleccionada = "";
         updatedFormElement.value = event.target.value;
         checkValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.valid = checkValid.isValid;
@@ -259,7 +259,7 @@ class ListModules extends Component {
         updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
 
-        //console.log(inputIdentifier);
+        console.log(inputIdentifier);
         if(inputIdentifier == "tipoModulo")
         {
             console.log(event.target.value);
@@ -268,7 +268,7 @@ class ListModules extends Component {
             console.log(this.state.listaImagenes[event.target.value]);
 
             //cargo la imagen
-            imagenSeleccionada = this.state.listaImagenes.find((element) => { return element.value === event.target.value; }).imagen;
+            this.state.imagenSeleccionada = this.state.listaImagenes.find((element) => { return element.value === event.target.value; }).imagen;
         }
 
         let formIsValidAlt = true;
@@ -277,7 +277,7 @@ class ListModules extends Component {
         }
         this.setState({
             orderForm: updatedOrderForm,
-            imagen: imagenSeleccionada,
+            imagen: this.state.imagenSeleccionada,
             formIsValid: formIsValidAlt
         })
 

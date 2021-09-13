@@ -176,9 +176,9 @@ class EditModule extends Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card style={style}>
             <CardHeader color="primary">
-              <h4 className={this.props.classes.cardTitleWhite} >Edicion de Modulo</h4>
+              <h4 className={this.props.classes.cardTitleWhite} >Edición de Modulo</h4>
               <p className={this.props.classes.cardCategoryWhite} >
-                Edicion de modulo
+                Edición de modulo
                       </p>
             </CardHeader>
             <CardBody>
