@@ -29,7 +29,7 @@ export const StateNewEditPage = {
             elementType: 'input',
             elementConfig: {
                 type: 'text',
-                label: 'descripcion',
+                label: 'Descripcion',
                 fullWidth: true,
             },
             value: '',
@@ -39,7 +39,20 @@ export const StateNewEditPage = {
             valid: false,
             touched: false
         },
-
+        uri: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'URI',
+                fullWidth: true,
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: false
+        }
         
     },
     orderFormIsValid: false,
@@ -55,5 +68,6 @@ export const StateNewEditPage = {
 export const ColumnsListado = [
 { title: "Nombre", field: "nombre" },
 { title: "Descripcion", field: "descripcion" },
-{ title: "Estado", field: "estado" }
+{ title: "Estado", field: "estado" },
+{ title: "URI", field: "uri" }
 ];

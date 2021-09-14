@@ -203,8 +203,8 @@ class EditControlFalta extends Component {
     Database.post(`/update-controlfalta`, { id: this.props.match.params.idcontrolfalta, 
         id_empleado: this.state.editControlFaltaForm.id_empleado.value, 
         id_tipo_falta: this.state.editControlFaltaForm.id_tipo_falta.value,
-        inicio_licencia: this.state.fechaInicioLicencia,
-        fin_licencia: this.state.fechaFinLicencia
+        inicio_licencia: fechaInicioLicencia,
+        fin_licencia: fechaFinLicencia
         },this)
       .then(res => {
 

@@ -28,6 +28,8 @@ import DirectionsBike from "@material-ui/icons/DirectionsBike";
 import ExposureIcon from '@material-ui/icons/Exposure';
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import PetsIcon from '@material-ui/icons/Pets';
+import HealingIcon from '@material-ui/icons/Healing';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 
 
@@ -48,6 +50,11 @@ import ControlFaltasEmpleados from 'views/ControlFaltasEmpleados/ControlFaltas.j
 import CompensatoriosEmpleados from 'views/CompensatoriosEmpleados/Compensatorios.js';
 import Clientes from 'views/Clientes/Clientes.js';
 import Pacientes from 'views/Pacientes/Pacientes.js';
+import Clases from 'views/Clases/Clases.js';
+import Especies from 'views/Especies/Especies.js';
+import Razas from 'views/Razas/Razas.js';
+import Patologias from 'views/Patologias/Patologias.js';
+import Servicios from 'views/Servicios/Servicios.js';
 
 
 const dashboardRoutes = [
@@ -266,7 +273,7 @@ const dashboardRoutes = [
 
   {
     show:false,
-    accesos: [101, 102],
+    accesos: [101, 102, 103, 104, 105, 106, 107],
     groupComponent: true,
     name: 'Hospital',
     open: 'open23',
@@ -287,9 +294,59 @@ const dashboardRoutes = [
         accesos: [102],
         path: "/pacientes",
         name: "Pacientes",
-        rtlName: "CL",
+        rtlName: "PA",
         icon: PetsIcon,
         component: Pacientes,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [105],
+        path: "/clases",
+        name: "Clases",
+        rtlName: "CA",
+        icon: PetsIcon,
+        component: Clases,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [103],
+        path: "/especies",
+        name: "Especies",
+        rtlName: "ES",
+        icon: PetsIcon,
+        component: Especies,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [104],
+        path: "/razas",
+        name: "Razas",
+        rtlName: "RZ",
+        icon: PetsIcon,
+        component: Razas,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [106],
+        path: "/patologias",
+        name: "Patologias",
+        rtlName: "PA",
+        icon: HealingIcon,
+        component: Patologias,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [107],
+        path: "/servicios",
+        name: "Servicios",
+        rtlName: "SE",
+        icon: AssignmentIcon,
+        component: Servicios,
         layout: "/admin"
       },
 

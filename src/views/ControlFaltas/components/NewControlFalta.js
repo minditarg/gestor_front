@@ -75,8 +75,8 @@ class NewControlFalta extends Component {
 
     Database.post(`/insert-controlfaltas`, {id_empleado: this.state.newControlFaltaForm.id_empleado.value,
                                         id_tipo_falta: this.state.newControlFaltaForm.id_tipo_falta.value,
-                                        inicio_licencia: this.state.fechaInicioLicencia,
-                                        fin_licencia: this.state.fechaFinLicencia
+                                        inicio_licencia: fechaInicioLicencia,
+                                        fin_licencia: fechaFinLicencia
                                         },this)
       .then(res => {
 
