@@ -1061,7 +1061,50 @@ class EditModule extends Component {
                 />
 
               }
+{
+                this.state.module && this.state.module.id_type_module == 18 &&
+                < ModType3
+                  module={this.state.module}
+                  orderFormPrincipal={this.state.orderForm}
+                  formIsValidPrincipal={this.state.formIsValid}
+                  orderForm={{
+                    url: {
+                      elementType: 'input',
+                      elementConfig: {
+                        type: 'text',
+                        label: 'URL del video',
+                        fullWidth: true
+                      },
+                      value: '',
+                      validation: {
+                        required: false
+                      },
+                      valid: true,
+                      touched: false
+                    },
+                    texto: {
+                      elementType: 'input',
+                      elementConfig: {
+                        type: 'text',
+                        label: 'Texto/Bajada del Video',
+                        fullWidth: true
+                      },
+                      value: '',
+                      validation: {
+                        required: false
+                      },
+                      valid: true,
+                      touched: false
+                    }
 
+                  }}
+                  archivo={false}
+                  htmlText={false}
+
+
+                />
+
+              }
 
 
 
