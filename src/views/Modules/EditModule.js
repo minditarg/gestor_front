@@ -95,7 +95,21 @@ class EditModule extends Component {
 
         valid: false,
         touched: false
-      }
+      },
+      columnas: {
+        elementType: 'input',
+        elementConfig: {
+            type: 'number',
+            label: 'Cantidad de Columnas (1-12) ' ,
+            fullWidth: true
+        },
+        value: '12',
+        validation: {
+            required: true
+        },
+        valid: false,
+        touched: false
+    },
 
 
 
