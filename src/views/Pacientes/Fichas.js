@@ -24,7 +24,7 @@ import { localization } from "variables/general.js";
 import { toast } from 'react-toastify';
 
 
-import { StateListFichas, ColumnsListado } from "./VariablesState";
+import { StateListFichas, ColumnsListadoFicha } from "./VariablesState";
 
 import lightGreen from '@material-ui/core/colors/lightGreen';
 
@@ -67,8 +67,9 @@ class Fichas extends Component {
 
   componentDidMount() {
     //const { pacienteID } = this.props.match.params;
-    //console.log(this.props.match.params);
-    this.getFichasAdmin(/*pacienteID*/);
+    console.log("entro");
+ console.log(this.props);
+    this.getFichasAdmin(3);
   }
 
 
@@ -145,13 +146,24 @@ class Fichas extends Component {
         console.log("TESTING");
         console.log(this);
 
+
+
         resultado = resultado.map(elem => {
           return {
             ...elem,
-            edad: ((elem.edad < 30) ? elem.edad + ' días' : ((elem.edad < 365) ? Math.floor(elem.edad / 30) + ' meses' : Math.floor(elem.edad / 365) + ' años')),
-            castrado_mostrar: ((elem.castrado == 1) ? 'SI' : 'NO'),
+            fecha_mostrar: (( moment(elem.fecha).isValid()) ? moment(elem.fecha).format("DD/MM/YYYY") : ''),
           }
         })
+
+
+
+        // resultado = resultado.map(elem => {
+        //   return {
+        //     ...elem,
+        //     edad: ((elem.edad < 30) ? elem.edad + ' días' : ((elem.edad < 365) ? Math.floor(elem.edad / 30) + ' meses' : Math.floor(elem.edad / 365) + ' años')),
+        //     castrado_mostrar: ((elem.castrado == 1) ? 'SI' : 'NO'),
+        //   }
+        // })
 
         this.setState({
           isLoading:false,
@@ -262,7 +274,7 @@ class Fichas extends Component {
             <CardBody>
               <MaterialTable
                 isLoading={this.state.isLoading}
-                columns={ColumnsListado}
+                columns={ColumnsListadoFicha}
                 data={this.state.fichas}
                 title=""
                 localization={localization}

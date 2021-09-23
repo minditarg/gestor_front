@@ -274,7 +274,7 @@ class Pacientes extends Component {
                   onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarpaciente/' + rowData.id)
                 },
                 {
-                  icon: AssignmentIcon,
+                  icon: AddIcon,
                   tooltip: 'Agregar Consulta',
                   onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/consultas/nuevoconsulta/' + rowData.id)
                 },
