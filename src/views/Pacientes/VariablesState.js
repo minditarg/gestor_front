@@ -157,9 +157,9 @@ export const StateEditPaciente = {
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         }, 
     },
@@ -300,9 +300,9 @@ export const StateNewPaciente = {
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },    
     },
