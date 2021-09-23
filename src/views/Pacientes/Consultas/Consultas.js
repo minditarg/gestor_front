@@ -15,18 +15,16 @@ import Card from "components/Card/Card.js";
 import Paper from '@material-ui/core/Paper';
 import Button from "components/CustomButtons/Button.js";
 import AddIcon from '@material-ui/icons/Add';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 
-import NewUser from "./components/NewPaciente";
-import EditPaciente from "./components/EditPaciente";
-import ModalDelete from "./components/ModalDelete";
-import NewConsulta from './Consultas/components/NewConsulta.js';
+import NewUser from "./components/NewConsulta";
+import EditConsulta from "./components/EditConsulta";
+import ModalDelete from "./components/ModalDelete"
 import { localization } from "variables/general.js";
 
 import { toast } from 'react-toastify';
 
 
-import { StateListPacientes, ColumnsListado } from "./VariablesState";
+import { StateListConsultas, ColumnsListado } from "./VariablesState";
 
 import lightGreen from '@material-ui/core/colors/lightGreen';
 
@@ -63,12 +61,12 @@ const styles = {
 };
 
 
-class Pacientes extends Component {
-  state = { ...StateListPacientes };
+class Consultas extends Component {
+  state = { ...StateListConsultas };
 
 
   componentDidMount() {
-    this.getPacientesAdmin();
+    this.getConsultasAdmin();
   }
 
 
@@ -114,7 +112,7 @@ class Pacientes extends Component {
         this.setState({
           menuContext: menuContext
         })
-        this.props.history.push(this.props.match.url + '/nuevopaciente');
+        this.props.history.push(this.props.match.url + '/nuevoconsulta');
       }
 
       if (value === 'editar' && this.state.checked.length === 1) {
@@ -122,7 +120,7 @@ class Pacientes extends Component {
           menuContext: menuContext
         })
         let idUser = this.state.checked[0].id;
-        this.props.history.push(this.props.match.url + '/editarpaciente/' + idUser);
+        this.props.history.push(this.props.match.url + '/editarconsulta/' + idUser);
       }
     }
   }
@@ -132,13 +130,17 @@ class Pacientes extends Component {
       menuContext: event.currentTarget
     })
   }
-
-  getPacientesAdmin = () => {
+  ////////////////////////
+  ////////////////////////
+  //METODOS PARA LISTADO DE BANCOS
+  ////////////////////////
+  ////////////////////////
+  getConsultasAdmin = () => {
     this.setState({
       isLoading: true
     })
 
-    Database.get('/list-pacientes',this,null,true)
+    Database.get('/list-consultas',this,null,true)
       .then(res => {
         let resultado = [...res.result[0]];
         console.log(resultado);
@@ -146,14 +148,13 @@ class Pacientes extends Component {
         resultado = resultado.map(elem => {
           return {
             ...elem,
-            edad: ((elem.edad < 30) ? elem.edad + ' días' : ((elem.edad < 365) ? Math.floor(elem.edad / 30) + ' meses' : Math.floor(elem.edad / 365) + ' años')),
-            castrado_mostrar: ((elem.castrado == 1) ? 'SI' : 'NO'),
+            fecha_mostrar: (( moment(elem.fecha).isValid()) ? moment(elem.fecha).format("DD/MM/YYYY") : ''),
           }
         })
 
         this.setState({
           isLoading:false,
-          pacientes: resultado,
+          consultas: resultado,
           checked: [],
           menuContext: null,
           botonesAcciones: {
@@ -185,7 +186,7 @@ class Pacientes extends Component {
 
 
   editSingleUser = value => {
-    this.props.history.push(this.props.match.url + '/editarpaciente/' + value);
+    this.props.history.push(this.props.match.url + '/editarconsulta/' + value);
   }
 
   handlePagination = offset => {
@@ -195,11 +196,11 @@ class Pacientes extends Component {
 
   }
 
-  handleDeletePaciente = rowData => {
-    console.log(rowData);
-    Database.post('/delete-paciente', { id: rowData.id },this).then(res => {
-        let pacientes = [...this.state.pacientes]
-        pacientes = pacientes.filter(elem => {
+  handleDeleteConsulta = rowData => {
+
+    Database.post('/delete-consulta', { id: rowData.id },this).then(res => {
+        let consultas = [...this.state.consultas]
+        consultas = consultas.filter(elem => {
           if (elem.id === rowData.id)
             return false;
 
@@ -208,10 +209,10 @@ class Pacientes extends Component {
         })
 
         this.setState({
-          pacientes: pacientes,
+          consultas: consultas,
           openDeleteDialog:false
         },()=>{
-          toast.success("El paciente se ha eliminado con exito!");
+          toast.success("La consulta se ha eliminado con exito!");
         })
 
 
@@ -252,33 +253,27 @@ class Pacientes extends Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card style={style}>
             <CardHeader color="primary">
-              <h4 className={this.props.classes.cardTitleWhite} >Pacientes</h4>
+              <h4 className={this.props.classes.cardTitleWhite} >Consultas</h4>
               <p className={this.props.classes.cardCategoryWhite} >
-                Listado de Pacientes
+                Listado de Consultas
                       </p>
             </CardHeader>
             <CardBody>
-              <Button style={{ marginTop: '25px' }} onClick={() => this.props.history.push(this.props.match.url + '/nuevopaciente')} color="primary"><AddIcon /> Nuevo Paciente</Button>
               <MaterialTable
                 isLoading={this.state.isLoading}
                 columns={ColumnsListado}
-                data={this.state.pacientes}
+                data={this.state.consultas}
                 title=""
                 localization={localization}
 
                 actions={[{
                   icon: 'edit',
-                  tooltip: 'Editar Paciente',
-                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarpaciente/' + rowData.id)
-                },
-                {
-                  icon: AssignmentIcon,
-                  tooltip: 'Agregar Consulta',
-                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/consultas/nuevoconsulta/' + rowData.id)
+                  tooltip: 'Editar Consulta',
+                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarconsulta/' + rowData.id)
                 },
                 {
                   icon: 'delete',
-                  tooltip: 'Borrar Paciente',
+                  tooltip: 'Borrar Consulta',
                   onClick: (event, rowData) => this.handleDeleteButton(rowData)
 
                 }]}
@@ -292,7 +287,7 @@ class Pacientes extends Component {
                   actionsColumnIndex: -1,
                   exportButton: true,
                   exportAllData:true,
-                  exportFileName:"Pacientes " + moment().format("DD-MM-YYYY"),
+                  exportFileName:"Consultas " + moment().format("DD-MM-YYYY"),
                   exportDelimiter:";",
                   headerStyle: {
                     backgroundColor: lightGreen[700],
@@ -304,42 +299,32 @@ class Pacientes extends Component {
           </Card>
 
           <Switch>
-            <Route path={this.props.match.url + "/nuevopaciente"} render={() =>
+            <Route path={this.props.match.url + "/nuevoconsulta"} render={() =>
 
               <NewUser
 
-                getPacientesAdmin={() => this.getPacientesAdmin()}
+                getConsultasAdmin={() => this.getConsultasAdmin()}
                 handleListNewUser={(rowData) => this.handleListNewUser(rowData)}
 
 
                 />}
               />
 
-            <Route path={this.props.match.url + "/editarpaciente/:idpaciente"} render={() =>
+            <Route path={this.props.match.url + "/editarconsulta/:idconsulta"} render={() =>
 
-              <EditPaciente
-                orderForm={this.state.editPacienteForm}
+              <EditConsulta
+                orderForm={this.state.editConsultaForm}
                 editFormIsValid={this.state.editFormIsValid}
                 successSubmitEdit={this.state.successSubmitEdit}
 
 
-                handleSubmitEditPaciente={(event) => { this.handleSubmitEditPaciente(event) } }
+                handleSubmitEditConsulta={(event) => { this.handleSubmitEditConsulta(event) } }
                 inputEditChangedHandler={(event, inputIdentifier) => this.inputEditChangedHandler(event, inputIdentifier)}
                 getUserEdit={(id) => { this.getUserEdit(id) } }
                 resetEditForm={this.resetEditForm}
-                reloadPacientes={this.reloadPacientes}
-                getPacientesAdmin={() => this.getPacientesAdmin()}
+                reloadConsultas={this.reloadConsultas}
+                getConsultasAdmin={() => this.getConsultasAdmin()}
 
-
-
-                />}
-              />
-              <Route path={this.props.match.url + "/consultas/nuevoconsulta/:id"} render={() =>
-
-                <NewConsulta
-
-                //getPacientesAdmin={() => this.getPacientesAdmin()}
-                //handleListNewUser={(rowData) => this.handleListNewUser(rowData)}
 
 
                 />}
@@ -353,7 +338,7 @@ class Pacientes extends Component {
           openDeleteDialog={this.state.openDeleteDialog}
           deleteRowData={this.state.deleteRowData}
           handleClose={() => this.handleModalClose()}
-          handleDelete={(rowData) => this.handleDeletePaciente(rowData)}
+          handleDelete={(rowData) => this.handleDeleteConsulta(rowData)}
           />
 
 
@@ -364,4 +349,4 @@ class Pacientes extends Component {
 }
 
 
-export default withStyles(styles)(Pacientes);
+export default withStyles(styles)(Consultas);
