@@ -115,6 +115,8 @@ class EditPaciente extends Component {
             this.setState({
               pacienteEdit: resultado.result[0]
             })
+            console.log("TESTING");
+            console.log(this);
 
             let editPacienteFormAlt = { ...this.state.editPacienteForm };
             editPacienteFormAlt.nombre.value = resultado.result[0].nombre;

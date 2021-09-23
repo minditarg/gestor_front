@@ -47,7 +47,7 @@ export const StateEditConsulta = {
                 required: false
             },
             valid: false,
-            touched: false
+            touched: true
         },
         peso: {
             elementType: 'input',
@@ -61,14 +61,15 @@ export const StateEditConsulta = {
                 required: false
             },
             valid: false,
-            touched: false
+            touched: true
         },
         consulta: {
-            elementType: 'input',
+            elementType: 'textarea',
             elementConfig: {
                 type: 'text',
                 label: 'Consulta',
-                fullWidth: true
+                fullWidth: true,
+                rows: 4
             },
             value: '',
             validation: {
@@ -125,7 +126,7 @@ export const StateNewConsulta = {
                 required: false
             },
             valid: false,
-            touched: false
+            touched: true
         },
         peso: {
             elementType: 'input',
@@ -139,14 +140,15 @@ export const StateNewConsulta = {
                 required: false
             },
             valid: false,
-            touched: false
+            touched: true
         },
         consulta: {
-            elementType: 'input',
+            elementType: 'textarea',
             elementConfig: {
                 type: 'text',
                 label: 'Consulta',
-                fullWidth: true
+                fullWidth: true,
+                rows: 4
             },
             value: '',
             validation: {

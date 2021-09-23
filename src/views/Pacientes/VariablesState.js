@@ -24,10 +24,34 @@ export const StateListPacientes = {
     openDeleteDialog:false,
     deleteRowData:null,
     isLoading:false
+}
 
+export const StateListFichas = {
+    pacientes: [],
+    offset:0,
+    checked: [],
+    menuContext: null,
+    botonesAcciones: {
+        nuevo: {
 
+            enabled: true,
+            texto: 'Nuevo'
+        },
+        editar: {
 
+            enabled: false,
+            texto: 'Editar'
+        },
+        delete: {
 
+            enabled: false,
+            texto: 'Eliminar'
+        }
+    },
+    modalOpen: false,
+    openDeleteDialog:false,
+    deleteRowData:null,
+    isLoading:false
 }
 
 export const StateEditPaciente = {
