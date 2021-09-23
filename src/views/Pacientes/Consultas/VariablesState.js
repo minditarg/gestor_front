@@ -35,6 +35,50 @@ export const StateListConsultas = {
 export const StateEditConsulta = {
     idPaciente: null,
     editConsultaForm: {
+        temperatura: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Temperatura (ºC)',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        },
+        peso: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Peso (Kg)',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        },
+        consulta: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Consulta',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        },
+    },
+    editConsultaForm2: {
         id_servicio: {
             elementType: 'select',
             elementConfig: {
@@ -49,50 +93,9 @@ export const StateEditConsulta = {
             },
             valid: false,
             touched: true
-        },
-        temperatura: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'text',
-                label: 'Temperatura (ºC)',
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: true
-            },
-            valid: false,
-            touched: false
-        },
-        peso: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'text',
-                label: 'Peso (Kg)',
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: true
-            },
-            valid: false,
-            touched: false
-        },
-        consulta: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'text',
-                label: 'Consulta',
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: true
-            },
-            valid: false,
-            touched: false
-        },
+        }
     },
+    servicioClinica: null,
     files: [],
     url_archivo:null,
     openDeleteArchivo:false,
@@ -110,6 +113,50 @@ export const StateEditConsulta = {
 export const StateNewConsulta = {
     idPaciente: null,
     newConsultaForm: {
+        temperatura: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Temperatura (ºC)',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        },
+        peso: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Peso (Kg)',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        },
+        consulta: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Consulta',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        },   
+    },
+    newConsultaForm2: {
         id_servicio: {
             elementType: 'select',
             elementConfig: {
@@ -124,50 +171,9 @@ export const StateNewConsulta = {
             },
             valid: false,
             touched: true
-        },
-        temperatura: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'text',
-                label: 'Temperatura (ºC)',
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: true
-            },
-            valid: false,
-            touched: false
-        },
-        peso: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'text',
-                label: 'Peso (Kg)',
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: true
-            },
-            valid: false,
-            touched: false
-        },
-        consulta: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'text',
-                label: 'Consulta',
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: true
-            },
-            valid: false,
-            touched: false
-        },   
+        }   
     },
+    servicioClinica: null,
     files: [],
     archivo_subido:null,
     url_archivo:null,

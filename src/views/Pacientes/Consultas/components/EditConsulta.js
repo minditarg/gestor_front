@@ -113,6 +113,10 @@ class EditConsulta extends Component {
       .then(resultado => {
           console.log(resultado.result[0]);
           console.log(this.state.editConsultaForm);
+          if (resultado.result[0].id_servicio == 1) {
+            this.state.servicioClinica = true;
+          }
+          
           if (resultado.result.length > 0) {
             this.setState({
               consultaEdit: resultado.result[0]
@@ -120,9 +124,10 @@ class EditConsulta extends Component {
 
             let editConsultaFormAlt = { ...this.state.editConsultaForm };
             editConsultaFormAlt.consulta.value = resultado.result[0].consulta;
-            editConsultaFormAlt.id_servicio.value = resultado.result[0].id_servicio;
             editConsultaFormAlt.temperatura.value = resultado.result[0].temperatura;
             editConsultaFormAlt.peso.value = resultado.result[0].peso;
+            let editConsultaFormAlt2 = { ...this.state.editConsultaForm2 };
+            editConsultaFormAlt2.id_servicio.value = resultado.result[0].id_servicio;
             for (let key in editConsultaFormAlt) {
               editConsultaFormAlt[key].touched = true;
               editConsultaFormAlt[key].valid = true;
@@ -130,6 +135,7 @@ class EditConsulta extends Component {
 
             this.setState({
               editConsultaForm: editConsultaFormAlt,
+              editConsultaForm2: editConsultaFormAlt2,
               fecha: resultado.result[0].fecha,
               url_archivo: resultado.result[0].archivo
             })
@@ -155,7 +161,7 @@ class EditConsulta extends Component {
     fecha = moment(this.state.fecha).format("YYYY-MM-DD HH:mm");
 
     Database.post(`/update-consulta`, { id: this.props.match.params.idconsulta, 
-                                        id_servicio: this.state.editConsultaForm.id_servicio.value,
+                                        id_servicio: this.state.editConsultaForm2.id_servicio.value,
                                         temperatura: this.state.editConsultaForm.temperatura.value,
                                         peso: this.state.editConsultaForm.peso.value,
                                         consulta: this.state.editConsultaForm.consulta.value,
@@ -204,6 +210,54 @@ class EditConsulta extends Component {
       editConsultaForm: updatedOrderForm,
       editFormIsValid: formIsValidAlt
     })
+
+  }
+
+  inputEditChangedHandler2 = (event, inputIdentifier) => {
+    let checkValid;
+    const updatedOrderForm = {
+      ...this.state.editConsultaForm2
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    };
+    updatedFormElement.value = event.target.value;
+    checkValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = checkValid.isValid;
+    updatedFormElement.textValid = checkValid.textValid;
+    updatedFormElement.touched = true;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    let formIsValidAlt = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
+    }
+    if (inputIdentifier == "id_servicio")
+    {
+      if(event.target.value == 1)
+      {
+        this.setState({
+          editConsultaForm2: updatedOrderForm,
+          editFormIsValid: formIsValidAlt,
+          servicioClinica: true
+        })
+      }
+      else 
+      {
+        this.setState({
+          editConsultaForm2: updatedOrderForm,
+          editFormIsValid: formIsValidAlt,
+          servicioClinica: null
+        })
+      }
+    } 
+    else 
+    {
+      this.setState({
+        editConsultaForm2: updatedOrderForm,
+        editFormIsValid: formIsValidAlt
+      })
+    }
 
   }
 
@@ -273,10 +327,10 @@ class EditConsulta extends Component {
             displayValue: entry.codigo + " - " + entry.descripcion
           });
         })
-        let formulario = { ...this.state.editConsultaForm }
+        let formulario = { ...this.state.editConsultaForm2 }
         formulario.id_servicio.elementConfig.options = [...a];
         this.setState({
-            editConsultaForm: formulario
+            editConsultaForm2: formulario
         })
       }, err => {
         toast.error(err.message);
@@ -342,6 +396,13 @@ class EditConsulta extends Component {
         config: this.state.editConsultaForm[key]
       });
     }
+    const formElementsArray2 = [];
+    for (let key in this.state.editConsultaForm2) {
+      formElementsArray2.push({
+        id: key,
+        config: this.state.editConsultaForm2[key]
+      });
+    }
 
     return ([
 
@@ -385,7 +446,23 @@ class EditConsulta extends Component {
                   />
                 </div>
               </MuiPickersUtilsProvider>
-              {formElementsArray.map(formElement => (
+              {formElementsArray2.map(formElement => (
+                <Input
+                  key={"editconsulta-" + formElement.id}
+                  elementType={formElement.config.elementType}
+                  elementConfig={formElement.config.elementConfig}
+                  value={formElement.config.value}
+                  textValid={formElement.config.textValid}
+                  invalid={!formElement.config.valid}
+                  shouldValidate={formElement.config.validation}
+                  touched={formElement.config.touched}
+                  changed={(event) => this.inputEditChangedHandler2(event, formElement.id)}
+                  />
+              ))}
+
+              {this.state.servicioClinica ?
+                <div>
+                {formElementsArray.map(formElement => (
                 <Input
                   key={"editconsulta-" + formElement.id}
                   elementType={formElement.config.elementType}
@@ -397,7 +474,9 @@ class EditConsulta extends Component {
                   touched={formElement.config.touched}
                   changed={(event) => this.inputEditChangedHandler(event, formElement.id)}
                   />
-              ))}
+                ))}
+                </div>
+                :null}
 
               <div className="files">
                 <Files
