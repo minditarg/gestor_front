@@ -78,10 +78,8 @@ class NewConsulta extends Component {
 
     if (this.state.archivo_subido == null)
     {
-      console.log("ENTRO 1");
-      console.log(this.state.archivo_subido);
       Database.post(`/insert-consultas`, {  idPaciente: this.state.idPaciente,
-                                            id_servicio: this.state.newConsultaForm.id_servicio.value,
+                                            id_servicio: this.state.newConsultaForm2.id_servicio.value,
                                             temperatura: this.state.newConsultaForm.temperatura.value,
                                             peso: this.state.newConsultaForm.peso.value,
                                             consulta: this.state.newConsultaForm.consulta.value,
@@ -105,10 +103,8 @@ class NewConsulta extends Component {
 
     }else 
     {
-      console.log("ENTRO 2");
-      console.log(this.state.archivo_subido);
       Database.post(`/insert-consultas-archivo-subido`, {  idPaciente: this.state.idPaciente,
-                                            id_servicio: this.state.newConsultaForm.id_servicio.value,
+                                            id_servicio: this.state.newConsultaForm2.id_servicio.value,
                                             temperatura: this.state.newConsultaForm.temperatura.value,
                                             peso: this.state.newConsultaForm.peso.value,
                                             consulta: this.state.newConsultaForm.consulta.value,
@@ -138,6 +134,7 @@ class NewConsulta extends Component {
     const updatedOrderForm = {
       ...this.state.newConsultaForm
     };
+    
     const updatedFormElement = {
       ...updatedOrderForm[inputIdentifier]
     };
@@ -152,11 +149,68 @@ class NewConsulta extends Component {
     for (let inputIdentifier in updatedOrderForm) {
       formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
     }
+    
     this.setState({
       newConsultaForm: updatedOrderForm,
       formIsValid: formIsValidAlt
     })
+    
+    /*this.setState({
+      archivo_subido: true
+    })*/
+  }
 
+  inputChangedHandler2 = (event, inputIdentifier) => {
+    let checkValid;
+    const updatedOrderForm = {
+      ...this.state.newConsultaForm2
+    };
+    console.log("SERVICIO 1: " + updatedOrderForm.id_servicio.value);
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    };
+    updatedFormElement.value = event.target.value;
+    checkValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = checkValid.isValid;
+    updatedFormElement.textValid = checkValid.textValid;
+    updatedFormElement.touched = true;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    console.log(this.state.archivo_subido);
+    let formIsValidAlt = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
+    }
+    if (inputIdentifier == "id_servicio")
+    {
+      if(event.target.value == 1)
+      {
+        this.setState({
+          newConsultaForm2: updatedOrderForm,
+          formIsValid: formIsValidAlt,
+          servicioClinica: true
+        })
+      }
+      else 
+      {
+        this.setState({
+          newConsultaForm2: updatedOrderForm,
+          formIsValid: formIsValidAlt,
+          servicioClinica: null
+        })
+      }
+    } 
+    else 
+    {
+      this.setState({
+        newConsultaForm2: updatedOrderForm,
+        formIsValid: formIsValidAlt
+      })
+    }
+    console.log("cambiando servicio: " + event.target.value);
+    console.log("SERVICIO 2: " + updatedOrderForm.id_servicio.value);
+    /*this.setState({
+      archivo_subido: true
+    })*/
   }
 
   onFilesArchivoChange = (files) => {
@@ -227,10 +281,10 @@ class NewConsulta extends Component {
             displayValue: entry.codigo + " - " + entry.descripcion
           });
         })
-        let formulario = { ...this.state.newConsultaForm }
+        let formulario = { ...this.state.newConsultaForm2 }
         formulario.id_servicio.elementConfig.options = [...a];
         this.setState({
-            newConsultaForm: formulario
+            newConsultaForm2: formulario
         })
       }, err => {
         toast.error(err.message);
@@ -337,6 +391,13 @@ class NewConsulta extends Component {
         config: this.state.newConsultaForm[key]
       });
     }
+    const formElementsArray2 = [];
+    for (let key in this.state.newConsultaForm2) {
+      formElementsArray2.push({
+        id: key,
+        config: this.state.newConsultaForm2[key]
+      });
+    }
     return (
 
       <form onSubmit={(event) => {
@@ -376,7 +437,23 @@ class NewConsulta extends Component {
                 </div>
               </MuiPickersUtilsProvider>
 
-              {formElementsArray.map(formElement => (
+              {formElementsArray2.map(formElement => (
+                <Input
+                  key={"editconsulta-" + formElement.id}
+                  elementType={formElement.config.elementType}
+                  elementConfig={formElement.config.elementConfig}
+                  value={formElement.config.value}
+                  textValid={formElement.config.textValid}
+                  invalid={!formElement.config.valid}
+                  shouldValidate={formElement.config.validation}
+                  touched={formElement.config.touched}
+                  changed={(event) => this.inputChangedHandler2(event, formElement.id)}
+                  />
+              ))}
+
+              {this.state.servicioClinica ?
+                <div>
+                {formElementsArray.map(formElement => (
                 <Input
                   key={"editconsulta-" + formElement.id}
                   elementType={formElement.config.elementType}
@@ -388,7 +465,9 @@ class NewConsulta extends Component {
                   touched={formElement.config.touched}
                   changed={(event) => this.inputChangedHandler(event, formElement.id)}
                   />
-              ))}
+                ))}
+                </div>
+                :null}
 
               <div className="files">
                 <Files
