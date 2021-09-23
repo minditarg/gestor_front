@@ -149,11 +149,12 @@ export const StateEditPaciente = {
             touched: true
         },    
         notas: {
-            elementType: 'input',
+            elementType: 'textarea',
             elementConfig: {
                 type: 'text',
                 label: 'Comentarios',
-                fullWidth: true
+                fullWidth: true,
+                rows: 4
             },
             value: '',
             validation: {
@@ -292,11 +293,12 @@ export const StateNewPaciente = {
             touched: true
         },    
         notas: {
-            elementType: 'input',
+            elementType: 'textarea',
             elementConfig: {
                 type: 'text',
                 label: 'Comentarios',
-                fullWidth: true
+                fullWidth: true,
+                rows: 4
             },
             value: '',
             validation: {
