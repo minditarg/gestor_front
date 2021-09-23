@@ -106,7 +106,7 @@ export const StateEditCliente = {
         mail: {
             elementType: 'input',
             elementConfig: {
-                type: 'text',
+                type: 'email',
                 label: 'Mail',
                 fullWidth: true
             },
@@ -217,7 +217,7 @@ export const StateNewCliente = {
         mail: {
             elementType: 'input',
             elementConfig: {
-                type: 'text',
+                type: 'email',
                 label: 'Mail',
                 fullWidth: true
             },
