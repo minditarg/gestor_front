@@ -246,6 +246,7 @@ class Pacientes extends Component {
 
   render() {
     let style = {}
+    console.log(this.props);
     if (this.props.match.url !== this.props.location.pathname) {
       style = { display: 'none' }
     }
@@ -281,7 +282,7 @@ class Pacientes extends Component {
                 {
                   icon: FeaturedPlayListIcon,
                   tooltip: 'Ver Ficha',
-                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + `/ficha/${rowData.id}`)
+                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/ficha/' + rowData.id)
                 },
                 {
                   icon: 'delete',
@@ -324,6 +325,7 @@ class Pacientes extends Component {
 
             <Route path={this.props.match.url + "/editarpaciente/:idpaciente"} render={() =>
 
+
               <EditPaciente
                 orderForm={this.state.editPacienteForm}
                 editFormIsValid={this.state.editFormIsValid}
@@ -339,32 +341,25 @@ class Pacientes extends Component {
 
 
 
-                />}
-              />
-              <Route
-              path={
-                this.props.match.url + "/ficha/:pacienteId"
+                />
               }
-              render={() => (
+              />
+              <Route path={this.props.match.url + "/ficha/:idpaciente"} render={() => 
+
+
                 <Ficha
-                  pacienteID= {this.state.pacientes}
-                  orderForm={this.state.editFichaForm}
+               
+                  orderForm={this.state.editPacienteForm}
                   editFormIsValid={this.state.editFormIsValid}
                   successSubmitEdit={this.state.successSubmitEdit}
-                  handleSubmitEditFicha={event => {
-                    this.handleSubmitEditFicha(event);
-                  }}
-                  inputEditChangedHandler={(event, inputIdentifier) =>
-                    this.inputEditChangedHandler(event, inputIdentifier)
-                  }
-                  getUserEdit={id => {
-                    this.getUserEdit(id);
-                  }}
+                  handleSubmitEditFicha={(event) => {this.handleSubmitEditFicha(event) }}
+                  inputEditChangedHandler={(event, inputIdentifier) => this.inputEditChangedHandler(event, inputIdentifier)}
+                  getUserEdit={(id) => { this.getUserEdit(id) }}
                   resetEditForm={this.resetEditForm}
                   reloadPaciente={this.reloadPaciente}
-                  getFichaAdmin={() => this.getPacienteAdmin()}
+                  getPacientesAdmin={() => this.getPacientesAdmin()}
                 />
-              )}
+              }
                 />
               <Route path={this.props.match.url + "/consultas/nuevoconsulta/:id"} render={() =>
 

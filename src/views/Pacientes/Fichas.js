@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Database from "variables/Database.js";
 import moment from 'moment';
 
-import { Route, Switch} from 'react-router-dom';
+import { Route, Switch, Link, withRouter } from 'react-router-dom';
 // core components
 import MaterialTable from "material-table";
 // import Typography from '@material-ui/core/Typography';
@@ -24,7 +24,7 @@ import { localization } from "variables/general.js";
 import { toast } from 'react-toastify';
 
 
-import { StateListFichas, ColumnsListadoFicha } from "./VariablesState";
+import { StateListFichas, ColumnsListadoFicha, StateEditPaciente } from "./VariablesState";
 
 import lightGreen from '@material-ui/core/colors/lightGreen';
 
@@ -66,10 +66,13 @@ class Fichas extends Component {
 
 
   componentDidMount() {
-    //const { pacienteID } = this.props.match.params;
+    const pacienteID = this.props.match.params.idpaciente;
+    //console.log(this.state);
     console.log("entro");
- console.log(this.props);
-    this.getFichasAdmin(3);
+    console.log(pacienteID);
+//  console.log(this.props);
+//  console.log(this.props.orderForm);
+    this.getFichasAdmin(pacienteID);
   }
 
 
@@ -134,12 +137,12 @@ class Fichas extends Component {
     })
   }
 
-  getFichasAdmin = (/*pacienteID*/) => {
+  getFichasAdmin = (pacienteID) => {
     this.setState({
       isLoading: true
     })
 
-    Database.get('/list-fichas',this,null,true)
+    Database.get('/list-fichas/' + pacienteID)
       .then(res => {
         let resultado = [...res.result[0]];
         console.log(resultado);
@@ -257,10 +260,10 @@ class Fichas extends Component {
 
 
   render() {
-    let style = {}
-    // if (this.props.match.url !== this.props.location.pathname) {
-    //   style = { display: 'none' }
-    // }
+     let style = {}
+    //  if (this.props.match.url !== this.props.location.pathname) {
+    //    style = { display: 'none' }
+    //  }
     return (
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
@@ -396,4 +399,4 @@ class Fichas extends Component {
 }
 
 
-export default withStyles(styles)(Fichas);
+export default withRouter(withStyles(styles)(Fichas));
