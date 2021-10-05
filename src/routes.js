@@ -56,6 +56,7 @@ import Razas from 'views/Razas/Razas.js';
 import Patologias from 'views/Patologias/Patologias.js';
 import Servicios from 'views/Servicios/Servicios.js';
 import Consultas from 'views/Pacientes/Consultas/Consultas.js';
+import Signos from 'views/Signos/Signos.js';
 
 
 const dashboardRoutes = [
@@ -274,7 +275,7 @@ const dashboardRoutes = [
 
   {
     show:false,
-    accesos: [101, 102, 103, 104, 105, 106, 107, 108],
+    accesos: [101, 102, 103, 104, 105, 106, 107, 108, 109],
     groupComponent: true,
     name: 'Hospital',
     open: 'open23',
@@ -352,12 +353,22 @@ const dashboardRoutes = [
       },
       {
         show:false,
-        accesos: [107],
+        accesos: [108],
         path: "/consultas",
         name: "Consultas",
         rtlName: "CN",
         icon: AssignmentIcon,
         component: Consultas,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [109],
+        path: "/signos",
+        name: "Signos y Sintomas",
+        rtlName: "SS",
+        icon: HealingIcon,
+        component: Signos,
         layout: "/admin"
       },
 
