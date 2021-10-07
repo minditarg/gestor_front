@@ -33,6 +33,21 @@ export const StateListPatologias = {
 export const StateEditPatologia = {
 
     editPatologiaForm: {
+        id_especie: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Especie',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },
         descripcion: {
             elementType: 'input',
             elementConfig: {
@@ -59,6 +74,21 @@ export const StateEditPatologia = {
 export const StateNewPatologia = {
 
     newPatologiaForm: {
+        id_especie: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Especie',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },
         descripcion: {
             elementType: 'input',
             elementConfig: {
@@ -81,5 +111,6 @@ export const StateNewPatologia = {
 }
 
 export const ColumnsListado = [
+{ title: "Especie", field: "nombreespecie" },
 { title: "Patologia", field: "descripcion" }
 ];

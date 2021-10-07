@@ -109,6 +109,7 @@ class EditPatologia extends Component {
 
             let editPatologiaFormAlt = { ...this.state.editPatologiaForm };
             editPatologiaFormAlt.descripcion.value = resultado.result[0].descripcion;
+            editPatologiaFormAlt.id_especie.value = resultado.result[0].id_especie;
             for (let key in editPatologiaFormAlt) {
               editPatologiaFormAlt[key].touched = true;
               editPatologiaFormAlt[key].valid = true;
@@ -126,6 +127,27 @@ class EditPatologia extends Component {
           }
 
       })
+
+      Database.get('/list-especie', this)
+      .then(res => {
+  
+        let resultado = [...res.result];
+        let a = [];
+        resultado.forEach(function (entry) {
+          a.push({
+            value: entry.id,
+            displayValue: entry.descripcion
+          });
+        })
+        let formulario = { ...this.state.editPatologiaForm }
+        formulario.id_especie.elementConfig.options = [...a];
+        this.setState({
+            editPatologiaForm: formulario
+        })
+      }, err => {
+        toast.error(err.message);
+      })
+    
   }
 
 
@@ -133,7 +155,7 @@ class EditPatologia extends Component {
 
     event.preventDefault();
 
-    Database.post(`/update-patologia`, { id: this.props.match.params.idpatologia, descripcion: this.state.editPatologiaForm.descripcion.value},this)
+    Database.post(`/update-patologia`, { id: this.props.match.params.idpatologia, descripcion: this.state.editPatologiaForm.descripcion.value, id_especie: this.state.editPatologiaForm.id_especie.value},this)
       .then(res => {
 
           this.setState({
