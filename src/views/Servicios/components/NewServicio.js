@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import Input from 'components/Input/Input';
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/styles';
-import { StateNewCompensatorio } from "../VariablesState";
+import { StateNewServicio } from "../VariablesState";
 
 import Database from "variables/Database.js";
 
 import { toast } from 'react-toastify';
-import moment from "moment";
 
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
@@ -15,14 +14,6 @@ import Card from "components/Card/Card.js";
 import Button from '@material-ui/core/Button';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import Save from '@material-ui/icons/Save';
-
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-import esLocale from "date-fns/locale/es";
 
 
 
@@ -57,28 +48,22 @@ const styles = {
 };
 
 
-class NewCompensatorio extends Component {
-  state =JSON.parse(JSON.stringify(StateNewCompensatorio));
+class NewServicio extends Component {
+  state =JSON.parse(JSON.stringify(StateNewServicio));
 
 
-  handleSubmitNewCompensatorio = (event) => {
+  handleSubmitNewServicio = (event) => {
     event.preventDefault();
 
-    let fechaCompensatorio = null;
-
-    if (this.state.fechaCompensatorio != null)
-    fechaCompensatorio = moment(this.state.fechaCompensatorio).format("YYYY-MM-DD HH:mm");
-
-    Database.post(`/insert-compensatorios`, {id_empleado: this.state.newCompensatorioForm.id_empleado.value, horas: this.state.newCompensatorioForm.horas.value * this.props.Testing(), 
-                                            minutos: this.state.newCompensatorioForm.minutos.value * this.props.Testing(), fecha: fechaCompensatorio},this)
+    Database.post(`/insert-servicios`, { codigo: this.state.newServicioForm.codigo.value, descripcion: this.state.newServicioForm.descripcion.value},this)
       .then(res => {
 
-          toast.success("El compensatorio se ha creado con exito!");
+          toast.success("El servicio se ha creado con exito!");
           this.setState({
             successSubmit: true,
             formIsValid: false,
           },()=>{
-              this.props.getCompensatoriosAdmin();
+              this.props.getServiciosAdmin();
           })
           this.resetNewForm();
 
@@ -93,7 +78,7 @@ class NewCompensatorio extends Component {
   inputChangedHandler = (event, inputIdentifier) => {
     let checkValid;
     const updatedOrderForm = {
-      ...this.state.newCompensatorioForm
+      ...this.state.newServicioForm
     };
     const updatedFormElement = {
       ...updatedOrderForm[inputIdentifier]
@@ -110,17 +95,17 @@ class NewCompensatorio extends Component {
       formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
     }
     this.setState({
-      newCompensatorioForm: updatedOrderForm,
+      newServicioForm: updatedOrderForm,
       formIsValid: formIsValidAlt
     })
 
   }
 
   resetNewForm = (all) => {
-    let newCompensatorioFormAlt = { ...this.state.newCompensatorioForm };
+    let newServicioFormAlt = { ...this.state.newServicioForm };
     let successSubmit = this.state.successSubmit;
-    for (let key in newCompensatorioFormAlt) {
-      newCompensatorioFormAlt[key].value = ''
+    for (let key in newServicioFormAlt) {
+      newServicioFormAlt[key].value = ''
     }
     if (all)
       successSubmit = false;
@@ -129,34 +114,11 @@ class NewCompensatorio extends Component {
       successSubmit: successSubmit,
       formIsValid: false
     })
-    //this.getCompensatoriosType("new", newCompensatorioFormAlt);
+    //this.getServiciosType("new", newServicioFormAlt);
 
   }
 
-  getTipoCompensatorio = () => {
-    console.log(this.props.Testing());
-    Database.get('/list-empleado', this)
-      .then(res => {
 
-        let resultado = [...res.result];
-        let a = [];
-        resultado.forEach(function (entry) {
-          a.push({
-            value: entry.id,
-            displayValue: entry.apellido + ", " + entry.nombre
-          });
-        })
-        let formulario = { ...this.state.newCompensatorioForm }
-        formulario.id_empleado.elementConfig.options = [...a];
-        this.setState({
-            newCompensatorioForm: formulario
-        })
-      }, err => {
-        toast.error(err.message);
-      })
-
-
-  }
 
 
 
@@ -184,33 +146,24 @@ class NewCompensatorio extends Component {
 
   componentDidMount() {
 
-    this.getTipoCompensatorio();
+    //this.getServiciosType();
   }
-
-  handleFechaInicio = (date) => {
-    this.setState(
-      {
-        fechaCompensatorio: date
-      }
-    )
-  };
-
 
 
 
   render() {
 
     const formElementsArray = [];
-    for (let key in this.state.newCompensatorioForm) {
+    for (let key in this.state.newServicioForm) {
       formElementsArray.push({
         id: key,
-        config: this.state.newCompensatorioForm[key]
+        config: this.state.newServicioForm[key]
       });
     }
     return (
 
       <form onSubmit={(event) => {
-        this.handleSubmitNewCompensatorio(event)
+        this.handleSubmitNewServicio(event)
 
       } }>
 
@@ -220,9 +173,9 @@ class NewCompensatorio extends Component {
 
         <Card>
           <CardHeader color="primary">
-            <h4 className={this.props.classes.cardTitleWhite}>Nuevo Compensatorio</h4>
+            <h4 className={this.props.classes.cardTitleWhite}>Nuevo Servicio</h4>
             <p className={this.props.classes.cardCategoryWhite}>
-              Formulario de alta de compensatorio
+              Formulario de alta de servicio
       </p>
           </CardHeader>
           <CardBody>
@@ -230,7 +183,7 @@ class NewCompensatorio extends Component {
             <div className="mt-3 mb-3">
               {formElementsArray.map(formElement => (
                 <Input
-                  key={"editcompensatorio-" + formElement.id}
+                  key={"editservicio-" + formElement.id}
                   elementType={formElement.config.elementType}
                   elementConfig={formElement.config.elementConfig}
                   value={formElement.config.value}
@@ -241,28 +194,9 @@ class NewCompensatorio extends Component {
                   changed={(event) => this.inputChangedHandler(event, formElement.id)}
                   />
               ))}
-
-              <MuiPickersUtilsProvider locale={esLocale} utils={DateFnsUtils}>
-                <div>
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="fechainicio"
-                    label="Fecha"
-                    format="dd/MM/yyyy"
-                    value={this.state.fechaCompensatorio}
-                    onChange={this.handleFechaInicio}
-                    autoOk={true}
-                    cancelLabel={"Cancelar"}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                  />
-                </div>
-              </MuiPickersUtilsProvider>
-
             </div>
 
-            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/compensatorios')} ><ArrowBack />Volver</Button>
+            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/servicios')} ><ArrowBack />Volver</Button>
             <Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
 
 
@@ -280,4 +214,4 @@ class NewCompensatorio extends Component {
 
 };
 
-export default withRouter(withStyles(styles)(NewCompensatorio));
+export default withRouter(withStyles(styles)(NewServicio));

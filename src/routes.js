@@ -29,6 +29,7 @@ import ExposureIcon from '@material-ui/icons/Exposure';
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import PetsIcon from '@material-ui/icons/Pets';
 import HealingIcon from '@material-ui/icons/Healing';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 
 
@@ -53,6 +54,9 @@ import Clases from 'views/Clases/Clases.js';
 import Especies from 'views/Especies/Especies.js';
 import Razas from 'views/Razas/Razas.js';
 import Patologias from 'views/Patologias/Patologias.js';
+import Servicios from 'views/Servicios/Servicios.js';
+import Consultas from 'views/Pacientes/Consultas/Consultas.js';
+import Signos from 'views/Signos/Signos.js';
 
 
 const dashboardRoutes = [
@@ -271,7 +275,7 @@ const dashboardRoutes = [
 
   {
     show:false,
-    accesos: [101, 102, 103, 104, 105, 106],
+    accesos: [101, 102, 103, 104, 105, 106, 107, 108, 109],
     groupComponent: true,
     name: 'Hospital',
     open: 'open23',
@@ -335,6 +339,36 @@ const dashboardRoutes = [
         rtlName: "PA",
         icon: HealingIcon,
         component: Patologias,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [107],
+        path: "/servicios",
+        name: "Servicios",
+        rtlName: "SE",
+        icon: AssignmentIcon,
+        component: Servicios,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [108],
+        path: "/consultas",
+        name: "Consultas",
+        rtlName: "CN",
+        icon: AssignmentIcon,
+        component: Consultas,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [109],
+        path: "/signos",
+        name: "Signos y Sintomas",
+        rtlName: "SS",
+        icon: HealingIcon,
+        component: Signos,
         layout: "/admin"
       },
 
