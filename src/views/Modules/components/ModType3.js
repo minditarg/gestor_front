@@ -208,7 +208,11 @@ class ModType3 extends Component {
             disableAllButtons: true
         })
 
-        Database.post(`/update-module`, { id: this.props.module.id, nombre: this.props.orderFormPrincipal.nombre.value, id_page: this.props.module.id_page, id_type_module: this.props.module.id_type_module, contenido: contenido, estado: this.props.orderFormPrincipal.estado.value })
+        if((this.props.orderFormPrincipal.columnas.value > 12) || (this.props.orderFormPrincipal.columnas.value < 1))
+            toast.error("La cantidad de Columnas debe estar entre 1 y 12");
+        else
+        {
+            Database.post(`/update-module`, { id: this.props.module.id, nombre: this.props.orderFormPrincipal.nombre.value, id_page: this.props.module.id_page, id_type_module: this.props.module.id_type_module, contenido: contenido, estado: this.props.orderFormPrincipal.estado.value, columnas: this.props.orderFormPrincipal.columnas.value })
             .then(res => {
 
                 this.setState({
@@ -222,6 +226,9 @@ class ModType3 extends Component {
                 toast.error(err.message);
 
             })
+        }
+
+        
 
 
     }
@@ -466,7 +473,8 @@ class ModType3 extends Component {
                         </div>
                     }
 
-                    <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.goBack()} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons || !this.props.formIsValidPrincipal} type="submit" ><Save /> Guardar</Button>
+                    <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.goBack()} ><ArrowBack />Volver</Button>
+                    <Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons || !this.props.formIsValidPrincipal} type="submit" ><Save /> Guardar</Button>
 
                 </form>
 

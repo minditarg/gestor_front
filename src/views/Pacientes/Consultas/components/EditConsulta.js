@@ -24,7 +24,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -33,7 +32,7 @@ import {
 } from '@material-ui/pickers';
 import esLocale from "date-fns/locale/es";
 
-import { StateEditControlFalta } from "../VariablesState";
+import { StateEditConsulta } from "../VariablesState";
 
 
 
@@ -68,8 +67,8 @@ const styles = {
 };
 
 
-class EditControlFalta extends Component {
-  state = JSON.parse(JSON.stringify(StateEditControlFalta));
+class EditConsulta extends Component {
+  state = JSON.parse(JSON.stringify(StateEditConsulta));
 
   handleClickOpen = () => {
     this.setState({
@@ -109,103 +108,64 @@ class EditControlFalta extends Component {
   }
 
 
-  getControlFaltaEdit = (id) => {
-    Database.get('/list-controlfaltas/' + id)
+  getConsultaEdit = (id) => {
+    Database.get('/list-consultas/' + id)
       .then(resultado => {
-
+          console.log(resultado.result[0]);
+          console.log(this.state.editConsultaForm);
+          if (resultado.result[0].id_servicio == 1) {
+            this.state.servicioClinica = true;
+          }
+          
           if (resultado.result.length > 0) {
             this.setState({
-              controlfaltaEdit: resultado.result[0]
+              consultaEdit: resultado.result[0]
             })
 
-            let editControlFaltaFormAlt = { ...this.state.editControlFaltaForm };
-            editControlFaltaFormAlt.id_empleado.value = resultado.result[0].id_empleado;
-            editControlFaltaFormAlt.id_tipo_falta.value = resultado.result[0].id_tipo_falta;
-            this.state.fechaInicioLicencia = resultado.result[0].inicio_licencia;
-            this.state.fechaFinLicencia = resultado.result[0].fin_licencia;
-            for (let key in editControlFaltaFormAlt) {
-              editControlFaltaFormAlt[key].touched = true;
-              editControlFaltaFormAlt[key].valid = true;
+            let editConsultaFormAlt = { ...this.state.editConsultaForm };
+            editConsultaFormAlt.consulta.value = resultado.result[0].consulta;
+            editConsultaFormAlt.temperatura.value = resultado.result[0].temperatura;
+            editConsultaFormAlt.peso.value = resultado.result[0].peso;
+            let editConsultaFormAlt2 = { ...this.state.editConsultaForm2 };
+            editConsultaFormAlt2.id_servicio.value = resultado.result[0].id_servicio;
+            for (let key in editConsultaFormAlt) {
+              editConsultaFormAlt[key].touched = true;
+              editConsultaFormAlt[key].valid = true;
             }
 
             this.setState({
-              editControlFaltaForm: editControlFaltaFormAlt,
+              editConsultaForm: editConsultaFormAlt,
+              editConsultaForm2: editConsultaFormAlt2,
+              fecha: resultado.result[0].fecha,
               url_archivo: resultado.result[0].archivo
             })
-           // this.getControlFaltasType("edit", editControlFaltaFormAlt);
+           // this.getConsultasType("edit", editConsultaFormAlt);
           }
           else {
             this.setState({
-              controlfaltaEdit: null
+              consultaEdit: null
             })
           }
 
       })
-
-    
-      Database.get('/list-empleado', this)
-      .then(res => {
-
-        let resultado = [...res.result];
-        let a = [];
-        resultado.forEach(function (entry) {
-          a.push({
-            value: entry.id,
-            displayValue: entry.apellido + ", " + entry.nombre
-          });
-        })
-        let formulario = { ...this.state.editControlFaltaForm }
-        formulario.id_empleado.elementConfig.options = [...a];
-        this.setState({
-            editControlFaltaForm: formulario
-        })
-      }, err => {
-        toast.error(err.message);
-      })
-
-
-    Database.get('/list-tipo-falta', this)
-    .then(res => {
-
-      let resultado = [...res.result];
-      let a = [];
-      resultado.forEach(function (entry) {
-        a.push({
-          value: entry.id,
-          displayValue: entry.descripcion
-        });
-      })
-      let formulario = { ...this.state.editControlFaltaForm }
-      formulario.id_tipo_falta.elementConfig.options = [...a];
-      this.setState({
-          editControlFaltaForm: formulario
-      })
-    }, err => {
-      toast.error(err.message);
-    })
-    
   }
 
 
-  handleSubmitEditControlFalta = (event) => {
+  handleSubmitEditConsulta = (event) => {
 
     event.preventDefault();
 
-    let fechaInicioLicencia = null;
-    let fechaFinLicencia = null;
+    let fecha = null;
 
-    if (this.state.fechaInicioLicencia != null)
-    fechaInicioLicencia = moment(this.state.fechaInicioLicencia).format("YYYY-MM-DD HH:mm");
+    if (this.state.fecha != null)
+    fecha = moment(this.state.fecha).format("YYYY-MM-DD HH:mm");
 
-    if (this.state.fechaFinLicencia != null)
-    fechaFinLicencia = moment(this.state.fechaFinLicencia).format("YYYY-MM-DD HH:mm");
-
-    Database.post(`/update-controlfalta`, { id: this.props.match.params.idcontrolfalta, 
-        id_empleado: this.state.editControlFaltaForm.id_empleado.value, 
-        id_tipo_falta: this.state.editControlFaltaForm.id_tipo_falta.value,
-        inicio_licencia: fechaInicioLicencia,
-        fin_licencia: fechaFinLicencia
-        },this)
+    Database.post(`/update-consulta`, { id: this.props.match.params.idconsulta, 
+                                        id_servicio: this.state.editConsultaForm2.id_servicio.value,
+                                        temperatura: this.state.editConsultaForm.temperatura.value,
+                                        peso: this.state.editConsultaForm.peso.value,
+                                        consulta: this.state.editConsultaForm.consulta.value,
+                                        fecha: fecha},this)
       .then(res => {
 
           this.setState({
@@ -213,15 +173,14 @@ class EditControlFalta extends Component {
             editFormIsValid: false,
             disableAllButtons:false
           },()=>{
-              toast.success("La falta se ha modificado con exito!");
+              toast.success("La consulta se ha modificado con exito!");
 
-              this.props.getControlFaltasAdmin();
+              this.props.getConsultasAdmin();
 
           })
 
       },err =>{
-        err.message = err.message.substring(err.message.indexOf(':') + 1 );
-        toast.error(err.message);
+          toast.error(err.message);
 
       })
 
@@ -231,7 +190,7 @@ class EditControlFalta extends Component {
   inputEditChangedHandler = (event, inputIdentifier) => {
     let checkValid;
     const updatedOrderForm = {
-      ...this.state.editControlFaltaForm
+      ...this.state.editConsultaForm
     };
     const updatedFormElement = {
       ...updatedOrderForm[inputIdentifier]
@@ -248,11 +207,60 @@ class EditControlFalta extends Component {
       formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
     }
     this.setState({
-      editControlFaltaForm: updatedOrderForm,
+      editConsultaForm: updatedOrderForm,
       editFormIsValid: formIsValidAlt
     })
 
   }
+
+  inputEditChangedHandler2 = (event, inputIdentifier) => {
+    let checkValid;
+    const updatedOrderForm = {
+      ...this.state.editConsultaForm2
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    };
+    updatedFormElement.value = event.target.value;
+    checkValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = checkValid.isValid;
+    updatedFormElement.textValid = checkValid.textValid;
+    updatedFormElement.touched = true;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    let formIsValidAlt = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
+    }
+    if (inputIdentifier == "id_servicio")
+    {
+      if(event.target.value == 1)
+      {
+        this.setState({
+          editConsultaForm2: updatedOrderForm,
+          editFormIsValid: formIsValidAlt,
+          servicioClinica: true
+        })
+      }
+      else 
+      {
+        this.setState({
+          editConsultaForm2: updatedOrderForm,
+          editFormIsValid: formIsValidAlt,
+          servicioClinica: null
+        })
+      }
+    } 
+    else 
+    {
+      this.setState({
+        editConsultaForm2: updatedOrderForm,
+        editFormIsValid: formIsValidAlt
+      })
+    }
+
+  }
+
 
   onFilesArchivoChange = (files) => {
     console.log(files)
@@ -263,12 +271,10 @@ class EditControlFalta extends Component {
 
     const formData = new FormData();
     formData.append('archivo', files[0]);
-    // if (props.thumbs)
-    //     formData.append('thumbs', JSON.stringify(props.thumbs));
 
-    var id = this.props.match.params.idcontrolfalta;//buscar id
+    var id = this.props.match.params.idconsulta;//buscar id
 
-    Database.post('/insert-archivo/' + id + "/" + files[0].name, formData, this, false, {
+    Database.post('/insert-archivo-consulta/' + id + "/" + files[0].name, formData, this, false, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -294,14 +300,11 @@ class EditControlFalta extends Component {
   }
 
 
-
-
-
   resetEditForm = () => {
-    let editControlFaltaFormAlt = { ...this.state.editControlFaltaForm };
+    let editConsultaFormAlt = { ...this.state.editConsultaForm };
     let successSubmitEdit = this.state.successSubmitEdit;
-    for (let key in editControlFaltaFormAlt) {
-      editControlFaltaFormAlt[key].value = ''
+    for (let key in editConsultaFormAlt) {
+      editConsultaFormAlt[key].value = ''
     }
 
     this.setState({
@@ -312,10 +315,32 @@ class EditControlFalta extends Component {
 
   }
 
+  getServicio = () => {
+    Database.get('/list-servicio', this)
+      .then(res => {
+
+        let resultado = [...res.result];
+        let a = [];
+        resultado.forEach(function (entry) {
+          a.push({
+            value: entry.id,
+            displayValue: entry.codigo + " - " + entry.descripcion
+          });
+        })
+        let formulario = { ...this.state.editConsultaForm2 }
+        formulario.id_servicio.elementConfig.options = [...a];
+        this.setState({
+            editConsultaForm2: formulario
+        })
+      }, err => {
+        toast.error(err.message);
+      })
+  }
+
   componentDidMount() {
 
-   // this.getControlFaltasType();
-    this.getControlFaltaEdit(this.props.match.params.idcontrolfalta);
+    this.getServicio();
+    this.getConsultaEdit(this.props.match.params.idconsulta);
   }
 
   handleClickOpenArchivo = () => {
@@ -336,7 +361,7 @@ class EditControlFalta extends Component {
       openDeleteArchivo: false
     })
 
-    Database.post(`/delete-archivo`, { id: this.props.match.params.idcontrolfalta }, this)
+    Database.post(`/delete-archivo-consulta`, { id: this.props.match.params.idconsulta }, this)
       .then(res => {
         this.setState({
           successSubmitEdit: true,
@@ -354,20 +379,10 @@ class EditControlFalta extends Component {
       })
   }
 
-  handleFechaInicio = (date) => {
+  handleFecha = (date) => {
     this.setState(
       {
-        fechaInicioLicencia: date,
-        editFormIsValid: true,
-      }
-    )
-  };
-
-  handleFechaFin = (date) => {
-    this.setState(
-      {
-        fechaFinLicencia: date,
-        editFormIsValid: true,
+        fecha: date
       }
     )
   };
@@ -375,10 +390,17 @@ class EditControlFalta extends Component {
   render() {
 
     const formElementsArray = [];
-    for (let key in this.state.editControlFaltaForm) {
+    for (let key in this.state.editConsultaForm) {
       formElementsArray.push({
         id: key,
-        config: this.state.editControlFaltaForm[key]
+        config: this.state.editConsultaForm[key]
+      });
+    }
+    const formElementsArray2 = [];
+    for (let key in this.state.editConsultaForm2) {
+      formElementsArray2.push({
+        id: key,
+        config: this.state.editConsultaForm2[key]
       });
     }
 
@@ -386,7 +408,7 @@ class EditControlFalta extends Component {
 
       <form onSubmit={(event) => {
         
-        this.handleSubmitEditControlFalta(event)
+        this.handleSubmitEditConsulta(event)
 
       } }>
 
@@ -396,9 +418,9 @@ class EditControlFalta extends Component {
 
         <Card>
           <CardHeader color="primary">
-            <h4 className={this.props.classes.cardTitleWhite}>Editar Falta</h4>
+            <h4 className={this.props.classes.cardTitleWhite}>Editar Consulta</h4>
             <p className={this.props.classes.cardCategoryWhite}>
-              Formulario para modificar los datos de la falta
+              Formulario para modificar los datos de la consulta
       </p>
           </CardHeader>
           <CardBody>
@@ -407,9 +429,42 @@ class EditControlFalta extends Component {
       </Button> */}
 
             <div className="mt-3 mb-3">
-              {formElementsArray.map(formElement => (
+            <MuiPickersUtilsProvider locale={esLocale} utils={DateFnsUtils}>
+                <div>
+                  <KeyboardDatePicker
+                    margin="normal"
+                    id="fecha"
+                    label="Fecha"
+                    format="dd/MM/yyyy"
+                    value={this.state.fecha}
+                    onChange={this.handleFecha}
+                    autoOk={true}
+                    cancelLabel={"Cancelar"}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                    }}
+                  />
+                </div>
+              </MuiPickersUtilsProvider>
+              {formElementsArray2.map(formElement => (
                 <Input
-                  key={"editcontrolfalta-" + formElement.id}
+                  key={"editconsulta-" + formElement.id}
+                  elementType={formElement.config.elementType}
+                  elementConfig={formElement.config.elementConfig}
+                  value={formElement.config.value}
+                  textValid={formElement.config.textValid}
+                  invalid={!formElement.config.valid}
+                  shouldValidate={formElement.config.validation}
+                  touched={formElement.config.touched}
+                  changed={(event) => this.inputEditChangedHandler2(event, formElement.id)}
+                  />
+              ))}
+
+              {this.state.servicioClinica ?
+                <div>
+                {formElementsArray.map(formElement => (
+                <Input
+                  key={"editconsulta-" + formElement.id}
                   elementType={formElement.config.elementType}
                   elementConfig={formElement.config.elementConfig}
                   value={formElement.config.value}
@@ -419,42 +474,9 @@ class EditControlFalta extends Component {
                   touched={formElement.config.touched}
                   changed={(event) => this.inputEditChangedHandler(event, formElement.id)}
                   />
-              ))}
-              <MuiPickersUtilsProvider locale={esLocale} utils={DateFnsUtils}>
-                <div>
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="fechainicio"
-                    label="Inicio Licencia"
-                    format="dd/MM/yyyy"
-                    value={this.state.fechaInicioLicencia}
-                    onChange={this.handleFechaInicio}
-                    autoOk={true}
-                    cancelLabel={"Cancelar"}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                  />
+                ))}
                 </div>
-              </MuiPickersUtilsProvider>
-
-              <MuiPickersUtilsProvider locale={esLocale} utils={DateFnsUtils}>
-                <div>
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="fechafin"
-                    label="Fin Licencia"
-                    format="dd/MM/yyyy"
-                    value={this.state.fechaFinLicencia}
-                    onChange={this.handleFechaFin}
-                    autoOk={true}
-                    cancelLabel={"Cancelar"}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                  />
-                </div>
-              </MuiPickersUtilsProvider>
+                :null}
 
               <div className="files">
                 <Files
@@ -504,10 +526,9 @@ class EditControlFalta extends Component {
                   </DialogActions>
                 </form>
               </Dialog>
-
             </div>
 
-            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/controlfaltas')} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.editFormIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
+            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/consultas')} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.editFormIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
 
 
           </CardBody>
@@ -526,7 +547,7 @@ class EditControlFalta extends Component {
       <DialogContent>
       
         <DialogContentText>
-          Ingrese una nueva contraseña para el ControlFalta
+          Ingrese una nueva contraseña para el Consulta
         </DialogContentText>
         <TextField
           autoFocus
@@ -557,4 +578,4 @@ class EditControlFalta extends Component {
 
 };
 
-export default withRouter(withStyles(styles)(EditControlFalta));
+export default withRouter(withStyles(styles)(EditConsulta));

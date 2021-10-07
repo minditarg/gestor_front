@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const StateListPacientes = {
     pacientes: [],
     offset:0,
@@ -24,10 +26,34 @@ export const StateListPacientes = {
     openDeleteDialog:false,
     deleteRowData:null,
     isLoading:false
+}
 
+export const StateListFichas = {
+    pacientes: [],
+    offset:0,
+    checked: [],
+    menuContext: null,
+    botonesAcciones: {
+        nuevo: {
 
+            enabled: true,
+            texto: 'Nuevo'
+        },
+        editar: {
 
+            enabled: false,
+            texto: 'Editar'
+        },
+        delete: {
 
+            enabled: false,
+            texto: 'Eliminar'
+        }
+    },
+    modalOpen: false,
+    openDeleteDialog:false,
+    deleteRowData:null,
+    isLoading:false
 }
 
 export const StateEditPaciente = {
@@ -149,17 +175,18 @@ export const StateEditPaciente = {
             touched: true
         },    
         notas: {
-            elementType: 'input',
+            elementType: 'textarea',
             elementConfig: {
                 type: 'text',
                 label: 'Comentarios',
-                fullWidth: true
+                fullWidth: true,
+                rows: 4
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         }, 
     },
@@ -292,17 +319,18 @@ export const StateNewPaciente = {
             touched: true
         },    
         notas: {
-            elementType: 'input',
+            elementType: 'textarea',
             elementConfig: {
                 type: 'text',
                 label: 'Comentarios',
-                fullWidth: true
+                fullWidth: true,
+                rows: 4
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },    
     },
@@ -324,3 +352,14 @@ export const ColumnsListado = [
 { title: "Sexo", field: "nombresexo" },
 { title: "Castrado", field: "castrado_mostrar" }
 ];
+
+export const ColumnsListadoFicha = [
+    { title: "Fecha", field: "fecha_mostrar" , customSort: (a, b) => parseInt(moment(a.inicio_licencia).format("YYYYMMDD")) - parseInt(moment(b.inicio_licencia).format("YYYYMMDD"))},
+    { title: "Servicio", field: "nombreservicio" },
+    { title: "Paciente", field: "nombrepaciente" },
+    { title: "Dueño", field: "nombredueno" },
+    { title: "Temperatura (ºC)", field: "temperatura" },
+    { title: "Peso (Kg)", field: "peso" },
+    { title: "Diagnostico", field: "consulta" }
+    ];
+    
