@@ -81,6 +81,9 @@ class NewPaciente extends Component {
                                         color: this.state.newPacienteForm.color.value,
                                         id_sexo: this.state.newPacienteForm.id_sexo.value,
                                         castrado: this.state.newPacienteForm.castrado.value,
+                                        id_alimentacion: this.state.newPacienteForm.id_alimentacion.value,
+                                        id_habitos: this.state.newPacienteForm.id_habitos.value,
+                                        id_mascotas: this.state.newPacienteForm.id_mascotas.value,
                                         notas: this.state.newPacienteForm.notas.value,
                                         fecha_nacimiento: this.state.fechaNacimiento,
                                         fecha_adopcion: this.state.fechaAdopcion
@@ -264,6 +267,72 @@ class NewPaciente extends Component {
       })
   }
 
+  getAlimentacion = () => {
+    Database.get('/list-alimentacion', this)
+      .then(res => {
+
+        let resultado = [...res.result];
+        let a = [];
+        resultado.forEach(function (entry) {
+          a.push({
+            value: entry.id,
+            displayValue: entry.descripcion
+          });
+        })
+        let formulario = { ...this.state.newPacienteForm }
+        formulario.id_alimentacion.elementConfig.options = [...a];
+        this.setState({
+            newPacienteForm: formulario
+        })
+      }, err => {
+        toast.error(err.message);
+      })
+  }
+
+  getHabitos = () => {
+    Database.get('/list-habitos', this)
+      .then(res => {
+
+        let resultado = [...res.result];
+        let a = [];
+        resultado.forEach(function (entry) {
+          a.push({
+            value: entry.id,
+            displayValue: entry.descripcion
+          });
+        })
+        let formulario = { ...this.state.newPacienteForm }
+        formulario.id_habitos.elementConfig.options = [...a];
+        this.setState({
+            newPacienteForm: formulario
+        })
+      }, err => {
+        toast.error(err.message);
+      })
+  }
+
+  getMascotas = () => {
+    Database.get('/list-mascotas', this)
+      .then(res => {
+
+        let resultado = [...res.result];
+        let a = [];
+        resultado.forEach(function (entry) {
+          a.push({
+            value: entry.id,
+            displayValue: entry.descripcion
+          });
+        })
+        let formulario = { ...this.state.newPacienteForm }
+        formulario.id_mascotas.elementConfig.options = [...a];
+        this.setState({
+            newPacienteForm: formulario
+        })
+      }, err => {
+        toast.error(err.message);
+      })
+  }
+
 
 
   checkValidity = (value, rules) => {
@@ -295,6 +364,9 @@ class NewPaciente extends Component {
     this.getEspecie();
     this.getRaza();
     this.getSexo();
+    this.getAlimentacion();
+    this.getHabitos();
+    this.getMascotas();
   }
 
   handleFechaNacimiento = (date) => {

@@ -173,6 +173,51 @@ export const StateEditPaciente = {
             },
             valid: true,
             touched: true
+        },
+        id_alimentacion: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Alimentación',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },
+        id_habitos: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Habitos',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },
+        id_mascotas: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Otras Mascotas',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
         },    
         notas: {
             elementType: 'textarea',
@@ -317,7 +362,52 @@ export const StateNewPaciente = {
             },
             valid: true,
             touched: true
-        },    
+        },
+        id_alimentacion: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Alimentación',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },
+        id_habitos: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Habitos',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },
+        id_mascotas: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Otras Mascotas',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },     
         notas: {
             elementType: 'textarea',
             elementConfig: {
