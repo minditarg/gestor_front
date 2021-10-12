@@ -18,7 +18,7 @@ import Paper from '@material-ui/core/Paper';
 
 //import NewUser from "./components/NewFicha";
 //import EditFicha from "./components/EditFicha";
-import ModalDelete from "./components/ModalDelete";
+import ModalDeleteFicha from "./components/ModalDeleteFicha";
 import { localization } from "variables/general.js";
 
 import { toast } from 'react-toastify';
@@ -214,7 +214,8 @@ class Fichas extends Component {
 
   handleDeleteFicha = rowData => {
     console.log(rowData);
-    Database.post('/delete-ficha', { id: rowData.id },this).then(res => {
+    console.log(this);
+    Database.post('/delete-consulta', { id: rowData.id },this).then(res => {
         let fichas = [...this.state.fichas]
         fichas = fichas.filter(elem => {
           if (elem.id === rowData.id)
@@ -228,7 +229,7 @@ class Fichas extends Component {
           fichas: fichas,
           openDeleteDialog:false
         },()=>{
-          toast.success("El ficha se ha eliminado con exito!");
+          toast.success("La consulta se ha eliminado con exito!");
         })
 
 
@@ -284,12 +285,12 @@ class Fichas extends Component {
 
                 actions={[{
                   icon: 'edit',
-                  tooltip: 'Editar Ficha',
+                  tooltip: 'Editar Consulta',
                   onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarficha/' + rowData.id)
                 },
                 {
                   icon: 'delete',
-                  tooltip: 'Borrar Ficha',
+                  tooltip: 'Borrar Consulta',
                   onClick: (event, rowData) => this.handleDeleteButton(rowData)
 
                 }]}
@@ -384,7 +385,7 @@ class Fichas extends Component {
 
 
         </GridItem>
-        <ModalDelete
+        <ModalDeleteFicha
           openDeleteDialog={this.state.openDeleteDialog}
           deleteRowData={this.state.deleteRowData}
           handleClose={() => this.handleModalClose()}
