@@ -1,5 +1,5 @@
-export const StateListPatologias = {
-    patologias: [],
+export const StateListSignos = {
+    signos: [],
     offset:0,
     checked: [],
     menuContext: null,
@@ -30,29 +30,14 @@ export const StateListPatologias = {
 
 }
 
-export const StateEditPatologia = {
+export const StateEditSigno = {
 
-    editPatologiaForm: {
-        id_especie: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Especie',
-                options: [
-                ],
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: true
-            },
-            valid: false,
-            touched: true
-        },
+    editSignoForm: {
         descripcion: {
             elementType: 'input',
             elementConfig: {
                 type: 'text',
-                label: 'Patologia',
+                label: 'Signos y Sintomas',
                 fullWidth: true
             },
             value: '',
@@ -63,7 +48,7 @@ export const StateEditPatologia = {
             touched: false
         } 
     },
-    patologiaEdit: null,
+    signoEdit: null,
     editFormIsValid: false,
     successSubmitEdit: null,
     disableAllButtons:false,
@@ -71,29 +56,16 @@ export const StateEditPatologia = {
 
 }
 
-export const StateNewPatologia = {
 
-    newPatologiaForm: {
-        id_especie: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Especie',
-                options: [
-                ],
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: true
-            },
-            valid: false,
-            touched: true
-        },
+
+export const StateNewSigno = {
+
+    newSignoForm: {
         descripcion: {
             elementType: 'input',
             elementConfig: {
                 type: 'text',
-                label: 'Patologia',
+                label: 'Signos y Sintomas',
                 fullWidth: true
             },
             value: '',
@@ -110,7 +82,7 @@ export const StateNewPatologia = {
     disableAllButtons:false
 }
 
+
 export const ColumnsListado = [
-{ title: "Especie", field: "nombreespecie" },
-{ title: "Patologia", field: "descripcion" }
+{ title: "Signos y Sintomas", field: "descripcion" }
 ];

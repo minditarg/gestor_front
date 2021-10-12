@@ -22,7 +22,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { StateEditPatologia } from "../VariablesState";
+import { StateEditSigno } from "../VariablesState";
 
 
 
@@ -57,8 +57,8 @@ const styles = {
 };
 
 
-class EditPatologia extends Component {
-  state = JSON.parse(JSON.stringify(StateEditPatologia));
+class EditSigno extends Component {
+  state = JSON.parse(JSON.stringify(StateEditSigno));
 
   handleClickOpen = () => {
     this.setState({
@@ -98,64 +98,42 @@ class EditPatologia extends Component {
   }
 
 
-  getPatologiaEdit = (id) => {
-    Database.get('/list-patologias/' + id)
+  getSignoEdit = (id) => {
+    Database.get('/list-signos/' + id)
       .then(resultado => {
 
           if (resultado.result.length > 0) {
             this.setState({
-              patologiaEdit: resultado.result[0]
+              signoEdit: resultado.result[0]
             })
 
-            let editPatologiaFormAlt = { ...this.state.editPatologiaForm };
-            editPatologiaFormAlt.descripcion.value = resultado.result[0].descripcion;
-            editPatologiaFormAlt.id_especie.value = resultado.result[0].id_especie;
-            for (let key in editPatologiaFormAlt) {
-              editPatologiaFormAlt[key].touched = true;
-              editPatologiaFormAlt[key].valid = true;
+            let editSignoFormAlt = { ...this.state.editSignoForm };
+            editSignoFormAlt.descripcion.value = resultado.result[0].descripcion;
+            for (let key in editSignoFormAlt) {
+              editSignoFormAlt[key].touched = true;
+              editSignoFormAlt[key].valid = true;
             }
 
             this.setState({
-              editPatologiaForm: editPatologiaFormAlt
+              editSignoForm: editSignoFormAlt
             })
-           // this.getPatologiasType("edit", editPatologiaFormAlt);
+           // this.getSignosType("edit", editSignoFormAlt);
           }
           else {
             this.setState({
-              patologiaEdit: null
+              signoEdit: null
             })
           }
 
       })
-
-      Database.get('/list-especie', this)
-      .then(res => {
-  
-        let resultado = [...res.result];
-        let a = [];
-        resultado.forEach(function (entry) {
-          a.push({
-            value: entry.id,
-            displayValue: entry.descripcion
-          });
-        })
-        let formulario = { ...this.state.editPatologiaForm }
-        formulario.id_especie.elementConfig.options = [...a];
-        this.setState({
-            editPatologiaForm: formulario
-        })
-      }, err => {
-        toast.error(err.message);
-      })
-    
   }
 
 
-  handleSubmitEditPatologia = (event) => {
+  handleSubmitEditSigno = (event) => {
 
     event.preventDefault();
 
-    Database.post(`/update-patologia`, { id: this.props.match.params.idpatologia, descripcion: this.state.editPatologiaForm.descripcion.value, id_especie: this.state.editPatologiaForm.id_especie.value},this)
+    Database.post(`/update-signo`, { id: this.props.match.params.idsigno, descripcion: this.state.editSignoForm.descripcion.value},this)
       .then(res => {
 
           this.setState({
@@ -163,9 +141,9 @@ class EditPatologia extends Component {
             editFormIsValid: false,
             disableAllButtons:false
           },()=>{
-              toast.success("La patologia se ha modificado con exito!");
+              toast.success("La signo se ha modificado con exito!");
 
-              this.props.getPatologiasAdmin();
+              this.props.getSignosAdmin();
 
           })
 
@@ -180,7 +158,7 @@ class EditPatologia extends Component {
   inputEditChangedHandler = (event, inputIdentifier) => {
     let checkValid;
     const updatedOrderForm = {
-      ...this.state.editPatologiaForm
+      ...this.state.editSignoForm
     };
     const updatedFormElement = {
       ...updatedOrderForm[inputIdentifier]
@@ -197,7 +175,7 @@ class EditPatologia extends Component {
       formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
     }
     this.setState({
-      editPatologiaForm: updatedOrderForm,
+      editSignoForm: updatedOrderForm,
       editFormIsValid: formIsValidAlt
     })
 
@@ -208,10 +186,10 @@ class EditPatologia extends Component {
 
 
   resetEditForm = () => {
-    let editPatologiaFormAlt = { ...this.state.editPatologiaForm };
+    let editSignoFormAlt = { ...this.state.editSignoForm };
     let successSubmitEdit = this.state.successSubmitEdit;
-    for (let key in editPatologiaFormAlt) {
-      editPatologiaFormAlt[key].value = ''
+    for (let key in editSignoFormAlt) {
+      editSignoFormAlt[key].value = ''
     }
 
     this.setState({
@@ -224,17 +202,17 @@ class EditPatologia extends Component {
 
   componentDidMount() {
 
-   // this.getPatologiasType();
-    this.getPatologiaEdit(this.props.match.params.idpatologia);
+   // this.getSignosType();
+    this.getSignoEdit(this.props.match.params.idsigno);
   }
 
   render() {
 
     const formElementsArray = [];
-    for (let key in this.state.editPatologiaForm) {
+    for (let key in this.state.editSignoForm) {
       formElementsArray.push({
         id: key,
-        config: this.state.editPatologiaForm[key]
+        config: this.state.editSignoForm[key]
       });
     }
 
@@ -242,7 +220,7 @@ class EditPatologia extends Component {
 
       <form onSubmit={(event) => {
         
-        this.handleSubmitEditPatologia(event)
+        this.handleSubmitEditSigno(event)
 
       } }>
 
@@ -252,9 +230,9 @@ class EditPatologia extends Component {
 
         <Card>
           <CardHeader color="primary">
-            <h4 className={this.props.classes.cardTitleWhite}>Editar Patologia</h4>
+            <h4 className={this.props.classes.cardTitleWhite}>Editar Signos y Sintomas</h4>
             <p className={this.props.classes.cardCategoryWhite}>
-              Formulario para modificar los datos de la patologia
+              Formulario para modificar los datos del signo y sintoma
       </p>
           </CardHeader>
           <CardBody>
@@ -265,7 +243,7 @@ class EditPatologia extends Component {
             <div className="mt-3 mb-3">
               {formElementsArray.map(formElement => (
                 <Input
-                  key={"editpatologia-" + formElement.id}
+                  key={"editsigno-" + formElement.id}
                   elementType={formElement.config.elementType}
                   elementConfig={formElement.config.elementConfig}
                   value={formElement.config.value}
@@ -278,7 +256,7 @@ class EditPatologia extends Component {
               ))}
             </div>
 
-            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/patologias')} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.editFormIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
+            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/signos')} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.editFormIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
 
 
           </CardBody>
@@ -297,7 +275,7 @@ class EditPatologia extends Component {
       <DialogContent>
       
         <DialogContentText>
-          Ingrese una nueva contraseña para el Patologia
+          Ingrese una nueva contraseña para el Signo
         </DialogContentText>
         <TextField
           autoFocus
@@ -328,4 +306,4 @@ class EditPatologia extends Component {
 
 };
 
-export default withRouter(withStyles(styles)(EditPatologia));
+export default withRouter(withStyles(styles)(EditSigno));

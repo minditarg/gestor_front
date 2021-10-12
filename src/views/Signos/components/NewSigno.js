@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Input from 'components/Input/Input';
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/styles';
-import { StateNewPatologia } from "../VariablesState";
+import { StateNewSigno } from "../VariablesState";
 
 import Database from "variables/Database.js";
 
@@ -48,22 +48,22 @@ const styles = {
 };
 
 
-class NewPatologia extends Component {
-  state =JSON.parse(JSON.stringify(StateNewPatologia));
+class NewSigno extends Component {
+  state =JSON.parse(JSON.stringify(StateNewSigno));
 
 
-  handleSubmitNewPatologia = (event) => {
+  handleSubmitNewSigno = (event) => {
     event.preventDefault();
 
-    Database.post(`/insert-patologias`, { descripcion: this.state.newPatologiaForm.descripcion.value, id_especie: this.state.newPatologiaForm.id_especie.value},this)
+    Database.post(`/insert-signos`, { descripcion: this.state.newSignoForm.descripcion.value},this)
       .then(res => {
 
-          toast.success("La patologia se ha creado con exito!");
+          toast.success("El signo y sintoma se ha creado con exito!");
           this.setState({
             successSubmit: true,
             formIsValid: false,
           },()=>{
-              this.props.getPatologiasAdmin();
+              this.props.getSignosAdmin();
           })
           this.resetNewForm();
 
@@ -78,7 +78,7 @@ class NewPatologia extends Component {
   inputChangedHandler = (event, inputIdentifier) => {
     let checkValid;
     const updatedOrderForm = {
-      ...this.state.newPatologiaForm
+      ...this.state.newSignoForm
     };
     const updatedFormElement = {
       ...updatedOrderForm[inputIdentifier]
@@ -95,39 +95,17 @@ class NewPatologia extends Component {
       formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
     }
     this.setState({
-      newPatologiaForm: updatedOrderForm,
+      newSignoForm: updatedOrderForm,
       formIsValid: formIsValidAlt
     })
 
   }
 
-  getEspecie = () => {
-    Database.get('/list-especie', this)
-      .then(res => {
-
-        let resultado = [...res.result];
-        let a = [];
-        resultado.forEach(function (entry) {
-          a.push({
-            value: entry.id,
-            displayValue: entry.descripcion
-          });
-        })
-        let formulario = { ...this.state.newPatologiaForm }
-        formulario.id_especie.elementConfig.options = [...a];
-        this.setState({
-            newPatologiaForm: formulario
-        })
-      }, err => {
-        toast.error(err.message);
-      })
-  }
-
   resetNewForm = (all) => {
-    let newPatologiaFormAlt = { ...this.state.newPatologiaForm };
+    let newSignoFormAlt = { ...this.state.newSignoForm };
     let successSubmit = this.state.successSubmit;
-    for (let key in newPatologiaFormAlt) {
-      newPatologiaFormAlt[key].value = ''
+    for (let key in newSignoFormAlt) {
+      newSignoFormAlt[key].value = ''
     }
     if (all)
       successSubmit = false;
@@ -136,7 +114,7 @@ class NewPatologia extends Component {
       successSubmit: successSubmit,
       formIsValid: false
     })
-    //this.getPatologiasType("new", newPatologiaFormAlt);
+    //this.getSignosType("new", newSignoFormAlt);
 
   }
 
@@ -168,7 +146,7 @@ class NewPatologia extends Component {
 
   componentDidMount() {
 
-    this.getEspecie();
+    //this.getSignosType();
   }
 
 
@@ -176,16 +154,16 @@ class NewPatologia extends Component {
   render() {
 
     const formElementsArray = [];
-    for (let key in this.state.newPatologiaForm) {
+    for (let key in this.state.newSignoForm) {
       formElementsArray.push({
         id: key,
-        config: this.state.newPatologiaForm[key]
+        config: this.state.newSignoForm[key]
       });
     }
     return (
 
       <form onSubmit={(event) => {
-        this.handleSubmitNewPatologia(event)
+        this.handleSubmitNewSigno(event)
 
       } }>
 
@@ -195,9 +173,9 @@ class NewPatologia extends Component {
 
         <Card>
           <CardHeader color="primary">
-            <h4 className={this.props.classes.cardTitleWhite}>Nueva Patología</h4>
+            <h4 className={this.props.classes.cardTitleWhite}>Nuevo Signo y Sintoma</h4>
             <p className={this.props.classes.cardCategoryWhite}>
-              Formulario de alta de patología
+              Formulario de alta de signos y sintomas
       </p>
           </CardHeader>
           <CardBody>
@@ -205,7 +183,7 @@ class NewPatologia extends Component {
             <div className="mt-3 mb-3">
               {formElementsArray.map(formElement => (
                 <Input
-                  key={"editpatologia-" + formElement.id}
+                  key={"editsigno-" + formElement.id}
                   elementType={formElement.config.elementType}
                   elementConfig={formElement.config.elementConfig}
                   value={formElement.config.value}
@@ -218,7 +196,7 @@ class NewPatologia extends Component {
               ))}
             </div>
 
-            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/patologias')} ><ArrowBack />Volver</Button>
+            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/signos')} ><ArrowBack />Volver</Button>
             <Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
 
 
@@ -236,4 +214,4 @@ class NewPatologia extends Component {
 
 };
 
-export default withRouter(withStyles(styles)(NewPatologia));
+export default withRouter(withStyles(styles)(NewSigno));

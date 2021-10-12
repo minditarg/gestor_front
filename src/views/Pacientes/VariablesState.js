@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const StateListPacientes = {
     pacientes: [],
     offset:0,
@@ -24,10 +26,34 @@ export const StateListPacientes = {
     openDeleteDialog:false,
     deleteRowData:null,
     isLoading:false
+}
 
+export const StateListFichas = {
+    pacientes: [],
+    offset:0,
+    checked: [],
+    menuContext: null,
+    botonesAcciones: {
+        nuevo: {
 
+            enabled: true,
+            texto: 'Nuevo'
+        },
+        editar: {
 
+            enabled: false,
+            texto: 'Editar'
+        },
+        delete: {
 
+            enabled: false,
+            texto: 'Eliminar'
+        }
+    },
+    modalOpen: false,
+    openDeleteDialog:false,
+    deleteRowData:null,
+    isLoading:false
 }
 
 export const StateEditPaciente = {
@@ -147,12 +173,13 @@ export const StateEditPaciente = {
             },
             valid: true,
             touched: true
-        },    
-        notas: {
-            elementType: 'input',
+        },
+        id_alimentacion: {
+            elementType: 'select',
             elementConfig: {
-                type: 'text',
-                label: 'Comentarios',
+                label: 'Alimentación',
+                options: [
+                ],
                 fullWidth: true
             },
             value: '',
@@ -160,6 +187,51 @@ export const StateEditPaciente = {
                 required: true
             },
             valid: false,
+            touched: true
+        },
+        id_habitos: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Habitos',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },
+        id_mascotas: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Otras Mascotas',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },    
+        notas: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Comentarios',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
             touched: true
         }, 
     },
@@ -290,12 +362,13 @@ export const StateNewPaciente = {
             },
             valid: true,
             touched: true
-        },    
-        notas: {
-            elementType: 'input',
+        },
+        id_alimentacion: {
+            elementType: 'select',
             elementConfig: {
-                type: 'text',
-                label: 'Comentarios',
+                label: 'Alimentación',
+                options: [
+                ],
                 fullWidth: true
             },
             value: '',
@@ -303,6 +376,51 @@ export const StateNewPaciente = {
                 required: true
             },
             valid: false,
+            touched: true
+        },
+        id_habitos: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Habitos',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },
+        id_mascotas: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Otras Mascotas',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },     
+        notas: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Comentarios',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
             touched: true
         },    
     },
@@ -324,3 +442,14 @@ export const ColumnsListado = [
 { title: "Sexo", field: "nombresexo" },
 { title: "Castrado", field: "castrado_mostrar" }
 ];
+
+export const ColumnsListadoFicha = [
+    { title: "Fecha", field: "fecha_mostrar" , customSort: (a, b) => parseInt(moment(a.inicio_licencia).format("YYYYMMDD")) - parseInt(moment(b.inicio_licencia).format("YYYYMMDD"))},
+    { title: "Servicio", field: "nombreservicio" },
+    { title: "Paciente", field: "nombrepaciente" },
+    { title: "Dueño", field: "nombredueno" },
+    { title: "Temperatura (ºC)", field: "temperatura" },
+    { title: "Peso (Kg)", field: "peso" },
+    { title: "Diagnostico", field: "consulta" }
+    ];
+    
