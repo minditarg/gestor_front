@@ -5,7 +5,7 @@ import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/styles';
 
 import Database from "variables/Database.js";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast,ToastContainer } from 'react-toastify';
 
 
 import CardHeader from "components/Card/CardHeader.js";
@@ -22,7 +22,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { StateNewEditItem } from "../VariablesState";
+import { StateEditSigno } from "../VariablesState";
 
 
 
@@ -57,21 +57,20 @@ const styles = {
 };
 
 
-class EditItem extends Component {
-  state = JSON.parse(JSON.stringify(StateNewEditItem));
+class EditSigno extends Component {
+  state = JSON.parse(JSON.stringify(StateEditSigno));
 
   handleClickOpen = () => {
     this.setState({
-      openChangePass: true
+      openChangePass:true
     })
   };
 
   handleClose = () => {
     this.setState({
-      openChangePass: false
+      openChangePass:false
     })
   };
-
 
 
 
@@ -99,62 +98,57 @@ class EditItem extends Component {
   }
 
 
-  getPageEdit = (id) => {
-    Database.get('/list-items/' + id, this)
+  getSignoEdit = (id) => {
+    Database.get('/list-signos/' + id)
       .then(resultado => {
 
-        if (resultado.result.length > 0) {
+          if (resultado.result.length > 0) {
+            this.setState({
+              signoEdit: resultado.result[0]
+            })
 
+            let editSignoFormAlt = { ...this.state.editSignoForm };
+            editSignoFormAlt.descripcion.value = resultado.result[0].descripcion;
+            for (let key in editSignoFormAlt) {
+              editSignoFormAlt[key].touched = true;
+              editSignoFormAlt[key].valid = true;
+            }
 
-          let orderForm = { ...this.state.orderForm };
-          orderForm.texto.value = resultado.result[0].texto;
-          orderForm.enlace.value = resultado.result[0].enlace;
-          orderForm.estado.value = resultado.result[0].estado;
-
-          if (resultado.result[0].id_page)
-            orderForm.id_page.value = resultado.result[0].id_page;
-
-          for (let key in orderForm) {
-            orderForm[key].touched = true;
-            orderForm[key].valid = true;
+            this.setState({
+              editSignoForm: editSignoFormAlt
+            })
+           // this.getSignosType("edit", editSignoFormAlt);
           }
-
-          this.setState({
-            orderForm: orderForm
-          })
-
-        }
-        else {
-
-        }
+          else {
+            this.setState({
+              signoEdit: null
+            })
+          }
 
       })
   }
 
 
-
-  handleSubmitEditItem = (event) => {
+  handleSubmitEditSigno = (event) => {
 
     event.preventDefault();
-    let id_page = null;
-    if (this.state.orderForm.id_page.value > 0 && this.state.orderForm.id_page.value != '')
-      id_page = this.state.orderForm.id_page.value;
-    Database.post(`/update-item`, { id: this.props.match.params.iditem, texto: this.state.orderForm.texto.value, enlace: this.state.orderForm.enlace.value, id_page: id_page, estado: this.state.orderForm.estado.value })
+
+    Database.post(`/update-signo`, { id: this.props.match.params.idsigno, descripcion: this.state.editSignoForm.descripcion.value},this)
       .then(res => {
 
-        this.setState({
-          successSubmit: true,
-          formIsValid: false,
-          disableAllButtons: false
-        }, () => {
-          toast.success("Modificacion exitosa");
+          this.setState({
+            successSubmitEdit: true,
+            editFormIsValid: false,
+            disableAllButtons:false
+          },()=>{
+              toast.success("La signo se ha modificado con exito!");
 
-          this.props.getItems();
+              this.props.getSignosAdmin();
 
-        })
+          })
 
-      }, err => {
-        toast.error(err.message);
+      },err =>{
+          toast.error(err.message);
 
       })
 
@@ -164,7 +158,7 @@ class EditItem extends Component {
   inputEditChangedHandler = (event, inputIdentifier) => {
     let checkValid;
     const updatedOrderForm = {
-      ...this.state.orderForm
+      ...this.state.editSignoForm
     };
     const updatedFormElement = {
       ...updatedOrderForm[inputIdentifier]
@@ -181,8 +175,8 @@ class EditItem extends Component {
       formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
     }
     this.setState({
-      orderForm: updatedOrderForm,
-      formIsValid: formIsValidAlt
+      editSignoForm: updatedOrderForm,
+      editFormIsValid: formIsValidAlt
     })
 
   }
@@ -191,77 +185,44 @@ class EditItem extends Component {
 
 
 
-  resetForm = () => {
-    let orderFormAlt = { ...this.state.editUserForm };
-    let successSubmit = this.state.successSubmit;
-    for (let key in orderFormAlt) {
-      orderFormAlt[key].value = ''
+  resetEditForm = () => {
+    let editSignoFormAlt = { ...this.state.editSignoForm };
+    let successSubmitEdit = this.state.successSubmitEdit;
+    for (let key in editSignoFormAlt) {
+      editSignoFormAlt[key].value = ''
     }
 
     this.setState({
-      formIsValid: false,
-      successSubmit: successSubmit
+      editFormIsValid: false,
+      successSubmitEdit: successSubmitEdit
     })
-
-
-  }
-
-
-  getPages = () => {
-    Database.get(`/list-pages`, this)
-      .then(res => {
-
-        let resultado = res.result;
-
-        let orderForm = { ...this.state.orderForm };
-        orderForm.id_page.elementConfig.options.push({ value: 0, displayValue: 'Ninguna' });
-        res.result.forEach(elem => {
-          orderForm.id_page.elementConfig.options.push({ value: elem.id, displayValue: elem.nombre });
-
-        })
-        if (orderForm.id_page.value && orderForm.id_page.value != '')
-          orderForm.id_page.valid = true;
-
-        this.setState({
-          orderForm: orderForm
-        })
-
-
-      }, err => {
-        toast.error(err.message);
-
-      })
 
 
   }
 
   componentDidMount() {
 
-    this.getPageEdit(this.props.match.params.iditem);
-    this.getPages();
-
+   // this.getSignosType();
+    this.getSignoEdit(this.props.match.params.idsigno);
   }
 
   render() {
 
     const formElementsArray = [];
-    for (let key in this.state.orderForm) {
-      if(key == 'enlace'){
-        this.state.orderForm[key].elementConfig.disabled = this.state.orderForm.id_page.value
-      }
+    for (let key in this.state.editSignoForm) {
       formElementsArray.push({
         id: key,
-        config: this.state.orderForm[key]
+        config: this.state.editSignoForm[key]
       });
     }
 
     return ([
 
       <form onSubmit={(event) => {
+        
+        this.handleSubmitEditSigno(event)
 
-        this.handleSubmitEditItem(event)
-
-      }}>
+      } }>
 
 
 
@@ -269,18 +230,20 @@ class EditItem extends Component {
 
         <Card>
           <CardHeader color="primary">
-            <h4 className={this.props.classes.cardTitleWhite}>Editar Item</h4>
+            <h4 className={this.props.classes.cardTitleWhite}>Editar Signos y Sintomas</h4>
             <p className={this.props.classes.cardCategoryWhite}>
-              Formulario para modificar los datos del Item
+              Formulario para modificar los datos del signo y sintoma
       </p>
           </CardHeader>
           <CardBody>
-
+          {/* <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+        Cambiar Contraseña
+      </Button> */}
 
             <div className="mt-3 mb-3">
               {formElementsArray.map(formElement => (
                 <Input
-                  key={"edititem-" + formElement.id}
+                  key={"editsigno-" + formElement.id}
                   elementType={formElement.config.elementType}
                   elementConfig={formElement.config.elementConfig}
                   value={formElement.config.value}
@@ -289,26 +252,58 @@ class EditItem extends Component {
                   shouldValidate={formElement.config.validation}
                   touched={formElement.config.touched}
                   changed={(event) => this.inputEditChangedHandler(event, formElement.id)}
-                />
+                  />
               ))}
             </div>
 
-            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.goBack()} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
+            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/signos')} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.editFormIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
 
 
           </CardBody>
         </Card>
 
 
-      </ form>
+      </ form>,
+      
+      <Dialog open={this.state.openChangePass} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+      <DialogTitle id="form-dialog-title">Cambio de Contraseña</DialogTitle>
+      <form onSubmit={(event) => {
+        this.handleChangePass(event)
+
+      } }>
+      { this.state.openChangePass &&
+      <DialogContent>
+      
+        <DialogContentText>
+          Ingrese una nueva contraseña para el Signo
+        </DialogContentText>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="contrasenia"
+          name="contrasenia"
+          label="nueva contraseña"
+          type="password"
+          fullWidth
+        />
+      </DialogContent>
+      }
+      <DialogActions>
+        <Button onClick={this.handleClose} color="primary">
+          Cancelar
+        </Button>
+        <Button type="submit" color="primary">
+          Aceptar
+        </Button>
+      </DialogActions>
+      </form>
+    </Dialog>
+      
 
 
-
-
-
-    ])
+              ])
   }
 
 };
 
-export default withRouter(withStyles(styles)(EditItem));
+export default withRouter(withStyles(styles)(EditSigno));

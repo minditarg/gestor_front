@@ -115,6 +115,8 @@ class EditPaciente extends Component {
             this.setState({
               pacienteEdit: resultado.result[0]
             })
+            console.log("TESTING");
+            console.log(this);
 
             let editPacienteFormAlt = { ...this.state.editPacienteForm };
             editPacienteFormAlt.nombre.value = resultado.result[0].nombre;
@@ -125,6 +127,9 @@ class EditPaciente extends Component {
             editPacienteFormAlt.color.value = resultado.result[0].color;
             editPacienteFormAlt.id_sexo.value = resultado.result[0].id_sexo;
             editPacienteFormAlt.castrado.value = resultado.result[0].castrado;
+            editPacienteFormAlt.id_alimentacion.value = resultado.result[0].id_alimentacion;
+            editPacienteFormAlt.id_habitos.value = resultado.result[0].id_habitos;
+            editPacienteFormAlt.id_mascotas.value = resultado.result[0].id_mascotas;
             editPacienteFormAlt.notas.value = resultado.result[0].notas;
             this.state.fechaNacimiento = resultado.result[0].fecha_nacimiento;
             this.state.fechaAdopcion = resultado.result[0].fecha_adopcion;
@@ -246,6 +251,66 @@ class EditPaciente extends Component {
     }, err => {
       toast.error(err.message);
     })
+
+    Database.get('/list-alimentacion', this)
+    .then(res => {
+
+      let resultado = [...res.result];
+      let a = [];
+      resultado.forEach(function (entry) {
+        a.push({
+          value: entry.id,
+          displayValue: entry.descripcion
+        });
+      })
+      let formulario = { ...this.state.editPacienteForm }
+      formulario.id_alimentacion.elementConfig.options = [...a];
+      this.setState({
+          editPacienteForm: formulario
+      })
+    }, err => {
+      toast.error(err.message);
+    })
+
+    Database.get('/list-habitos', this)
+    .then(res => {
+
+      let resultado = [...res.result];
+      let a = [];
+      resultado.forEach(function (entry) {
+        a.push({
+          value: entry.id,
+          displayValue: entry.descripcion
+        });
+      })
+      let formulario = { ...this.state.editPacienteForm }
+      formulario.id_habitos.elementConfig.options = [...a];
+      this.setState({
+          editPacienteForm: formulario
+      })
+    }, err => {
+      toast.error(err.message);
+    })
+
+    Database.get('/list-mascotas', this)
+    .then(res => {
+
+      let resultado = [...res.result];
+      let a = [];
+      resultado.forEach(function (entry) {
+        a.push({
+          value: entry.id,
+          displayValue: entry.descripcion
+        });
+      })
+      let formulario = { ...this.state.editPacienteForm }
+      formulario.id_mascotas.elementConfig.options = [...a];
+      this.setState({
+          editPacienteForm: formulario
+      })
+    }, err => {
+      toast.error(err.message);
+    })
     
   }
 
@@ -263,6 +328,9 @@ class EditPaciente extends Component {
         color: this.state.editPacienteForm.color.value,
         id_sexo: this.state.editPacienteForm.id_sexo.value,
         castrado: this.state.editPacienteForm.castrado.value,
+        id_alimentacion: this.state.editPacienteForm.id_alimentacion.value,
+        id_habitos: this.state.editPacienteForm.id_habitos.value,
+        id_mascotas: this.state.editPacienteForm.id_mascotas.value,
         notas: this.state.editPacienteForm.notas.value,
         fecha_nacimiento: this.state.fechaNacimiento,
         fecha_adopcion: this.state.fechaAdopcion},this)

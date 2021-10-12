@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Input from 'components/Input/Input';
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/styles';
-import { StateNewEditItem } from "../VariablesState";
+import { StateNewSigno } from "../VariablesState";
 
 import Database from "variables/Database.js";
 
@@ -48,29 +48,27 @@ const styles = {
 };
 
 
-class NewItem extends Component {
-  state = JSON.parse(JSON.stringify(StateNewEditItem));
+class NewSigno extends Component {
+  state =JSON.parse(JSON.stringify(StateNewSigno));
 
 
-  handleSubmitNewItem = (event) => {
+  handleSubmitNewSigno = (event) => {
     event.preventDefault();
-    let id_page = null;
-    if (this.state.orderForm.id_page.value > 0 && this.state.orderForm.id_page.value != '')
-      id_page = this.state.orderForm.id_page.value;
-    Database.post(`/insert-item`, { texto: this.state.orderForm.texto.value, enlace: this.state.orderForm.enlace.value, id_page: id_page, estado: this.state.orderForm.estado.value,id_item_menu: this.props.idItem }, this)
+
+    Database.post(`/insert-signos`, { descripcion: this.state.newSignoForm.descripcion.value},this)
       .then(res => {
 
-        toast.success("El item se ha creado con exito!");
-        this.setState({
-          successSubmit: true,
-          formIsValid: false,
-        }, () => {
-          this.props.getItems();
-        })
-        this.resetNewForm();
+          toast.success("El signo y sintoma se ha creado con exito!");
+          this.setState({
+            successSubmit: true,
+            formIsValid: false,
+          },()=>{
+              this.props.getSignosAdmin();
+          })
+          this.resetNewForm();
 
 
-      }, err => {
+      },err => {
         toast.error(err.message);
 
       })
@@ -80,7 +78,7 @@ class NewItem extends Component {
   inputChangedHandler = (event, inputIdentifier) => {
     let checkValid;
     const updatedOrderForm = {
-      ...this.state.orderForm
+      ...this.state.newSignoForm
     };
     const updatedFormElement = {
       ...updatedOrderForm[inputIdentifier]
@@ -97,29 +95,30 @@ class NewItem extends Component {
       formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
     }
     this.setState({
-      orderForm: updatedOrderForm,
+      newSignoForm: updatedOrderForm,
       formIsValid: formIsValidAlt
     })
 
   }
 
   resetNewForm = (all) => {
-    let orderForm = { ...this.state.orderForm };
+    let newSignoFormAlt = { ...this.state.newSignoForm };
     let successSubmit = this.state.successSubmit;
-    for (let key in orderForm) {
-      orderForm[key].value = ''
+    for (let key in newSignoFormAlt) {
+      newSignoFormAlt[key].value = ''
     }
     if (all)
       successSubmit = false;
 
     this.setState({
-      orderForm: orderForm,
       successSubmit: successSubmit,
       formIsValid: false
     })
-
+    //this.getSignosType("new", newSignoFormAlt);
 
   }
+
+
 
 
 
@@ -146,36 +145,8 @@ class NewItem extends Component {
   }
 
   componentDidMount() {
-    this.getPages()
-  }
 
-  getPages = () => {
-    Database.get(`/list-pages`, this)
-      .then(res => {
-
-        let resultado = res.result;
-
-        let orderForm = { ...this.state.orderForm };
-        orderForm.id_page.elementConfig.options.push({ value: 0, displayValue: 'Ninguna' });
-        res.result.forEach(elem => {
-          orderForm.id_page.elementConfig.options.push({ value: elem.id, displayValue: elem.nombre });
-
-        })
-        /*
-        if (orderForm.id_page.value && orderForm.id_page.value != '')
-          orderForm.pagina.valid = true;
-        */
-        this.setState({
-          orderForm: orderForm
-        })
-
-
-      }, err => {
-        toast.error(err.message);
-
-      })
-
-
+    //this.getSignosType();
   }
 
 
@@ -183,21 +154,18 @@ class NewItem extends Component {
   render() {
 
     const formElementsArray = [];
-    for (let key in this.state.orderForm) {
-      if(key == 'enlace'){
-        this.state.orderForm[key].elementConfig.disabled = this.state.orderForm.id_page.value
-      }
+    for (let key in this.state.newSignoForm) {
       formElementsArray.push({
         id: key,
-        config: this.state.orderForm[key]
+        config: this.state.newSignoForm[key]
       });
     }
     return (
 
       <form onSubmit={(event) => {
-        this.handleSubmitNewItem(event)
+        this.handleSubmitNewSigno(event)
 
-      }}>
+      } }>
 
 
 
@@ -205,19 +173,17 @@ class NewItem extends Component {
 
         <Card>
           <CardHeader color="primary">
-            <h4 className={this.props.classes.cardTitleWhite}>Nuevo Item</h4>
+            <h4 className={this.props.classes.cardTitleWhite}>Nuevo Signo y Sintoma</h4>
             <p className={this.props.classes.cardCategoryWhite}>
-              Formulario de un item nuevo
+              Formulario de alta de signos y sintomas
       </p>
           </CardHeader>
           <CardBody>
 
             <div className="mt-3 mb-3">
-              {formElementsArray.map(formElement => {
-              
-              return (
+              {formElementsArray.map(formElement => (
                 <Input
-                  key={"newitem-" + formElement.id}
+                  key={"editsigno-" + formElement.id}
                   elementType={formElement.config.elementType}
                   elementConfig={formElement.config.elementConfig}
                   value={formElement.config.value}
@@ -226,13 +192,12 @@ class NewItem extends Component {
                   shouldValidate={formElement.config.validation}
                   touched={formElement.config.touched}
                   changed={(event) => this.inputChangedHandler(event, formElement.id)}
-                />
-              )}
-              )
-              }
+                  />
+              ))}
             </div>
 
-            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.goBack()} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
+            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/signos')} ><ArrowBack />Volver</Button>
+            <Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
 
 
           </CardBody>
@@ -249,4 +214,4 @@ class NewItem extends Component {
 
 };
 
-export default withRouter(withStyles(styles)(NewItem));
+export default withRouter(withStyles(styles)(NewSigno));

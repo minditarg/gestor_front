@@ -294,7 +294,8 @@ class NewConsulta extends Component {
   getPaciente = (id) => {
     Database.get('/list-paciente/' + id)
       .then(resultado => {
-
+        console.log("TESTING");
+        console.log(this);
         if (resultado.result.length > 0) {
           this.setState({
             nombrePaciente: resultado.result[0].nombre.toUpperCase(),

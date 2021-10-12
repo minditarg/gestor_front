@@ -88,7 +88,7 @@ const SortableItem = sortableElement(({ value, deleteItem, editItem }) => {
                 {value.descripcion_type}
             </TableCell>
             <TableCell>
-                {value.nombre_page}
+                {value.columnas}
             </TableCell>
             <TableCell>
                 {estado}
@@ -109,7 +109,7 @@ const SortableContainer = sortableContainer(({ children }) => {
                 <TableCell>Acciones</TableCell>
                 <TableCell>Nombre</TableCell>
                 <TableCell>Tipo</TableCell>
-                <TableCell>Pagina</TableCell>
+                <TableCell>Columnas</TableCell>
                 <TableCell>Estado</TableCell>
 
 
