@@ -63,21 +63,121 @@ export const StateEditConsulta = {
             valid: false,
             touched: true
         },
-        consulta: {
-            elementType: 'textarea',
+        // consulta: {
+        //     elementType: 'textarea',
+        //     elementConfig: {
+        //         type: 'text',
+        //         label: 'Consulta',
+        //         fullWidth: true,
+        //         rows: 4
+        //     },
+        //     value: '',
+        //     validation: {
+        //         required: false
+        //     },
+        //     valid: false,
+        //     touched: false
+        // },
+        id_sensorio: {
+            elementType: 'select',
             elementConfig: {
-                type: 'text',
-                label: 'Consulta',
-                fullWidth: true,
-                rows: 4
+                label: 'Sensorio',
+                options: [
+                ],
+                fullWidth: true
             },
             value: '',
             validation: {
                 required: false
             },
             valid: false,
-            touched: false
+            touched: true
         },
+        id_mucosa: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Color de las Mucosas',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        tllc: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Tiempo de Llenado Capilar (sg)',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        frecuencia_cardiaca: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Frecuencia Cardíaca',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        frecuencia_respiratoria: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Frecuencia Respiratoria',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        ganglios: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Ganglios',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        anexos_cutaneos: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Anexos Cutáneos',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        }
     },
     editConsultaForm2: {
         id_servicio: {
@@ -95,6 +195,162 @@ export const StateEditConsulta = {
             valid: false,
             touched: true
         }
+    },
+    editConsultaForm3: {
+        id_signos: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Motivo de Consulta',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        anamnesis: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Anamnesis',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        }   
+    },
+    editConsultaForm4: {
+        examen_objetivo_particular: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Examen Objetivo Particular',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        }, 
+        diag_complementarios: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Diagnóstico Complementarios',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        },
+        id_diag_presuntivo: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Diagnóstico Presuntivo',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        tratamiento: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Tratamiento',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        },
+        id_pronostico: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Pronóstico',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        id_diag_definitivo: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Diagnóstico Definitivo',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        }, 
+    },
+    editConsultaForm5:{
+        informe_diagnostico: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Informe Diagnóstico',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        }, 
+        observaciones: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Observaciones',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        },
     },
     servicioClinica: null,
     files: [],
@@ -142,21 +398,121 @@ export const StateNewConsulta = {
             valid: false,
             touched: true
         },
-        consulta: {
-            elementType: 'textarea',
+        // consulta: {
+        //     elementType: 'textarea',
+        //     elementConfig: {
+        //         type: 'text',
+        //         label: 'Consulta',
+        //         fullWidth: true,
+        //         rows: 4
+        //     },
+        //     value: '',
+        //     validation: {
+        //         required: false
+        //     },
+        //     valid: false,
+        //     touched: false
+        // },
+        id_sensorio: {
+            elementType: 'select',
             elementConfig: {
-                type: 'text',
-                label: 'Consulta',
-                fullWidth: true,
-                rows: 4
+                label: 'Sensorio',
+                options: [
+                ],
+                fullWidth: true
             },
             value: '',
             validation: {
                 required: false
             },
             valid: false,
-            touched: false
-        },   
+            touched: true
+        },
+        id_mucosa: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Color de las Mucosas',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        tllc: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Tiempo de Llenado Capilar (seg)',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        frecuencia_cardiaca: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Frecuencia Cardíaca',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        frecuencia_respiratoria: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Frecuencia Respiratoria',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        ganglios: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Ganglios',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        anexos_cutaneos: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Anexos Cutáneos',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        }  
     },
     newConsultaForm2: {
         id_servicio: {
@@ -174,6 +530,162 @@ export const StateNewConsulta = {
             valid: false,
             touched: true
         }   
+    },
+    newConsultaForm3: {
+        id_signos: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Motivo de Consulta',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        anamnesis: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Anamnesis',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        }   
+    },
+    newConsultaForm4: {
+        examen_objetivo_particular: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Examen Objetivo Particular',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        }, 
+        diag_complementarios: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Diagnóstico Complementarios',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        },
+        id_diag_presuntivo: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Diagnóstico Presuntivo',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        tratamiento: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Tratamiento',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        },
+        id_pronostico: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Pronóstico',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        id_diag_definitivo: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Diagnóstico Definitivo',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+    },
+    newConsultaForm5: {
+        informe_diagnostico: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Informe Diagnóstico',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        }, 
+        observaciones: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Observaciones',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        },
     },
     servicioClinica: null,
     files: [],
