@@ -139,8 +139,8 @@ class Pages extends Component {
     this.setState({
       isLoading: true
     })
-
-    Database.get('/list-pages', this, null, true)
+    
+    Database.get('/list-pages/tipo/' + this.props.tipo, this, null, true)
       .then(res => {
         let resultado = [...res.result];
         console.log(resultado);
@@ -250,6 +250,7 @@ class Pages extends Component {
                   onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editpage/' + rowData.id)
                 },
                 {
+                  disabled: this.props.tipo == 'E',
                   icon: 'delete',
                   tooltip: 'Borrar Pagina',
                   onClick: (event, rowData) => this.handleDeleteButton(rowData)
@@ -267,21 +268,23 @@ class Pages extends Component {
           </Card>
 
           <Switch>
+            { this.props.tipo == 'D' &&
             <Route path={this.props.match.url + "/newpage"} render={() =>
 
               <NewPage
-
+                tipo = { this.props.tipo }
                 getPages={() => this.getPages()}
                 handleListNewUser={(rowData) => this.handleListNewPage(rowData)}
 
 
               />}
             />
+            }
 
             <Route path={this.props.match.url + "/editpage/:idpage"} render={() =>
 
               <EditPage
-                
+                tipo = { this.props.tipo }
                 getPages={() => this.getPages()}
 
 

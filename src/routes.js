@@ -58,17 +58,45 @@ import Servicios from 'views/Servicios/Servicios.js';
 
 
 const dashboardRoutes = [
-   {
+
+  {
     show:false,
-     accesos: [21],
-     path: "/pages",
-     name: "Paginas",
-     rtlName: "DS",
-     icon: WebIcon,
-     component: Pages,
-     layout: "/admin"
-   },
-   /*
+    accesos: [21],
+    groupComponent: true,
+    name: 'Páginas',
+    open: 'open21',
+    icon: WebIcon,
+    dependences: [
+      {
+        show:false,
+         accesos: [21],
+         path: "/pagesest",
+         name: "Estaticas",
+         rtlName: "DS",
+         icon: WebIcon,
+         component: Pages,
+         parametros:{
+          tipo:'E'
+        },
+         layout: "/admin"
+       },
+       {
+        show:false,
+         accesos: [21],
+         path: "/pagesdin",
+         name: "Dinamicas",
+         rtlName: "DS",
+         icon: WebIcon,
+         component: Pages,
+         parametros:{
+          tipo:'D'
+        },
+         layout: "/admin"
+       },
+    ]
+  },
+   
+   
    {
     accesos: [],
     path: "/itemsmenu",
@@ -78,7 +106,7 @@ const dashboardRoutes = [
     component: ItemsMenu,
     layout: "/admin"
   }, 
-  */
+  
   
   {
     show:false,

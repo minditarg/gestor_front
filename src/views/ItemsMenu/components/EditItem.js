@@ -246,6 +246,9 @@ class EditItem extends Component {
 
     const formElementsArray = [];
     for (let key in this.state.orderForm) {
+      if(key == 'enlace'){
+        this.state.orderForm[key].elementConfig.disabled = this.state.orderForm.id_page.value
+      }
       formElementsArray.push({
         id: key,
         config: this.state.orderForm[key]
