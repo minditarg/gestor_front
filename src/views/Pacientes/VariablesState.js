@@ -83,7 +83,7 @@ export const StateEditPaciente = {
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
             valid: false,
             touched: true
@@ -173,12 +173,13 @@ export const StateEditPaciente = {
             },
             valid: true,
             touched: true
-        },    
-        notas: {
-            elementType: 'input',
+        },
+        id_alimentacion: {
+            elementType: 'select',
             elementConfig: {
-                type: 'text',
-                label: 'Comentarios',
+                label: 'Alimentación',
+                options: [
+                ],
                 fullWidth: true
             },
             value: '',
@@ -186,6 +187,51 @@ export const StateEditPaciente = {
                 required: true
             },
             valid: false,
+            touched: true
+        },
+        id_habitos: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Habitos',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },
+        id_mascotas: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Otras Mascotas',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },    
+        notas: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Comentarios',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
             touched: true
         }, 
     },
@@ -226,7 +272,7 @@ export const StateNewPaciente = {
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
             valid: false,
             touched: true
@@ -316,12 +362,13 @@ export const StateNewPaciente = {
             },
             valid: true,
             touched: true
-        },    
-        notas: {
-            elementType: 'input',
+        },
+        id_alimentacion: {
+            elementType: 'select',
             elementConfig: {
-                type: 'text',
-                label: 'Comentarios',
+                label: 'Alimentación',
+                options: [
+                ],
                 fullWidth: true
             },
             value: '',
@@ -329,6 +376,51 @@ export const StateNewPaciente = {
                 required: true
             },
             valid: false,
+            touched: true
+        },
+        id_habitos: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Habitos',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },
+        id_mascotas: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Otras Mascotas',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },     
+        notas: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Comentarios',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
             touched: true
         },    
     },

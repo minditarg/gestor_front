@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Database from "variables/Database.js";
 import moment from 'moment';
 
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch, Link,withRouter } from 'react-router-dom';
 // core components
 import MaterialTable, { MTableCell, MTableBodyRow } from "material-table";
 import Typography from '@material-ui/core/Typography';
@@ -20,7 +20,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ControlCamera from '@material-ui/icons/ControlCamera';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import LooksTwoIcon from '@material-ui/icons/LooksTwo';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -28,10 +27,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import SecondLevel from "./components/SecondLevel";
-import NewItem from "./components/NewItem";
-import EditItem from "./components/EditItem";
-import ModalDelete from "./components/ModalDelete"
+import NewItem from "./NewItem";
+import EditItem from "./EditItem";
+import ModalDelete from "./ModalDelete"
 import { localization } from "variables/general.js";
 
 import { sortableContainer, sortableElement, sortableHandle } from 'react-sortable-hoc';
@@ -40,7 +38,7 @@ import arrayMove from 'array-move';
 import { toast } from 'react-toastify';
 
 
-import { StateListItems, ColumnsListado } from "./VariablesState";
+import { StateSecondListItems, ColumnsListado } from "../VariablesState";
 
 import lightGreen from '@material-ui/core/colors/lightGreen';
 
@@ -76,7 +74,7 @@ const styles = {
   }
 };
 
-const SortableItem = sortableElement(({ value, deleteItem, editItem, secondLevel }) => {
+const SortableItem = sortableElement(({ value, deleteItem, editItem }) => {
   let estado = null
   if (value.estado == 1)
     estado = 'Habilitado';
@@ -96,9 +94,6 @@ const SortableItem = sortableElement(({ value, deleteItem, editItem, secondLevel
         </IconButton>
         <IconButton onClick={() => editItem(value.id)}>
           <EditIcon />
-        </IconButton>
-        <IconButton onClick={() => secondLevel(value.id)}>
-          <LooksTwoIcon />
         </IconButton>
       </TableCell>
       <TableCell>
@@ -143,12 +138,13 @@ const SortableContainer = sortableContainer(({ children }) => {
 
 
 
-class ItemsMenu extends Component {
-  state = { ...StateListItems };
+class SecondLevel extends Component {
+  state = { ...StateSecondListItems };
 
 
   componentDidMount() {
-    this.getItems();
+    
+    this.getItems(this.props.match.params.idItem);
   }
 
 
@@ -157,28 +153,34 @@ class ItemsMenu extends Component {
   //METODOS PARA LISTADO DE Items
   ////////////////////////
   ////////////////////////
-  getItems = () => {
+  getItems = async (idItem) => {
     this.setState({
       isLoading: true
     })
 
-    Database.get('/list-items', this, null, true)
-      .then(res => {
-        let resultado = [...res.result];
-        console.log(resultado);
-        this.setState({
-          isLoading: false,
-          items: resultado,
+  try {
 
-        })
+  let resultado = await Database.get('/list-items/' + idItem, this, null, true);
+    
+  let resultado2 = await Database.get('/list-items-children/' + idItem, this, null, true)
+      
+  console.log(resultado.result[0]);
+  this.setState({
+    isLoading: false,
+    items: resultado2.result,
+    parent: resultado.result[0]
 
+  })
 
-      }, err => {
-        toast.error(err.message);
+  } catch(err) {
+    toast.error(err.message);
 
-      })
+  }
+      
+       
+      
 
-
+      
 
   }
 
@@ -187,11 +189,6 @@ class ItemsMenu extends Component {
   editSingleItem = value => {
     this.props.history.push(this.props.match.url + '/edititem/' + value);
   }
-
-  secondLevel = value => {
-    this.props.history.push(this.props.match.url + '/addchild/' + value);
-  }
- 
 
   
 
@@ -281,16 +278,16 @@ class ItemsMenu extends Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card style={style}>
             <CardHeader color="primary">
-              <h4 className={this.props.classes.cardTitleWhite} >Items de Menu</h4>
+              <h4 className={this.props.classes.cardTitleWhite} >Items de Menu: <strong>{ this.state.parent && this.state.parent.texto }</strong> </h4>
               <p className={this.props.classes.cardCategoryWhite} >
                 Listado de Items de Menu
                       </p>
             </CardHeader>
             <CardBody>
-              <Button style={{ marginTop: '25px' }} onClick={() => this.props.history.push(this.props.match.url + '/newitem')} color="primary"><AddIcon /> Nuevo Item</Button>
+              <Button style={{ marginTop: '25px' }} onClick={() => this.props.history.push(this.props.match.url + '/newitem')} disabled={ !this.state.parent } color="primary"><AddIcon /> Nuevo Item</Button>
               <SortableContainer onSortEnd={this.onSortEnd} useDragHandle>
                 {this.state.items.map((elem, index) => (
-                  <SortableItem key={`item-${elem.id}`} index={index} value={elem} deleteItem={this.handleDeleteButton} editItem={this.handleEditButton} secondLevel={ this.secondLevel } />
+                  <SortableItem key={`item-${elem.id}`} index={index} value={elem} deleteItem={this.handleDeleteButton} editItem={this.handleEditButton} />
                 ))}
 
 
@@ -308,8 +305,8 @@ class ItemsMenu extends Component {
             <Route path={this.props.match.url + "/newitem"} render={() =>
 
               <NewItem
-
-                getItems={() => this.getItems()}
+                idItem={ this.props.match.params.idItem }
+                getItems={() => this.getItems(this.props.match.params.idItem)}
 
 
 
@@ -320,19 +317,12 @@ class ItemsMenu extends Component {
 
               <EditItem
 
-                getItems={() => this.getItems()}
+                getItems={() => this.getItems(this.props.match.params.idItem)}
 
 
 
               />}
             />
-
-          <Route path={this.props.match.url + "/addchild/:idItem"} render={() =>
-
-                <SecondLevel />
-          }
-          />
-
 
           </Switch>
 
@@ -354,4 +344,4 @@ class ItemsMenu extends Component {
 }
 
 
-export default withStyles(styles)(ItemsMenu);
+export default withRouter(withStyles(styles)(SecondLevel));

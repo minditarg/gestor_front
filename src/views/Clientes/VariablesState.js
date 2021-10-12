@@ -70,9 +70,9 @@ export const StateEditCliente = {
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         direccion: {
@@ -98,23 +98,23 @@ export const StateEditCliente = {
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         mail: {
             elementType: 'input',
             elementConfig: {
-                type: 'text',
+                type: 'email',
                 label: 'Mail',
                 fullWidth: true
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },    
         id_tipo_cliente: {
@@ -131,7 +131,50 @@ export const StateEditCliente = {
             },
             valid: false,
             touched: true
-        }, 
+        },
+        nro_historia_clinica: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Nº Historia Clínica',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        },
+        vet_derivante: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Veterinario Derivante',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        },
+        estado_cuenta: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Estado de la Cuenta',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        } 
     },
     clienteEdit: null,
     editFormIsValid: false,
@@ -181,9 +224,9 @@ export const StateNewCliente = {
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         direccion: {
@@ -209,23 +252,23 @@ export const StateNewCliente = {
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         mail: {
             elementType: 'input',
             elementConfig: {
-                type: 'text',
+                type: 'email',
                 label: 'Mail',
                 fullWidth: true
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },    
         id_tipo_cliente: {
@@ -242,7 +285,50 @@ export const StateNewCliente = {
             },
             valid: false,
             touched: true
-        },   
+        },
+        nro_historia_clinica: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Nº Historia Clínica',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        },
+        vet_derivante: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Veterinario Derivante',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        },
+        estado_cuenta: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Estado de la Cuenta',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        }   
     },
 
     formIsValid: false,

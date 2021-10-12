@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Input from 'components/Input/Input';
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/styles';
-import { StateNewCliente } from "../VariablesState";
+import { StateNewSigno } from "../VariablesState";
 
 import Database from "variables/Database.js";
 
@@ -48,32 +48,22 @@ const styles = {
 };
 
 
-class NewCliente extends Component {
-  state =JSON.parse(JSON.stringify(StateNewCliente));
+class NewSigno extends Component {
+  state =JSON.parse(JSON.stringify(StateNewSigno));
 
 
-  handleSubmitNewCliente = (event) => {
+  handleSubmitNewSigno = (event) => {
     event.preventDefault();
 
-    Database.post(`/insert-clientes`, {nombre: this.state.newClienteForm.nombre.value, 
-                                        apellido: this.state.newClienteForm.apellido.value,
-                                        dni: this.state.newClienteForm.dni.value,
-                                        telefono: this.state.newClienteForm.telefono.value,
-                                        direccion: this.state.newClienteForm.direccion.value,
-                                        id_tipo_cliente: this.state.newClienteForm.id_tipo_cliente.value,
-                                        mail: this.state.newClienteForm.mail.value,
-                                        nro_historia_clinica: this.state.newClienteForm.nro_historia_clinica.value,
-                                        vet_derivante: this.state.newClienteForm.vet_derivante.value,
-                                        estado_cuenta: this.state.newClienteForm.estado_cuenta.value
-                                        },this)
+    Database.post(`/insert-signos`, { descripcion: this.state.newSignoForm.descripcion.value},this)
       .then(res => {
 
-          toast.success("El cliente se ha creado con exito!");
+          toast.success("El signo y sintoma se ha creado con exito!");
           this.setState({
             successSubmit: true,
             formIsValid: false,
           },()=>{
-              this.props.getClientesAdmin();
+              this.props.getSignosAdmin();
           })
           this.resetNewForm();
 
@@ -88,7 +78,7 @@ class NewCliente extends Component {
   inputChangedHandler = (event, inputIdentifier) => {
     let checkValid;
     const updatedOrderForm = {
-      ...this.state.newClienteForm
+      ...this.state.newSignoForm
     };
     const updatedFormElement = {
       ...updatedOrderForm[inputIdentifier]
@@ -105,17 +95,17 @@ class NewCliente extends Component {
       formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
     }
     this.setState({
-      newClienteForm: updatedOrderForm,
+      newSignoForm: updatedOrderForm,
       formIsValid: formIsValidAlt
     })
 
   }
 
   resetNewForm = (all) => {
-    let newClienteFormAlt = { ...this.state.newClienteForm };
+    let newSignoFormAlt = { ...this.state.newSignoForm };
     let successSubmit = this.state.successSubmit;
-    for (let key in newClienteFormAlt) {
-      newClienteFormAlt[key].value = ''
+    for (let key in newSignoFormAlt) {
+      newSignoFormAlt[key].value = ''
     }
     if (all)
       successSubmit = false;
@@ -124,31 +114,11 @@ class NewCliente extends Component {
       successSubmit: successSubmit,
       formIsValid: false
     })
-    //this.getClientesType("new", newClienteFormAlt);
+    //this.getSignosType("new", newSignoFormAlt);
 
   }
 
-  getTipoCliente = () => {
-    Database.get('/list-tipo-cliente', this)
-      .then(res => {
 
-        let resultado = [...res.result];
-        let a = [];
-        resultado.forEach(function (entry) {
-          a.push({
-            value: entry.id,
-            displayValue: entry.descripcion
-          });
-        })
-        let formulario = { ...this.state.newClienteForm }
-        formulario.id_tipo_cliente.elementConfig.options = [...a];
-        this.setState({
-            newClienteForm: formulario
-        })
-      }, err => {
-        toast.error(err.message);
-      })
-  }
 
 
 
@@ -176,7 +146,7 @@ class NewCliente extends Component {
 
   componentDidMount() {
 
-    this.getTipoCliente();
+    //this.getSignosType();
   }
 
 
@@ -184,16 +154,16 @@ class NewCliente extends Component {
   render() {
 
     const formElementsArray = [];
-    for (let key in this.state.newClienteForm) {
+    for (let key in this.state.newSignoForm) {
       formElementsArray.push({
         id: key,
-        config: this.state.newClienteForm[key]
+        config: this.state.newSignoForm[key]
       });
     }
     return (
 
       <form onSubmit={(event) => {
-        this.handleSubmitNewCliente(event)
+        this.handleSubmitNewSigno(event)
 
       } }>
 
@@ -203,9 +173,9 @@ class NewCliente extends Component {
 
         <Card>
           <CardHeader color="primary">
-            <h4 className={this.props.classes.cardTitleWhite}>Nuevo Cliente</h4>
+            <h4 className={this.props.classes.cardTitleWhite}>Nuevo Signo y Sintoma</h4>
             <p className={this.props.classes.cardCategoryWhite}>
-              Formulario de alta de cliente
+              Formulario de alta de signos y sintomas
       </p>
           </CardHeader>
           <CardBody>
@@ -213,7 +183,7 @@ class NewCliente extends Component {
             <div className="mt-3 mb-3">
               {formElementsArray.map(formElement => (
                 <Input
-                  key={"editcliente-" + formElement.id}
+                  key={"editsigno-" + formElement.id}
                   elementType={formElement.config.elementType}
                   elementConfig={formElement.config.elementConfig}
                   value={formElement.config.value}
@@ -226,7 +196,7 @@ class NewCliente extends Component {
               ))}
             </div>
 
-            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/clientes')} ><ArrowBack />Volver</Button>
+            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/signos')} ><ArrowBack />Volver</Button>
             <Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
 
 
@@ -244,4 +214,4 @@ class NewCliente extends Component {
 
 };
 
-export default withRouter(withStyles(styles)(NewCliente));
+export default withRouter(withStyles(styles)(NewSigno));

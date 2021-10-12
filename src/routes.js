@@ -56,20 +56,49 @@ import Razas from 'views/Razas/Razas.js';
 import Patologias from 'views/Patologias/Patologias.js';
 import Servicios from 'views/Servicios/Servicios.js';
 import Consultas from 'views/Pacientes/Consultas/Consultas.js';
+import Signos from 'views/Signos/Signos.js';
 
 
 const dashboardRoutes = [
-   {
+
+  {
     show:false,
-     accesos: [21],
-     path: "/pages",
-     name: "Paginas",
-     rtlName: "DS",
-     icon: WebIcon,
-     component: Pages,
-     layout: "/admin"
-   },
-   /*
+    accesos: [21],
+    groupComponent: true,
+    name: 'Páginas',
+    open: 'open21',
+    icon: WebIcon,
+    dependences: [
+      {
+        show:false,
+         accesos: [21],
+         path: "/pagesest",
+         name: "Estaticas",
+         rtlName: "DS",
+         icon: WebIcon,
+         component: Pages,
+         parametros:{
+          tipo:'E'
+        },
+         layout: "/admin"
+       },
+       {
+        show:false,
+         accesos: [21],
+         path: "/pagesdin",
+         name: "Dinamicas",
+         rtlName: "DS",
+         icon: WebIcon,
+         component: Pages,
+         parametros:{
+          tipo:'D'
+        },
+         layout: "/admin"
+       },
+    ]
+  },
+   
+   
    {
     accesos: [],
     path: "/itemsmenu",
@@ -79,7 +108,7 @@ const dashboardRoutes = [
     component: ItemsMenu,
     layout: "/admin"
   }, 
-  */
+  
   
   {
     show:false,
@@ -274,7 +303,7 @@ const dashboardRoutes = [
 
   {
     show:false,
-    accesos: [101, 102, 103, 104, 105, 106, 107, 108],
+    accesos: [101, 102, 103, 104, 105, 106, 107, 108, 109],
     groupComponent: true,
     name: 'Hospital',
     open: 'open23',
@@ -352,12 +381,22 @@ const dashboardRoutes = [
       },
       {
         show:false,
-        accesos: [107],
+        accesos: [108],
         path: "/consultas",
         name: "Consultas",
         rtlName: "CN",
         icon: AssignmentIcon,
         component: Consultas,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [109],
+        path: "/signos",
+        name: "Signos y Sintomas",
+        rtlName: "SS",
+        icon: HealingIcon,
+        component: Signos,
         layout: "/admin"
       },
 

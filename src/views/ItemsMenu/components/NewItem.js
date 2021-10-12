@@ -57,7 +57,7 @@ class NewItem extends Component {
     let id_page = null;
     if (this.state.orderForm.id_page.value > 0 && this.state.orderForm.id_page.value != '')
       id_page = this.state.orderForm.id_page.value;
-    Database.post(`/insert-item`, { texto: this.state.orderForm.texto.value, enlace: this.state.orderForm.enlace.value, id_page: id_page, estado: this.state.orderForm.estado.value }, this)
+    Database.post(`/insert-item`, { texto: this.state.orderForm.texto.value, enlace: this.state.orderForm.enlace.value, id_page: id_page, estado: this.state.orderForm.estado.value,id_item_menu: this.props.idItem }, this)
       .then(res => {
 
         toast.success("El item se ha creado con exito!");
@@ -146,7 +146,6 @@ class NewItem extends Component {
   }
 
   componentDidMount() {
-
     this.getPages()
   }
 
@@ -162,9 +161,10 @@ class NewItem extends Component {
           orderForm.id_page.elementConfig.options.push({ value: elem.id, displayValue: elem.nombre });
 
         })
+        /*
         if (orderForm.id_page.value && orderForm.id_page.value != '')
           orderForm.pagina.valid = true;
-
+        */
         this.setState({
           orderForm: orderForm
         })
@@ -184,6 +184,9 @@ class NewItem extends Component {
 
     const formElementsArray = [];
     for (let key in this.state.orderForm) {
+      if(key == 'enlace'){
+        this.state.orderForm[key].elementConfig.disabled = this.state.orderForm.id_page.value
+      }
       formElementsArray.push({
         id: key,
         config: this.state.orderForm[key]
@@ -210,7 +213,9 @@ class NewItem extends Component {
           <CardBody>
 
             <div className="mt-3 mb-3">
-              {formElementsArray.map(formElement => (
+              {formElementsArray.map(formElement => {
+              
+              return (
                 <Input
                   key={"newitem-" + formElement.id}
                   elementType={formElement.config.elementType}
@@ -222,7 +227,9 @@ class NewItem extends Component {
                   touched={formElement.config.touched}
                   changed={(event) => this.inputChangedHandler(event, formElement.id)}
                 />
-              ))}
+              )}
+              )
+              }
             </div>
 
             <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.goBack()} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>

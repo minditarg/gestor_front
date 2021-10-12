@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import Database from "variables/Database.js";
 import moment from 'moment';
 
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch} from 'react-router-dom';
 // core components
-import MaterialTable, { MTableCell, MTableBodyRow } from "material-table";
-import Typography from '@material-ui/core/Typography';
+import MaterialTable from "material-table";
+// import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -16,15 +16,15 @@ import Paper from '@material-ui/core/Paper';
 import Button from "components/CustomButtons/Button.js";
 import AddIcon from '@material-ui/icons/Add';
 
-import NewPage from "./components/NewPage";
-import EditPage from "./components/EditPage";
+import NewUser from "./components/NewSigno";
+import EditSigno from "./components/EditSigno";
 import ModalDelete from "./components/ModalDelete"
 import { localization } from "variables/general.js";
 
 import { toast } from 'react-toastify';
 
 
-import { StateListPages, ColumnsListado } from "./VariablesState";
+import { StateListSignos, ColumnsListado } from "./VariablesState";
 
 import lightGreen from '@material-ui/core/colors/lightGreen';
 
@@ -61,12 +61,12 @@ const styles = {
 };
 
 
-class Pages extends Component {
-  state = { ...StateListPages };
+class Signos extends Component {
+  state = { ...StateListSignos };
 
 
   componentDidMount() {
-    this.getPages();
+    this.getSignosAdmin();
   }
 
 
@@ -84,7 +84,7 @@ class Pages extends Component {
     }
     if (newChecked.length > 0) {
       deleteEnabled = true;
-      if (newChecked.length == 1)
+      if (newChecked.length === 1)
         editEnabled = true;
     }
     botonesAcc.editar.enabled = editEnabled;
@@ -108,19 +108,19 @@ class Pages extends Component {
     if (newItem.enabled) {
       menuContext = null;
 
-      if (value == 'nuevo') {
+      if (value === 'nuevo') {
         this.setState({
           menuContext: menuContext
         })
-        this.props.history.push(this.props.match.url + '/nuevousuario');
+        this.props.history.push(this.props.match.url + '/nuevosigno');
       }
 
-      if (value == 'editar' && this.state.checked.length == 1) {
+      if (value === 'editar' && this.state.checked.length === 1) {
         this.setState({
           menuContext: menuContext
         })
         let idUser = this.state.checked[0].id;
-        this.props.history.push(this.props.match.url + '/editarusuario/' + idUser);
+        this.props.history.push(this.props.match.url + '/editarsigno/' + idUser);
       }
     }
   }
@@ -132,26 +132,41 @@ class Pages extends Component {
   }
   ////////////////////////
   ////////////////////////
-  //METODOS PARA LISTADO DE USUARIOS
+  //METODOS PARA LISTADO DE SIGNOS Y SINTOMAS
   ////////////////////////
   ////////////////////////
-  getPages = () => {
+  getSignosAdmin = () => {
     this.setState({
       isLoading: true
     })
-    
-    Database.get('/list-pages/tipo/' + this.props.tipo, this, null, true)
+
+    Database.get('/list-signos',this,null,true)
       .then(res => {
         let resultado = [...res.result];
         console.log(resultado);
         this.setState({
-          isLoading: false,
-          pages: resultado,
-
+          isLoading:false,
+          signos: resultado,
+          checked: [],
+          menuContext: null,
+          botonesAcciones: {
+            nuevo: {
+              enabled: true,
+              texto: 'Nuevo'
+            },
+            editar: {
+              enabled: false,
+              texto: 'Editar'
+            },
+            delete: {
+              enabled: false,
+              texto: 'Eliminar'
+            }
+          }
         })
 
 
-      }, err => {
+      },err =>{
         toast.error(err.message);
 
       })
@@ -162,8 +177,8 @@ class Pages extends Component {
 
 
 
-  editSinglePage = value => {
-    this.props.history.push(this.props.match.url + '/editpage/' + value);
+  editSingleUser = value => {
+    this.props.history.push(this.props.match.url + '/editarsigno/' + value);
   }
 
   handlePagination = offset => {
@@ -173,27 +188,27 @@ class Pages extends Component {
 
   }
 
-  handleDelete = rowData => {
+  handleDeleteSigno = rowData => {
 
-    Database.post('/delete-page', { id: rowData.id }, this).then(res => {
-      let pages = [...this.state.pages]
-      pages = pages.filter(elem => {
-        if (elem.id == rowData.id)
-          return false;
+    Database.post('/delete-signo', { id: rowData.id },this).then(res => {
+        let signos = [...this.state.signos]
+        signos = signos.filter(elem => {
+          if (elem.id === rowData.id)
+            return false;
 
-        return true
+          return true
 
-      })
+        })
 
-      this.setState({
-        pages: pages,
-        openDeleteDialog: false
-      }, () => {
-        toast.success("La pagina se ha eliminado con exito!");
-      })
+        this.setState({
+          signos: signos,
+          openDeleteDialog:false
+        },()=>{
+          toast.success("El signo y sintoma se ha eliminado con exito!");
+        })
 
 
-    }, err => {
+    },err => {
       toast.error(err.message);
     })
 
@@ -222,7 +237,7 @@ class Pages extends Component {
 
   render() {
     let style = {}
-    if (this.props.match.url != this.props.location.pathname) {
+    if (this.props.match.url !== this.props.location.pathname) {
       style = { display: 'none' }
     }
     return (
@@ -230,29 +245,28 @@ class Pages extends Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card style={style}>
             <CardHeader color="primary">
-              <h4 className={this.props.classes.cardTitleWhite} >Paginas</h4>
+              <h4 className={this.props.classes.cardTitleWhite} >Signos y Sintomas</h4>
               <p className={this.props.classes.cardCategoryWhite} >
-                Listado de Paginas
+                Listado de Signos y Sintomas
                       </p>
             </CardHeader>
             <CardBody>
-              <Button style={{ marginTop: '25px' }} onClick={() => this.props.history.push(this.props.match.url + '/newpage')} color="primary"><AddIcon /> Nueva pagina</Button>
+              <Button style={{ marginTop: '25px' }} onClick={() => this.props.history.push(this.props.match.url + '/nuevosigno')} color="primary"><AddIcon /> Nuevo Signo y Sintoma</Button>
               <MaterialTable
                 isLoading={this.state.isLoading}
                 columns={ColumnsListado}
-                data={this.state.pages}
+                data={this.state.signos}
                 title=""
                 localization={localization}
 
                 actions={[{
                   icon: 'edit',
-                  tooltip: 'Editar Pagina',
-                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editpage/' + rowData.id)
+                  tooltip: 'Editar Signo',
+                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarsigno/' + rowData.id)
                 },
                 {
-                  disabled: this.props.tipo == 'E',
                   icon: 'delete',
-                  tooltip: 'Borrar Pagina',
+                  tooltip: 'Borrar Signo',
                   onClick: (event, rowData) => this.handleDeleteButton(rowData)
 
                 }]}
@@ -262,35 +276,52 @@ class Pages extends Component {
                   )
                 }}
 
-               
-              />
+                options={{
+                  actionsColumnIndex: -1,
+                  exportButton: true,
+                  exportAllData:true,
+                  exportFileName:"Signos " + moment().format("DD-MM-YYYY"),
+                  exportDelimiter:";",
+                  headerStyle: {
+                    backgroundColor: lightGreen[700],
+                    color: '#FFF'
+                  },
+                }}
+                />
             </CardBody>
           </Card>
 
           <Switch>
-            { this.props.tipo == 'D' &&
-            <Route path={this.props.match.url + "/newpage"} render={() =>
+            <Route path={this.props.match.url + "/nuevosigno"} render={() =>
 
-              <NewPage
-                tipo = { this.props.tipo }
-                getPages={() => this.getPages()}
-                handleListNewUser={(rowData) => this.handleListNewPage(rowData)}
+              <NewUser
 
-
-              />}
-            />
-            }
-
-            <Route path={this.props.match.url + "/editpage/:idpage"} render={() =>
-
-              <EditPage
-                tipo = { this.props.tipo }
-                getPages={() => this.getPages()}
+                getSignosAdmin={() => this.getSignosAdmin()}
+                handleListNewUser={(rowData) => this.handleListNewUser(rowData)}
 
 
+                />}
+              />
 
-              />}
-            />
+            <Route path={this.props.match.url + "/editarsigno/:idsigno"} render={() =>
+
+              <EditSigno
+                orderForm={this.state.editSignoForm}
+                editFormIsValid={this.state.editFormIsValid}
+                successSubmitEdit={this.state.successSubmitEdit}
+
+
+                handleSubmitEditSigno={(event) => { this.handleSubmitEditSigno(event) } }
+                inputEditChangedHandler={(event, inputIdentifier) => this.inputEditChangedHandler(event, inputIdentifier)}
+                getUserEdit={(id) => { this.getUserEdit(id) } }
+                resetEditForm={this.resetEditForm}
+                reloadSignos={this.reloadSignos}
+                getSignosAdmin={() => this.getSignosAdmin()}
+
+
+
+                />}
+              />
 
           </Switch>
 
@@ -299,10 +330,9 @@ class Pages extends Component {
         <ModalDelete
           openDeleteDialog={this.state.openDeleteDialog}
           deleteRowData={this.state.deleteRowData}
-
           handleClose={() => this.handleModalClose()}
-          handleDelete={(rowData) => this.handleDelete(rowData)}
-        />
+          handleDelete={(rowData) => this.handleDeleteSigno(rowData)}
+          />
 
 
       </GridContainer>
@@ -312,4 +342,4 @@ class Pages extends Component {
 }
 
 
-export default withStyles(styles)(Pages);
+export default withStyles(styles)(Signos);

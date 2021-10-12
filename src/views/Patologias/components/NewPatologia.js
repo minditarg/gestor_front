@@ -55,7 +55,7 @@ class NewPatologia extends Component {
   handleSubmitNewPatologia = (event) => {
     event.preventDefault();
 
-    Database.post(`/insert-patologias`, { descripcion: this.state.newPatologiaForm.descripcion.value},this)
+    Database.post(`/insert-patologias`, { descripcion: this.state.newPatologiaForm.descripcion.value, id_especie: this.state.newPatologiaForm.id_especie.value},this)
       .then(res => {
 
           toast.success("La patologia se ha creado con exito!");
@@ -99,6 +99,28 @@ class NewPatologia extends Component {
       formIsValid: formIsValidAlt
     })
 
+  }
+
+  getEspecie = () => {
+    Database.get('/list-especie', this)
+      .then(res => {
+
+        let resultado = [...res.result];
+        let a = [];
+        resultado.forEach(function (entry) {
+          a.push({
+            value: entry.id,
+            displayValue: entry.descripcion
+          });
+        })
+        let formulario = { ...this.state.newPatologiaForm }
+        formulario.id_especie.elementConfig.options = [...a];
+        this.setState({
+            newPatologiaForm: formulario
+        })
+      }, err => {
+        toast.error(err.message);
+      })
   }
 
   resetNewForm = (all) => {
@@ -146,7 +168,7 @@ class NewPatologia extends Component {
 
   componentDidMount() {
 
-    //this.getPatologiasType();
+    this.getEspecie();
   }
 
 
