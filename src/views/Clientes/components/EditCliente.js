@@ -115,6 +115,9 @@ class EditCliente extends Component {
             editClienteFormAlt.direccion.value = resultado.result[0].direccion;
             editClienteFormAlt.id_tipo_cliente.value = resultado.result[0].id_tipo_cliente;
             editClienteFormAlt.mail.value = resultado.result[0].mail;
+            editClienteFormAlt.nro_historia_clinica.value = resultado.result[0].nro_historia_clinica;
+            editClienteFormAlt.vet_derivante.value = resultado.result[0].vet_derivante;
+            editClienteFormAlt.estado_cuenta.value = resultado.result[0].estado_cuenta;
             for (let key in editClienteFormAlt) {
               editClienteFormAlt[key].touched = true;
               editClienteFormAlt[key].valid = true;
@@ -168,7 +171,10 @@ class EditCliente extends Component {
         telefono: this.state.editClienteForm.telefono.value,
         direccion: this.state.editClienteForm.direccion.value,
         id_tipo_cliente: this.state.editClienteForm.id_tipo_cliente.value,
-        mail: this.state.editClienteForm.mail.value},this)
+        mail: this.state.editClienteForm.mail.value,
+        nro_historia_clinica: this.state.editClienteForm.nro_historia_clinica.value,
+        vet_derivante: this.state.editClienteForm.vet_derivante.value,
+        estado_cuenta: this.state.editClienteForm.estado_cuenta.value},this)
       .then(res => {
 
           this.setState({

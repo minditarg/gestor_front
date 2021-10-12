@@ -61,7 +61,10 @@ class NewCliente extends Component {
                                         telefono: this.state.newClienteForm.telefono.value,
                                         direccion: this.state.newClienteForm.direccion.value,
                                         id_tipo_cliente: this.state.newClienteForm.id_tipo_cliente.value,
-                                        mail: this.state.newClienteForm.mail.value
+                                        mail: this.state.newClienteForm.mail.value,
+                                        nro_historia_clinica: this.state.newClienteForm.nro_historia_clinica.value,
+                                        vet_derivante: this.state.newClienteForm.vet_derivante.value,
+                                        estado_cuenta: this.state.newClienteForm.estado_cuenta.value
                                         },this)
       .then(res => {
 
