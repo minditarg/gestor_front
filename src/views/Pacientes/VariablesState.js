@@ -448,8 +448,9 @@ export const ColumnsListadoFicha = [
     { title: "Servicio", field: "nombreservicio" },
     { title: "Paciente", field: "nombrepaciente" },
     { title: "Dueño", field: "nombredueno" },
-    { title: "Temperatura (ºC)", field: "temperatura" },
     { title: "Peso (Kg)", field: "peso" },
-    { title: "Diagnostico", field: "consulta" }
+    { title: "Motivo de Consulta", field: "nombresigno" },
+    { title: "Diagnóstico Presuntivo", field: "nombrepatologia" },
+    { title: "Diagnóstico Definitivo", field: "nombrepatologia" }
     ];
     
