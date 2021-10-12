@@ -112,7 +112,7 @@ class EditPage extends Component {
 
     event.preventDefault();
 
-    Database.post(`/update-page`, { id: this.props.match.params.idpage, nombre: this.state.orderForm.nombre.value, descripcion: this.state.orderForm.descripcion.value })
+    Database.post(`/update-page`, { id: this.props.match.params.idpage, nombre: this.state.orderForm.nombre.value, descripcion: this.state.orderForm.descripcion.value, uri: this.state.orderForm.uri.value })
       .then(res => {
 
         this.setState({

@@ -20,6 +20,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ControlCamera from '@material-ui/icons/ControlCamera';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import LooksTwoIcon from '@material-ui/icons/LooksTwo';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -27,6 +28,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import SecondLevel from "./components/SecondLevel";
 import NewItem from "./components/NewItem";
 import EditItem from "./components/EditItem";
 import ModalDelete from "./components/ModalDelete"
@@ -74,7 +76,7 @@ const styles = {
   }
 };
 
-const SortableItem = sortableElement(({ value, deleteItem, editItem }) => {
+const SortableItem = sortableElement(({ value, deleteItem, editItem, secondLevel }) => {
   let estado = null
   if (value.estado == 1)
     estado = 'Habilitado';
@@ -94,6 +96,9 @@ const SortableItem = sortableElement(({ value, deleteItem, editItem }) => {
         </IconButton>
         <IconButton onClick={() => editItem(value.id)}>
           <EditIcon />
+        </IconButton>
+        <IconButton onClick={() => secondLevel(value.id)}>
+          <LooksTwoIcon />
         </IconButton>
       </TableCell>
       <TableCell>
@@ -182,6 +187,11 @@ class ItemsMenu extends Component {
   editSingleItem = value => {
     this.props.history.push(this.props.match.url + '/edititem/' + value);
   }
+
+  secondLevel = value => {
+    this.props.history.push(this.props.match.url + '/addchild/' + value);
+  }
+ 
 
   
 
@@ -280,7 +290,7 @@ class ItemsMenu extends Component {
               <Button style={{ marginTop: '25px' }} onClick={() => this.props.history.push(this.props.match.url + '/newitem')} color="primary"><AddIcon /> Nuevo Item</Button>
               <SortableContainer onSortEnd={this.onSortEnd} useDragHandle>
                 {this.state.items.map((elem, index) => (
-                  <SortableItem key={`item-${elem.id}`} index={index} value={elem} deleteItem={this.handleDeleteButton} editItem={this.handleEditButton} />
+                  <SortableItem key={`item-${elem.id}`} index={index} value={elem} deleteItem={this.handleDeleteButton} editItem={this.handleEditButton} secondLevel={ this.secondLevel } />
                 ))}
 
 
@@ -316,6 +326,13 @@ class ItemsMenu extends Component {
 
               />}
             />
+
+          <Route path={this.props.match.url + "/addchild/:idItem"} render={() =>
+
+                <SecondLevel />
+          }
+          />
+
 
           </Switch>
 

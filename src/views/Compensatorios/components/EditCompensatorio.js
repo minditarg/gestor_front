@@ -182,7 +182,7 @@ class EditCompensatorio extends Component {
         id_empleado: this.state.editCompensatorioForm.id_empleado.value, 
         horas: this.state.editCompensatorioForm.horas.value,
         minutos: this.state.editCompensatorioForm.minutos.value,
-        fecha: this.state.fechaCompensatorio
+        fecha: fechaCompensatorio
         },this)
       .then(res => {
 

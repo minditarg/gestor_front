@@ -55,7 +55,9 @@ class NewPage extends Component {
   handleSubmitNewPage = (event) => {
     event.preventDefault();
 
-    Database.post(`/insert-page`, { nombre: this.state.orderForm.nombre.value, descripcion: this.state.orderForm.descripcion.value },this)
+    console.log(this.state.orderForm.uri.value);
+
+    Database.post(`/insert-page`, { nombre: this.state.orderForm.nombre.value, descripcion: this.state.orderForm.descripcion.value, uri: this.state.orderForm.uri.value  },this)
       .then(res => {
 
           toast.success("El usuario se ha creado con exito!");
@@ -172,9 +174,9 @@ class NewPage extends Component {
 
         <Card>
           <CardHeader color="primary">
-            <h4 className={this.props.classes.cardTitleWhite}>Nueva Pagina</h4>
+            <h4 className={this.props.classes.cardTitleWhite}>Nueva Página</h4>
             <p className={this.props.classes.cardCategoryWhite}>
-              Formulario de una pagina nueva
+              Formulario para creación de nueva página
       </p>
           </CardHeader>
           <CardBody>

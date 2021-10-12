@@ -21,6 +21,18 @@ export const StateListItems = {
   
   }
 
+  export const StateSecondListItems = {
+    items: [],
+    parent:null,
+  
+    openDeleteDialog: false,
+    deleteRowData: null,
+    isLoading: false,
+    
+  
+  
+  }
+
 
   export const StateNewEditItem = {
     items: [],
@@ -51,9 +63,9 @@ export const StateListItems = {
         },
         value: '',
         validation: {
-            required: true
+            required: false
         },
-        valid: false,
+        valid: true,
         touched: false
     },
 
@@ -69,10 +81,10 @@ export const StateListItems = {
         },
         value: '',
         validation: {
-            required: true
+            required: false
         },
 
-        valid: false,
+        valid: true,
         touched: false
     },
 
