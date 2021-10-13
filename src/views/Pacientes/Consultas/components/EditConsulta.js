@@ -533,8 +533,8 @@ class EditConsulta extends Component {
       })
   }
 
-  getDiagPresuntivo = () => {
-    Database.get('/list-patologia', this)
+  getDiagPresuntivo = (idConsulta) => {
+    Database.get('/list-patologia-consulta/'+ idConsulta, this)
       .then(res => {
 
         let resultado = [...res.result];
@@ -586,8 +586,9 @@ class EditConsulta extends Component {
       })
   }
 
-  getDiagDefinitivo = () => {
-    Database.get('/list-patologia', this)
+  getDiagDefinitivo = (idConsulta) => {
+    console.log(idConsulta);
+    Database.get('/list-patologia-consulta/'+ idConsulta, this)
       .then(res => {
 
         let resultado = [...res.result];
@@ -620,9 +621,9 @@ class EditConsulta extends Component {
     this.getSigno();
     this.getSensorio();
     this.getMucosa();
-    this.getDiagPresuntivo();
+    this.getDiagPresuntivo(this.props.match.params.idconsulta);
     this.getPronostico();
-    this.getDiagDefinitivo();
+    this.getDiagDefinitivo(this.props.match.params.idconsulta);
     this.getConsultaEdit(this.props.match.params.idconsulta);
   }
 

@@ -554,6 +554,7 @@ class NewConsulta extends Component {
         console.log(this);
         if (resultado.result.length > 0) {
           this.setState({
+            idEspecie: resultado.result[0][0].id_especie,
             nombrePaciente: resultado.result[0][0].nombre.toUpperCase(),
             nombreClase: resultado.result[0][0].nombreclase.toUpperCase(),
             nombreDueno: resultado.result[0][0].nombredueno.toUpperCase(),
@@ -566,8 +567,9 @@ class NewConsulta extends Component {
       })
   }
 
-  getDiagPresuntivo = () => {
-    Database.get('/list-patologia', this)
+  getDiagPresuntivo = (idEspecie) => {
+    console.log(idEspecie);
+    Database.get('/list-patologia/' + idEspecie, this)
       .then(res => {
         
         let resultado = [...res.result];
@@ -618,8 +620,9 @@ class NewConsulta extends Component {
       })
   }
 
-  getDiagDefinitivo = () => {
-    Database.get('/list-patologia', this)
+  getDiagDefinitivo = (idEspecie) => {
+    console.log(idEspecie);
+    Database.get('/list-patologia/'+ idEspecie, this)
       .then(res => {
         
         let resultado = [...res.result];
@@ -677,9 +680,9 @@ class NewConsulta extends Component {
     this.getSigno();
     this.getSensorio();
     this.getMucosa();
-    this.getDiagPresuntivo();
+    this.getDiagPresuntivo(this.props.match.params.id);
     this.getPronostico();
-    this.getDiagDefinitivo();
+    this.getDiagDefinitivo(this.props.match.params.id);
   }
 
   handleClickOpenArchivo = () => {
@@ -949,7 +952,7 @@ class NewConsulta extends Component {
               </Dialog>
             </div>
 
-            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/consultas')} ><ArrowBack />Volver</Button>
+            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/pacientes')} ><ArrowBack />Volver</Button>
             <Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
 
 
