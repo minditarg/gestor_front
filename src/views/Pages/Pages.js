@@ -230,13 +230,13 @@ class Pages extends Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card style={style}>
             <CardHeader color="primary">
-              <h4 className={this.props.classes.cardTitleWhite} >Paginas</h4>
+              <h4 className={this.props.classes.cardTitleWhite} >Paginas { this.props.tipo == 'E' ? 'Estáticas' : 'Dinámicas' }</h4>
               <p className={this.props.classes.cardCategoryWhite} >
                 Listado de Paginas
                       </p>
             </CardHeader>
             <CardBody>
-              <Button style={{ marginTop: '25px' }} onClick={() => this.props.history.push(this.props.match.url + '/newpage')} color="primary"><AddIcon /> Nueva pagina</Button>
+              <Button style={{ marginTop: '25px' }} disabled={ this.props.tipo == 'E' } onClick={() => this.props.history.push(this.props.match.url + '/newpage')} color="primary"><AddIcon /> Nueva pagina</Button>
               <MaterialTable
                 isLoading={this.state.isLoading}
                 columns={ColumnsListado}

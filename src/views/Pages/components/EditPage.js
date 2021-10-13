@@ -146,6 +146,8 @@ class EditPage extends Component {
 
     const formElementsArray = [];
     for (let key in this.state.orderForm) {
+      if(this.props.tipo == 'E')
+        this.state.orderForm[key].elementConfig.disabled = true;
       formElementsArray.push({
         id: key,
         config: this.state.orderForm[key]
@@ -200,10 +202,10 @@ class EditPage extends Component {
                   ))}
                 </div>
 
-                <ListModules idPage={this.props.match.params.idpage} />
+                <ListModules tipo={ this.props.tipo } idPage={this.props.match.params.idpage} />
 
 
-                <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.goBack()} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
+                <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.goBack()} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons || this.props.tipo == 'E'} type="submit" ><Save /> Guardar</Button>
 
 
               </CardBody>

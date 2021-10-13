@@ -56,7 +56,7 @@ const headers = [
 ];
 
 
-const SortableItem = sortableElement(({ value, deleteItem, editItem }) => {
+const SortableItem = sortableElement(({ value, deleteItem, editItem, tipo }) => {
     let estado = null
     if (value.estado == 1)
         estado = 'Habilitado';
@@ -71,10 +71,12 @@ const SortableItem = sortableElement(({ value, deleteItem, editItem }) => {
     return (
         <TableRow>
             <TableCell>
+                { tipo != 'E' && 
                 <DragHandle />
+                }
             </TableCell>
             <TableCell>
-                <IconButton onClick={() => deleteItem(value)}>
+                <IconButton disabled={ tipo == 'E' } onClick={() => deleteItem(value)}>
                     <DeleteIcon />
                 </IconButton>
                 <IconButton onClick={() => editItem(value)}>
@@ -165,7 +167,7 @@ class ListModules extends Component {
     getTypesModules = () => {
 
 
-        Database.get('/list-types-modules', this)
+        Database.get('/list-types-modules-bytipo/D', this)
             .then(res => {
 
                 let orderForm = { ...this.state.orderForm };
@@ -370,10 +372,10 @@ class ListModules extends Component {
         return ([
             <div key={"modules-list-plantillas"} >
 
-                <Button style={{ marginTop: '25px' }} onClick={() => this.newModule()} color="primary"><AddIcon /> Nuevo modulo</Button>
+                <Button style={{ marginTop: '25px' }} onClick={() => this.newModule()} disabled={ this.props.tipo == 'E' } color="primary"><AddIcon /> Nuevo modulo</Button>
                 <SortableContainer onSortEnd={this.onSortEnd} useDragHandle>
                     {this.state.modules.map((elem, index) => (
-                        <SortableItem key={`item-${elem.id}`} index={index} value={elem} deleteItem={this.deleteModule.bind(this)} editItem={( this.handleEditButton.bind(this))} />
+                        <SortableItem key={`item-${elem.id}`} index={index} value={elem} deleteItem={this.deleteModule.bind(this)} editItem={( this.handleEditButton.bind(this))} tipo={ this.props.tipo } />
                     ))}
 
 
