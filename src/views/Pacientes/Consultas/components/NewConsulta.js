@@ -82,7 +82,24 @@ class NewConsulta extends Component {
                                             id_servicio: this.state.newConsultaForm2.id_servicio.value,
                                             temperatura: this.state.newConsultaForm.temperatura.value,
                                             peso: this.state.newConsultaForm.peso.value,
-                                            consulta: this.state.newConsultaForm.consulta.value,
+                                            id_sensorio: this.state.newConsultaForm.id_sensorio.value,
+                                            id_mucosa: this.state.newConsultaForm.id_mucosa.value,
+                                            tllc: this.state.newConsultaForm.tllc.value,
+                                            frecuencia_cardiaca: this.state.newConsultaForm.frecuencia_cardiaca.value,
+                                            frecuencia_respiratoria: this.state.newConsultaForm.frecuencia_respiratoria.value,
+                                            ganglios: this.state.newConsultaForm.ganglios.value,
+                                            anexos_cutaneos: this.state.newConsultaForm.anexos_cutaneos.value,
+                                            //consulta: this.state.newConsultaForm.consulta.value,
+                                            id_signos: this.state.newConsultaForm3.id_signos.value,
+                                            anamnesis: this.state.newConsultaForm3.anamnesis.value,
+                                            examen_objetivo_particular: this.state.newConsultaForm4.examen_objetivo_particular.value,
+                                            diag_complementarios: this.state.newConsultaForm4.diag_complementarios.value,
+                                            id_diag_presuntivo: this.state.newConsultaForm4.id_diag_presuntivo.value,
+                                            tratamiento: this.state.newConsultaForm4.tratamiento.value,
+                                            id_pronostico: this.state.newConsultaForm4.id_pronostico.value,
+                                            id_diag_definitivo: this.state.newConsultaForm4.id_diag_definitivo.value,
+                                            informe_diagnostico: this.state.newConsultaForm5.informe_diagnostico.value,
+                                            observaciones: this.state.newConsultaForm5.observaciones.value,
                                             fecha: fecha},this)
         .then(res => {
   
@@ -94,6 +111,10 @@ class NewConsulta extends Component {
                 //this.props.getConsultasAdmin();
             })
             this.resetNewForm();
+            this.resetNewForm2();
+            this.resetNewForm3();
+            this.resetNewForm4();
+            this.resetNewForm5();
   
   
         },err => {
@@ -107,7 +128,24 @@ class NewConsulta extends Component {
                                             id_servicio: this.state.newConsultaForm2.id_servicio.value,
                                             temperatura: this.state.newConsultaForm.temperatura.value,
                                             peso: this.state.newConsultaForm.peso.value,
-                                            consulta: this.state.newConsultaForm.consulta.value,
+                                            id_sensorio: this.state.newConsultaForm.id_sensorio.value,
+                                            id_mucosa: this.state.newConsultaForm.id_mucosa.value,
+                                            tllc: this.state.newConsultaForm.tllc.value,
+                                            frecuencia_cardiaca: this.state.newConsultaForm.frecuencia_cardiaca.value,
+                                            frecuencia_respiratoria: this.state.newConsultaForm.frecuencia_respiratoria.value,
+                                            ganglios: this.state.newConsultaForm.ganglios.value,
+                                            anexos_cutaneos: this.state.newConsultaForm.anexos_cutaneos.value,
+                                            //consulta: this.state.newConsultaForm.consulta.value,
+                                            id_signos: this.state.newConsultaForm3.id_signos.value,
+                                            anamnesis: this.state.newConsultaForm3.anamnesis.value,
+                                            examen_objetivo_particular: this.state.newConsultaForm4.examen_objetivo_particular.value,
+                                            diag_complementarios: this.state.newConsultaForm4.diag_complementarios.value,
+                                            id_diag_presuntivo: this.state.newConsultaForm4.id_diag_presuntivo.value,
+                                            tratamiento: this.state.newConsultaForm4.tratamiento.value,
+                                            id_pronostico: this.state.newConsultaForm4.id_pronostico.value,
+                                            id_diag_definitivo: this.state.newConsultaForm4.id_diag_definitivo.value,
+                                            informe_diagnostico: this.state.newConsultaForm5.informe_diagnostico.value,
+                                            observaciones: this.state.newConsultaForm5.observaciones.value,
                                             fecha: fecha},this)
         .then(res => {
 
@@ -119,6 +157,10 @@ class NewConsulta extends Component {
             //this.props.getConsultasAdmin();
             })
             this.resetNewForm();
+            this.resetNewForm2();
+            this.resetNewForm3();
+            this.resetNewForm4();
+            this.resetNewForm5();
 
 
         },err => {
@@ -213,6 +255,81 @@ class NewConsulta extends Component {
     })*/
   }
 
+  inputChangedHandler3 = (event, inputIdentifier) => {
+    let checkValid;
+    const updatedOrderForm = {
+      ...this.state.newConsultaForm3
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    };
+    updatedFormElement.value = event.target.value;
+    checkValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = checkValid.isValid;
+    updatedFormElement.textValid = checkValid.textValid;
+    updatedFormElement.touched = true;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    let formIsValidAlt = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
+    }
+    this.setState({
+      newConsultaForm3: updatedOrderForm,
+      formIsValid: formIsValidAlt
+    })
+  }
+
+  inputChangedHandler4 = (event, inputIdentifier) => {
+    let checkValid;
+    const updatedOrderForm = {
+      ...this.state.newConsultaForm4
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    };
+    updatedFormElement.value = event.target.value;
+    checkValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = checkValid.isValid;
+    updatedFormElement.textValid = checkValid.textValid;
+    updatedFormElement.touched = true;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    let formIsValidAlt = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
+    }
+    this.setState({
+      newConsultaForm4: updatedOrderForm,
+      formIsValid: formIsValidAlt
+    })
+  }
+
+  inputChangedHandler5 = (event, inputIdentifier) => {
+    let checkValid;
+    const updatedOrderForm = {
+      ...this.state.newConsultaForm5
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    };
+    updatedFormElement.value = event.target.value;
+    checkValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = checkValid.isValid;
+    updatedFormElement.textValid = checkValid.textValid;
+    updatedFormElement.touched = true;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    let formIsValidAlt = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
+    }
+    this.setState({
+      newConsultaForm5: updatedOrderForm,
+      formIsValid: formIsValidAlt
+    })
+  }
+
   onFilesArchivoChange = (files) => {
     console.log(files)
     this.setState({
@@ -269,6 +386,66 @@ class NewConsulta extends Component {
 
   }
 
+  resetNewForm2 = (all) => {
+    let newConsultaFormAlt = { ...this.state.newConsultaForm2 };
+    let successSubmit = this.state.successSubmit;
+    for (let key in newConsultaFormAlt) {
+      newConsultaFormAlt[key].value = ''
+    }
+    if (all)
+      successSubmit = false;
+
+    this.setState({
+      successSubmit: successSubmit,
+      formIsValid: false
+    })
+  }
+
+  resetNewForm3 = (all) => {
+    let newConsultaFormAlt = { ...this.state.newConsultaForm3 };
+    let successSubmit = this.state.successSubmit;
+    for (let key in newConsultaFormAlt) {
+      newConsultaFormAlt[key].value = ''
+    }
+    if (all)
+      successSubmit = false;
+
+    this.setState({
+      successSubmit: successSubmit,
+      formIsValid: false
+    })
+  }
+
+  resetNewForm4 = (all) => {
+    let newConsultaFormAlt = { ...this.state.newConsultaForm4 };
+    let successSubmit = this.state.successSubmit;
+    for (let key in newConsultaFormAlt) {
+      newConsultaFormAlt[key].value = ''
+    }
+    if (all)
+      successSubmit = false;
+
+    this.setState({
+      successSubmit: successSubmit,
+      formIsValid: false
+    })
+  }
+
+  resetNewForm5 = (all) => {
+    let newConsultaFormAlt = { ...this.state.newConsultaForm5 };
+    let successSubmit = this.state.successSubmit;
+    for (let key in newConsultaFormAlt) {
+      newConsultaFormAlt[key].value = ''
+    }
+    if (all)
+      successSubmit = false;
+
+    this.setState({
+      successSubmit: successSubmit,
+      formIsValid: false
+    })
+  }
+
   getServicio = () => {
     Database.get('/list-servicio', this)
       .then(res => {
@@ -291,17 +468,182 @@ class NewConsulta extends Component {
       })
   }
 
+  getSigno = () => {
+    Database.get('/list-signo', this)
+      .then(res => {
+        
+        let resultado = [...res.result];
+        let a = [];
+        a.push({
+          value: "",
+          displayValue: "Quitar"
+        });
+        resultado.forEach(function (entry) {
+          a.push({
+            value: entry.id,
+            displayValue: entry.descripcion
+          });
+        })
+        let formulario = { ...this.state.newConsultaForm3 }
+        formulario.id_signos.elementConfig.options = [...a];
+        this.setState({
+            newConsultaForm3: formulario
+        })
+      }, err => {
+        toast.error(err.message);
+      })
+  }
+
+  getSensorio = () => {
+    Database.get('/list-sensorio', this)
+      .then(res => {
+        
+        let resultado = [...res.result];
+        let a = [];
+        a.push({
+          value: "",
+          displayValue: "Quitar"
+        });
+        resultado.forEach(function (entry) {
+          a.push({
+            value: entry.id,
+            displayValue: entry.descripcion
+          });
+        })
+        let formulario = { ...this.state.newConsultaForm }
+        formulario.id_sensorio.elementConfig.options = [...a];
+        this.setState({
+            newConsultaForm: formulario
+        })
+      }, err => {
+        toast.error(err.message);
+      })
+  }
+
+  getMucosa = () => {
+    Database.get('/list-mucosa', this)
+      .then(res => {
+        
+        let resultado = [...res.result];
+        let a = [];
+        a.push({
+          value: "",
+          displayValue: "Quitar"
+        });
+        resultado.forEach(function (entry) {
+          a.push({
+            value: entry.id,
+            displayValue: entry.descripcion
+          });
+        })
+        let formulario = { ...this.state.newConsultaForm }
+        formulario.id_mucosa.elementConfig.options = [...a];
+        this.setState({
+            newConsultaForm: formulario
+        })
+      }, err => {
+        toast.error(err.message);
+      })
+  }
+
   getPaciente = (id) => {
     Database.get('/list-paciente/' + id)
       .then(resultado => {
+        console.log(resultado);
         console.log("TESTING");
         console.log(this);
         if (resultado.result.length > 0) {
           this.setState({
-            nombrePaciente: resultado.result[0].nombre.toUpperCase(),
+            idEspecie: resultado.result[0][0].id_especie,
+            nombrePaciente: resultado.result[0][0].nombre.toUpperCase(),
+            nombreClase: resultado.result[0][0].nombreclase.toUpperCase(),
+            nombreDueno: resultado.result[0][0].nombredueno.toUpperCase(),
+            nombreEspecie: resultado.result[0][0].nombreespecie.toUpperCase(),
+            nombreRaza: resultado.result[0][0].nombreraza.toUpperCase(),
+            nombreSexo: resultado.result[0][0].nombresexo.toUpperCase(),
             idPaciente: id
           })
         }
+      })
+  }
+
+  getDiagPresuntivo = (idEspecie) => {
+    console.log(idEspecie);
+    Database.get('/list-patologia/' + idEspecie, this)
+      .then(res => {
+        
+        let resultado = [...res.result];
+        let a = [];
+        a.push({
+          value: "",
+          displayValue: "Quitar"
+        });
+        resultado.forEach(function (entry) {
+          a.push({
+            value: entry.id,
+            displayValue: entry.descripcion
+          });
+        })
+        let formulario = { ...this.state.newConsultaForm4 }
+        formulario.id_diag_presuntivo.elementConfig.options = [...a];
+        this.setState({
+            newConsultaForm4: formulario
+        })
+      }, err => {
+        toast.error(err.message);
+      })
+  }
+
+  getPronostico = () => {
+    Database.get('/list-pronostico', this)
+      .then(res => {
+        
+        let resultado = [...res.result];
+        let a = [];
+        a.push({
+          value: "",
+          displayValue: "Quitar"
+        });
+        resultado.forEach(function (entry) {
+          a.push({
+            value: entry.id,
+            displayValue: entry.descripcion
+          });
+        })
+        let formulario = { ...this.state.newConsultaForm4 }
+        formulario.id_pronostico.elementConfig.options = [...a];
+        this.setState({
+            newConsultaForm4: formulario
+        })
+      }, err => {
+        toast.error(err.message);
+      })
+  }
+
+  getDiagDefinitivo = (idEspecie) => {
+    console.log(idEspecie);
+    Database.get('/list-patologia/'+ idEspecie, this)
+      .then(res => {
+        
+        let resultado = [...res.result];
+        let a = [];
+        a.push({
+          value: "",
+          displayValue: "Quitar"
+        });
+        resultado.forEach(function (entry) {
+          a.push({
+            value: entry.id,
+            displayValue: entry.descripcion
+          });
+        })
+        let formulario = { ...this.state.newConsultaForm4 }
+        formulario.id_diag_definitivo.elementConfig.options = [...a];
+        this.setState({
+            newConsultaForm4: formulario
+        })
+      }, err => {
+        toast.error(err.message);
       })
   }
 
@@ -335,6 +677,12 @@ class NewConsulta extends Component {
 
     this.getPaciente(this.props.match.params.id);
     this.getServicio();
+    this.getSigno();
+    this.getSensorio();
+    this.getMucosa();
+    this.getDiagPresuntivo(this.props.match.params.id);
+    this.getPronostico();
+    this.getDiagDefinitivo(this.props.match.params.id);
   }
 
   handleClickOpenArchivo = () => {
@@ -399,6 +747,27 @@ class NewConsulta extends Component {
         config: this.state.newConsultaForm2[key]
       });
     }
+    const formElementsArray3 = [];
+    for (let key in this.state.newConsultaForm3) {
+      formElementsArray3.push({
+        id: key,
+        config: this.state.newConsultaForm3[key]
+      });
+    }
+    const formElementsArray4 = [];
+    for (let key in this.state.newConsultaForm4) {
+      formElementsArray4.push({
+        id: key,
+        config: this.state.newConsultaForm4[key]
+      });
+    }
+    const formElementsArray5 = [];
+    for (let key in this.state.newConsultaForm5) {
+      formElementsArray5.push({
+        id: key,
+        config: this.state.newConsultaForm5[key]
+      });
+    }
     return (
 
       <form onSubmit={(event) => {
@@ -414,12 +783,20 @@ class NewConsulta extends Component {
           <CardHeader color="primary">
             <h4 className={this.props.classes.cardTitleWhite}>Nueva Consulta</h4>
             <p className={this.props.classes.cardCategoryWhite}>
-              Formulario de alta de consulta
+              Formulario de alta de consulta del paciente: {this.state.nombrePaciente}
       </p>
           </CardHeader>
           <CardBody>
 
             <div className="mt-3 mb-3">
+
+            {/* <br></br><br></br>
+            <CardHeader color="primary">
+              <h4 className={this.props.classes.cardTitleWhite}>Datos del Paciente: {this.state.nombrePaciente}</h4>
+
+            </CardHeader> */}
+
+               
             <MuiPickersUtilsProvider locale={esLocale} utils={DateFnsUtils}>
               <div>
                   <KeyboardDatePicker
@@ -435,8 +812,10 @@ class NewConsulta extends Component {
                       'aria-label': 'change date',
                     }}
                   />
-                </div>
-              </MuiPickersUtilsProvider>
+              </div>
+            </MuiPickersUtilsProvider>
+            
+            
 
               {formElementsArray2.map(formElement => (
                 <Input
@@ -454,21 +833,74 @@ class NewConsulta extends Component {
 
               {this.state.servicioClinica ?
                 <div>
-                {formElementsArray.map(formElement => (
-                <Input
-                  key={"editconsulta-" + formElement.id}
-                  elementType={formElement.config.elementType}
-                  elementConfig={formElement.config.elementConfig}
-                  value={formElement.config.value}
-                  textValid={formElement.config.textValid}
-                  invalid={!formElement.config.valid}
-                  shouldValidate={formElement.config.validation}
-                  touched={formElement.config.touched}
-                  changed={(event) => this.inputChangedHandler(event, formElement.id)}
-                  />
-                ))}
+                  
+                  {formElementsArray3.map(formElement => (
+                  <Input
+                    key={"editconsulta-" + formElement.id}
+                    elementType={formElement.config.elementType}
+                    elementConfig={formElement.config.elementConfig}
+                    value={formElement.config.value}
+                    textValid={formElement.config.textValid}
+                    invalid={!formElement.config.valid}
+                    shouldValidate={formElement.config.validation}
+                    touched={formElement.config.touched}
+                    changed={(event) => this.inputChangedHandler3(event, formElement.id)}
+                    />
+                  ))}
+                  <br></br><br></br>
+                  <CardHeader color="primary">
+                  <h4 className={this.props.classes.cardTitleWhite}>EXAMEN OBJETIVO GENERAL</h4>
+
+                  </CardHeader>
+                  <br></br>
+                  
+                  {formElementsArray.map(formElement => (
+                  <Input
+                    key={"editconsulta-" + formElement.id}
+                    elementType={formElement.config.elementType}
+                    elementConfig={formElement.config.elementConfig}
+                    value={formElement.config.value}
+                    textValid={formElement.config.textValid}
+                    invalid={!formElement.config.valid}
+                    shouldValidate={formElement.config.validation}
+                    touched={formElement.config.touched}
+                    changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                    />
+                  ))}
+
+                  <br></br><br></br>
+                  <CardHeader color="primary">
+                  <h4 className={this.props.classes.cardTitleWhite}>EXAMEN OBJETIVO PARTICULAR</h4>
+                  </CardHeader>
+
+                  {formElementsArray4.map(formElement => (
+                  <Input
+                    key={"editconsulta-" + formElement.id}
+                    elementType={formElement.config.elementType}
+                    elementConfig={formElement.config.elementConfig}
+                    value={formElement.config.value}
+                    textValid={formElement.config.textValid}
+                    invalid={!formElement.config.valid}
+                    shouldValidate={formElement.config.validation}
+                    touched={formElement.config.touched}
+                    changed={(event) => this.inputChangedHandler4(event, formElement.id)}
+                    />
+                  ))}
                 </div>
-                :null}
+                :<div>
+                {formElementsArray5.map(formElement => (
+                  <Input
+                    key={"editconsulta-" + formElement.id}
+                    elementType={formElement.config.elementType}
+                    elementConfig={formElement.config.elementConfig}
+                    value={formElement.config.value}
+                    textValid={formElement.config.textValid}
+                    invalid={!formElement.config.valid}
+                    shouldValidate={formElement.config.validation}
+                    touched={formElement.config.touched}
+                    changed={(event) => this.inputChangedHandler5(event, formElement.id)}
+                    />
+                  ))}</div>}
 
               <div className="files">
                 <Files
@@ -520,7 +952,7 @@ class NewConsulta extends Component {
               </Dialog>
             </div>
 
-            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/consultas')} ><ArrowBack />Volver</Button>
+            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/pacientes')} ><ArrowBack />Volver</Button>
             <Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.formIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
 
 

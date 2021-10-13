@@ -40,7 +40,8 @@ export const StateEditConsulta = {
             elementConfig: {
                 type: 'text',
                 label: 'Temperatura (ºC)',
-                fullWidth: true
+                fullWidth: true ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -54,7 +55,8 @@ export const StateEditConsulta = {
             elementConfig: {
                 type: 'text',
                 label: 'Peso (Kg)',
-                fullWidth: true
+                fullWidth: true ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -63,28 +65,14 @@ export const StateEditConsulta = {
             valid: false,
             touched: true
         },
-        // consulta: {
-        //     elementType: 'textarea',
-        //     elementConfig: {
-        //         type: 'text',
-        //         label: 'Consulta',
-        //         fullWidth: true,
-        //         rows: 4
-        //     },
-        //     value: '',
-        //     validation: {
-        //         required: false
-        //     },
-        //     valid: false,
-        //     touched: false
-        // },
         id_sensorio: {
             elementType: 'select',
             elementConfig: {
                 label: 'Sensorio',
                 options: [
                 ],
-                fullWidth: true
+                fullWidth: true ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -99,7 +87,8 @@ export const StateEditConsulta = {
                 label: 'Color de las Mucosas',
                 options: [
                 ],
-                fullWidth: true
+                fullWidth: true ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -113,7 +102,8 @@ export const StateEditConsulta = {
             elementConfig: {
                 type: 'text',
                 label: 'Tiempo de Llenado Capilar (sg)',
-                fullWidth: true
+                fullWidth: true ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -127,7 +117,8 @@ export const StateEditConsulta = {
             elementConfig: {
                 type: 'text',
                 label: 'Frecuencia Cardíaca',
-                fullWidth: true
+                fullWidth: true ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -141,7 +132,8 @@ export const StateEditConsulta = {
             elementConfig: {
                 type: 'text',
                 label: 'Frecuencia Respiratoria',
-                fullWidth: true
+                fullWidth: true ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -155,7 +147,8 @@ export const StateEditConsulta = {
             elementConfig: {
                 type: 'text',
                 label: 'Ganglios',
-                fullWidth: true
+                fullWidth: true ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -169,7 +162,8 @@ export const StateEditConsulta = {
             elementConfig: {
                 type: 'text',
                 label: 'Anexos Cutáneos',
-                fullWidth: true
+                fullWidth: true ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -186,7 +180,8 @@ export const StateEditConsulta = {
                 label: 'Servicio',
                 options: [
                 ],
-                fullWidth: true
+                fullWidth: true ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -203,7 +198,8 @@ export const StateEditConsulta = {
                 label: 'Motivo de Consulta',
                 options: [
                 ],
-                fullWidth: true
+                fullWidth: true ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -218,7 +214,8 @@ export const StateEditConsulta = {
                 type: 'text',
                 label: 'Anamnesis',
                 fullWidth: true,
-                rows: 4
+                rows: 4 ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -235,7 +232,8 @@ export const StateEditConsulta = {
                 type: 'text',
                 label: 'Examen Objetivo Particular',
                 fullWidth: true,
-                rows: 4
+                rows: 4 ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -250,7 +248,8 @@ export const StateEditConsulta = {
                 type: 'text',
                 label: 'Diagnóstico Complementarios',
                 fullWidth: true,
-                rows: 4
+                rows: 4 ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -265,7 +264,8 @@ export const StateEditConsulta = {
                 label: 'Diagnóstico Presuntivo',
                 options: [
                 ],
-                fullWidth: true
+                fullWidth: true ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -280,7 +280,8 @@ export const StateEditConsulta = {
                 type: 'text',
                 label: 'Tratamiento',
                 fullWidth: true,
-                rows: 4
+                rows: 4 ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -295,7 +296,8 @@ export const StateEditConsulta = {
                 label: 'Pronóstico',
                 options: [
                 ],
-                fullWidth: true
+                fullWidth: true ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -310,7 +312,8 @@ export const StateEditConsulta = {
                 label: 'Diagnóstico Definitivo',
                 options: [
                 ],
-                fullWidth: true
+                fullWidth: true ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -327,7 +330,8 @@ export const StateEditConsulta = {
                 type: 'text',
                 label: 'Informe Diagnóstico',
                 fullWidth: true,
-                rows: 4
+                rows: 4 ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -342,7 +346,8 @@ export const StateEditConsulta = {
                 type: 'text',
                 label: 'Observaciones',
                 fullWidth: true,
-                rows: 4
+                rows: 4 ,
+                disabled: true
             },
             value: '',
             validation: {
@@ -362,7 +367,6 @@ export const StateEditConsulta = {
     successSubmitEdit: null,
     disableAllButtons:false,
     openChangePass: false
-
 }
 
 
@@ -702,8 +706,6 @@ export const StateNewConsulta = {
 export const ColumnsListado = [
 { title: "Fecha", field: "fecha_mostrar" , customSort: (a, b) => parseInt(moment(a.inicio_licencia).format("YYYYMMDD")) - parseInt(moment(b.inicio_licencia).format("YYYYMMDD"))},
 { title: "Servicio", field: "nombreservicio" },
-{ title: "Paciente", field: "nombrepaciente" },
-{ title: "Dueño", field: "nombredueno" },
 { title: "Peso (Kg)", field: "peso" },
 { title: "Motivo de Consulta", field: "nombresigno" },
 { title: "Diagnóstico Presuntivo", field: "nombrepatologia" },

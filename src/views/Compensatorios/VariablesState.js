@@ -154,5 +154,6 @@ export const ColumnsListado = [
 
 export const ColumnsListadoCompensatorios = [
 { title: "Empleado", field: "nombre_empleado" },
-{ title: "Minutos Totales", field: "min_totales" }
+{ title: "Minutos Totales", field: "min_totales" },
+{ title: "Totales", field: "min_totales_dias" }
 ];

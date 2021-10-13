@@ -15,6 +15,9 @@ import Card from "components/Card/Card.js";
 import Button from '@material-ui/core/Button';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import Save from '@material-ui/icons/Save';
+import SelectorClase from './SelectorClase';
+import SelectorEspecie from './SelectorEspecie';
+import SelectorRaza from './SelectorRaza';
 
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -67,17 +70,30 @@ class NewPaciente extends Component {
     let fechaAdopcion = null;
     let fechaNacimiento = null;
 
+    let i_clase = null;
+    let i_especie = null;
+    let i_raza = null;
+
+    if (this.state.clase != null)
+      i_clase = this.state.clase.id;
+
+    if (this.state.especie != null)
+      i_especie = this.state.especie.id;
+
+      if (this.state.raza != null)
+      i_raza = this.state.raza.id;
+
     if (this.state.fechaAdopcion != null)
     fechaAdopcion = moment(this.state.fechaAdopcion).format("YYYY-MM-DD HH:mm");
 
     if (this.state.fechaNacimiento != null)
     fechaNacimiento = moment(this.state.fechaNacimiento).format("YYYY-MM-DD HH:mm");
 
-    Database.post(`/insert-pacientes`, {nombre: this.state.newPacienteForm.nombre.value, 
-                                        id_cliente: this.state.newPacienteForm.id_cliente.value,
-                                        id_clase: this.state.newPacienteForm.id_clase.value,
-                                        id_especie: this.state.newPacienteForm.id_especie.value,
-                                        id_raza: this.state.newPacienteForm.id_raza.value,
+    Database.post(`/insert-pacientes`, {nombre: this.state.newPacienteForm2.nombre.value, 
+                                        id_cliente: this.state.newPacienteForm2.id_cliente.value,
+                                        id_clase: i_clase,
+                                        id_especie: i_especie,
+                                        id_raza: i_raza,
                                         color: this.state.newPacienteForm.color.value,
                                         id_sexo: this.state.newPacienteForm.id_sexo.value,
                                         castrado: this.state.newPacienteForm.castrado.value,
@@ -85,8 +101,8 @@ class NewPaciente extends Component {
                                         id_habitos: this.state.newPacienteForm.id_habitos.value,
                                         id_mascotas: this.state.newPacienteForm.id_mascotas.value,
                                         notas: this.state.newPacienteForm.notas.value,
-                                        fecha_nacimiento: this.state.fechaNacimiento,
-                                        fecha_adopcion: this.state.fechaAdopcion
+                                        fecha_nacimiento: fechaNacimiento,
+                                        fecha_adopcion: fechaAdopcion
                                         },this)
       .then(res => {
 
@@ -140,6 +156,32 @@ class NewPaciente extends Component {
 
   }
 
+  inputChangedHandler = (event, inputIdentifier, newValue) => {
+    let checkValid;
+    const updatedOrderForm = {
+      ...this.state.newPacienteForm2
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    };
+    updatedFormElement.value = event.target.value;
+    checkValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = checkValid.isValid;
+    updatedFormElement.textValid = checkValid.textValid;
+    updatedFormElement.touched = true;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    let formIsValidAlt = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
+    }
+    this.setState({
+      newPacienteForm2: updatedOrderForm,
+      formIsValid: formIsValidAlt
+    })
+
+  }
+
   resetNewForm = (all) => {
     let newPacienteFormAlt = { ...this.state.newPacienteForm };
     let successSubmit = this.state.successSubmit;
@@ -169,10 +211,10 @@ class NewPaciente extends Component {
             displayValue: entry.apellido + ', '+ entry.nombre
           });
         })
-        let formulario = { ...this.state.newPacienteForm }
+        let formulario = { ...this.state.newPacienteForm2 }
         formulario.id_cliente.elementConfig.options = [...a];
         this.setState({
-            newPacienteForm: formulario
+            newPacienteForm2: formulario
         })
       }, err => {
         toast.error(err.message);
@@ -199,6 +241,40 @@ class NewPaciente extends Component {
       }, err => {
         toast.error(err.message);
       })
+  }
+
+  resetespecie = () => {
+    this.setState({ especie: null });
+  }
+
+  resetraza = () => {
+    this.setState({ raza: null });
+  }
+
+  getSelectedDataClase = (data) => {
+    this.setState({ clase: data });
+    this.setState({ enabledEspecie: true });
+  }
+
+  getSelectedDataEspecie = (data) => {
+    this.setState({ especie: data });
+    this.setState({ enabledRaza: true });
+
+    if (data !== null) {
+      this.setState({ enabledEspecie: true });
+    } else {
+      this.setState({ enabledEspecie: false });
+    }
+  }
+
+  getSelectedDataRaza = (data) => {
+    this.setState({ raza: data });
+
+    if (data !== null) {
+      this.setState({ enabledRaza: true });
+    } else {
+      this.setState({ enabledRaza: false });
+    }
   }
 
   getEspecie = () => {
@@ -360,9 +436,9 @@ class NewPaciente extends Component {
   componentDidMount() {
 
     this.getCliente();
-    this.getClase();
-    this.getEspecie();
-    this.getRaza();
+    //this.getClase();
+    //this.getEspecie();
+    //this.getRaza();
     this.getSexo();
     this.getAlimentacion();
     this.getHabitos();
@@ -396,6 +472,13 @@ class NewPaciente extends Component {
         config: this.state.newPacienteForm[key]
       });
     }
+    const formElementsArray2 = [];
+    for (let key in this.state.newPacienteForm2) {
+      formElementsArray2.push({
+        id: key,
+        config: this.state.newPacienteForm2[key]
+      });
+    }
     return (
 
       <form onSubmit={(event) => {
@@ -416,7 +499,28 @@ class NewPaciente extends Component {
           </CardHeader>
           <CardBody>
 
+
             <div className="mt-3 mb-3">
+            {formElementsArray2.map(formElement => (
+                <Input
+                  key={"editpaciente-" + formElement.id}
+                  elementType={formElement.config.elementType}
+                  elementConfig={formElement.config.elementConfig}
+                  value={formElement.config.value}
+                  textValid={formElement.config.textValid}
+                  invalid={!formElement.config.valid}
+                  shouldValidate={formElement.config.validation}
+                  touched={formElement.config.touched}
+                  changed={(event, newValue) => this.inputChangedHandler2(event, formElement.id, newValue)}
+                  />
+              ))}
+              <br></br>
+            <SelectorClase getDataSelectedData={this.getSelectedDataClase} />
+            <br></br>
+            <SelectorEspecie especie={this.state.especie} clase={this.state.clase} disabled={!this.state.enabledEspecie} getDataSelectedData={this.getSelectedDataEspecie} resetvalue={this.resetespecie} />
+            <br></br>
+            <SelectorRaza raza={this.state.raza} especie={this.state.especie} disabled={!this.state.enabledRaza} getDataSelectedData={this.getSelectedDataRaza} resetvalue={this.resetraza} />
+            
               {formElementsArray.map(formElement => (
                 <Input
                   key={"editpaciente-" + formElement.id}

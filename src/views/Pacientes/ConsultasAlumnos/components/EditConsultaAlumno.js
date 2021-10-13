@@ -111,6 +111,7 @@ class EditConsulta extends Component {
   getConsultaEdit = (id) => {
     Database.get('/list-consultas/' + id)
       .then(resultado => {
+          console.log(this);
           console.log(resultado.result[0]);
           console.log(this.state.editConsultaForm);
           if (resultado.result[0].id_servicio == 1) {
@@ -723,9 +724,9 @@ class EditConsulta extends Component {
 
         <Card>
           <CardHeader color="primary">
-            <h4 className={this.props.classes.cardTitleWhite}>Editar Consulta</h4>
+            <h4 className={this.props.classes.cardTitleWhite}>Ver Información de la Consulta</h4>
             <p className={this.props.classes.cardCategoryWhite}>
-              Formulario para modificar los datos de la consulta
+              Formulario para analizar los datos de la consulta
       </p>
           </CardHeader>
           <CardBody>
@@ -745,6 +746,7 @@ class EditConsulta extends Component {
                     onChange={this.handleFecha}
                     autoOk={true}
                     cancelLabel={"Cancelar"}
+                    disabled={true}
                     KeyboardButtonProps={{
                       'aria-label': 'change date',
                     }}
@@ -845,7 +847,6 @@ class EditConsulta extends Component {
                   minFileSize={0}
                   clickable
                 >
-                  <Button style={{ marginTop: '25px' }} color="primary" variant="contained" ><BackupIcon />&nbsp; Adjuntar archivo</Button>
                 </Files>
                 </div>
 
@@ -853,7 +854,7 @@ class EditConsulta extends Component {
                 <div>
                 <br></br>
                 <a target="_blank" href={this.state.url_archivo}>ver archivo adjunto</a>
-                <Button color="info" onClick={this.handleClickOpenArchivo} >Eliminar archivo</Button>
+                
                 </div>
                 :null}
 
@@ -883,7 +884,7 @@ class EditConsulta extends Component {
               </Dialog>
             </div>
 
-            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/consultas')} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.editFormIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
+            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.push('/admin/consultasalumnos')} ><ArrowBack />Volver</Button>
 
 
           </CardBody>
