@@ -57,6 +57,7 @@ import Patologias from 'views/Patologias/Patologias.js';
 import Servicios from 'views/Servicios/Servicios.js';
 import Consultas from 'views/Pacientes/Consultas/Consultas.js';
 import Signos from 'views/Signos/Signos.js';
+import ConsultasAlumnos from 'views/Pacientes/ConsultasAlumnos/ConsultasAlumnos.js';
 
 
 const dashboardRoutes = [
@@ -303,7 +304,7 @@ const dashboardRoutes = [
 
   {
     show:false,
-    accesos: [101, 102, 103, 104, 105, 106, 107, 108, 109],
+    accesos: [101, 102, 103, 104, 105, 106, 107, 108, 109, 110],
     groupComponent: true,
     name: 'Hospital',
     open: 'open23',
@@ -397,6 +398,16 @@ const dashboardRoutes = [
         rtlName: "SS",
         icon: HealingIcon,
         component: Signos,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [110],
+        path: "/consultasalumnos",
+        name: "Consultas Alumnos",
+        rtlName: "AL",
+        icon: AssignmentIcon,
+        component: ConsultasAlumnos,
         layout: "/admin"
       },
 
