@@ -146,8 +146,96 @@ class Compensatorios extends Component {
         console.log(resultado);
 
         resultado = resultado.map(elem => {
+          let min_totales_dias;
+          if(Math.abs(elem.min_totales) < 60)
+          {
+            min_totales_dias = Math.abs(elem.min_totales) > 1 ? elem.min_totales + ' minutos' : elem.min_totales + ' minuto';
+          }
+          else 
+          {
+            if((Math.abs(elem.min_totales) < 420))
+            {
+              if(elem.min_totales % 60 == 0)
+              {
+                min_totales_dias = (Math.abs(elem.min_totales) / 60) > 1 ? (elem.min_totales / 60) + ' horas' : (elem.min_totales / 60) + ' hora';
+              }
+              else
+              {
+                if(Math.trunc(elem.min_totales / 60) > 1)
+                {
+                  min_totales_dias = Math.trunc(elem.min_totales / 60) + ' horas ';
+
+                  Math.abs(elem.min_totales % 60) > 1 ? min_totales_dias += Math.abs(elem.min_totales % 60) + ' minutos' : min_totales_dias += Math.abs(elem.min_totales % 60) + ' minuto';
+                  
+                }
+                else
+                {
+                  min_totales_dias = Math.trunc(elem.min_totales / 60) + ' hora ';
+
+                  Math.abs(elem.min_totales % 60) > 1 ? min_totales_dias += Math.abs(elem.min_totales % 60) + ' minutos' : min_totales_dias += Math.abs(elem.min_totales % 60) + ' minuto';
+
+                }
+              }
+            }
+            else
+            {
+              if(Math.abs(elem.min_totales) % 420 == 0)
+              {
+                min_totales_dias = Math.abs(elem.min_totales / 420) > 1 ? (elem.min_totales / 420) + ' días' : (elem.min_totales / 420) + ' día';
+              }
+              else
+              {
+                if(Math.abs(elem.min_totales) % 420 > 59)
+                {
+                  if(Math.trunc(Math.abs(elem.min_totales / 420)) > 1)
+                  {
+                    min_totales_dias = Math.trunc(elem.min_totales / 420) + ' días ';
+                    if(Math.trunc(Math.abs((elem.min_totales % 420)/60)) > 1)
+                    {
+                      min_totales_dias += Math.trunc(Math.abs((elem.min_totales % 420)/60)) + ' horas ';
+                      Math.abs((elem.min_totales % 420)%60) > 1 ? min_totales_dias += Math.abs((elem.min_totales % 420)%60) + " minutos" : min_totales_dias += Math.abs((elem.min_totales % 420)%60) + " minuto";
+                    }
+                    else
+                    {
+                      min_totales_dias += Math.trunc(Math.abs((elem.min_totales % 420)/60)) + ' hora ';
+                      Math.abs((elem.min_totales % 420)%60) > 1 ? min_totales_dias += Math.abs((elem.min_totales % 420)%60) + " minutos" : min_totales_dias += Math.abs((elem.min_totales % 420)%60) + " minuto";
+                    }
+                  }
+                  else
+                  {
+                    min_totales_dias = Math.trunc(elem.min_totales / 420) + ' día ';
+                    if(Math.trunc(Math.abs((elem.min_totales % 420)/60)) > 1)
+                    {
+                      min_totales_dias += Math.trunc(Math.abs((elem.min_totales % 420)/60)) + ' horas ';
+                      Math.abs((elem.min_totales % 420)%60) > 1 ? min_totales_dias += Math.abs((elem.min_totales % 420)%60) + " minutos" : min_totales_dias += Math.abs((elem.min_totales % 420)%60) + " minuto";
+                    }
+                    else
+                    {
+                      min_totales_dias += Math.trunc(Math.abs((elem.min_totales % 420)/60)) + ' hora ';
+                      Math.abs((elem.min_totales % 420)%60) > 1 ? min_totales_dias += Math.abs((elem.min_totales % 420)%60) + " minutos" : min_totales_dias += Math.abs((elem.min_totales % 420)%60) + " minuto";
+                    }
+                  }
+                }
+                else
+                {
+                  if(Math.trunc(Math.abs(elem.min_totales / 420)) > 1)
+                  {
+                    min_totales_dias = Math.trunc(elem.min_totales / 420) + ' días ';
+                    Math.abs(elem.min_totales % 420) > 1 ? min_totales_dias += Math.abs(elem.min_totales % 420) + ' minutos' : min_totales_dias += Math.abs(elem.min_totales % 420) + ' minuto';
+                  }
+                  else
+                  {
+                    min_totales_dias = Math.trunc(elem.min_totales / 420) + ' día ';
+                    Math.abs(elem.min_totales % 420) > 1 ? min_totales_dias += Math.abs(elem.min_totales % 420) + ' minutos' : min_totales_dias += Math.abs(elem.min_totales % 420) + ' minuto';
+                  }
+                }
+              }
+            }
+          }
             return {
               ...elem,
+              //min_totales_dias: ((Math.abs(elem.min_totales) < 60) ? elem.min_totales + ' minutos' : ((Math.abs(elem.min_totales) < 420) ? (elem.min_totales / 60).toFixed(2) + ' horas' : (elem.min_totales / 420).toFixed(2) + ' días'))
+              min_totales_dias,
               fecha_mostrar: (( moment(elem.fecha).isValid()) ? moment(elem.fecha).format("DD/MM/YYYY") : '')
             }
           })
