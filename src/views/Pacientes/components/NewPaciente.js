@@ -156,7 +156,7 @@ class NewPaciente extends Component {
 
   }
 
-  inputChangedHandler = (event, inputIdentifier, newValue) => {
+  inputChangedHandler2 = (event, inputIdentifier, newValue) => {
     let checkValid;
     const updatedOrderForm = {
       ...this.state.newPacienteForm2

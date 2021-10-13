@@ -46,8 +46,8 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
-            touched: true
+            valid: true,
+            touched: false
         },
         peso: {
             elementType: 'input',
@@ -60,7 +60,7 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         // consulta: {
@@ -90,7 +90,7 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         id_mucosa: {
@@ -105,7 +105,7 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         tllc: {
@@ -119,7 +119,7 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         frecuencia_cardiaca: {
@@ -133,7 +133,7 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         frecuencia_respiratoria: {
@@ -147,7 +147,7 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         ganglios: {
@@ -161,7 +161,7 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         anexos_cutaneos: {
@@ -175,7 +175,7 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         }
     },
@@ -192,7 +192,7 @@ export const StateEditConsulta = {
             validation: {
                 required: true
             },
-            valid: false,
+            valid: true,
             touched: true
         }
     },
@@ -209,7 +209,7 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         anamnesis: {
@@ -224,8 +224,8 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
-            touched: false
+            valid: true,
+            touched: true
         }   
     },
     editConsultaForm4: {
@@ -241,8 +241,8 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
-            touched: false
+            valid: true,
+            touched: true
         }, 
         diag_complementarios: {
             elementType: 'textarea',
@@ -256,8 +256,8 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
-            touched: false
+            valid: true,
+            touched: true
         },
         id_diag_presuntivo: {
             elementType: 'select',
@@ -271,7 +271,7 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         tratamiento: {
@@ -286,8 +286,8 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
-            touched: false
+            valid: true,
+            touched: true
         },
         id_pronostico: {
             elementType: 'select',
@@ -301,7 +301,7 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         id_diag_definitivo: {
@@ -316,7 +316,7 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         }, 
     },
@@ -333,8 +333,8 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
-            touched: false
+            valid: true,
+            touched: true
         }, 
         observaciones: {
             elementType: 'textarea',
@@ -348,8 +348,8 @@ export const StateEditConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
-            touched: false
+            valid: true,
+            touched: true
         },
     },
     servicioClinica: null,
@@ -381,7 +381,7 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         peso: {
@@ -395,7 +395,7 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         // consulta: {
@@ -425,7 +425,7 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         id_mucosa: {
@@ -440,7 +440,7 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         tllc: {
@@ -454,7 +454,7 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         frecuencia_cardiaca: {
@@ -468,7 +468,7 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         frecuencia_respiratoria: {
@@ -482,7 +482,7 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         ganglios: {
@@ -496,7 +496,7 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         anexos_cutaneos: {
@@ -510,7 +510,7 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         }  
     },
@@ -528,7 +528,7 @@ export const StateNewConsulta = {
                 required: true
             },
             valid: false,
-            touched: true
+            touched: false
         }   
     },
     newConsultaForm3: {
@@ -544,7 +544,7 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         anamnesis: {
@@ -559,8 +559,8 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
-            touched: false
+            valid: true,
+            touched: true
         }   
     },
     newConsultaForm4: {
@@ -576,8 +576,8 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
-            touched: false
+            valid: true,
+            touched: true
         }, 
         diag_complementarios: {
             elementType: 'textarea',
@@ -591,8 +591,8 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
-            touched: false
+            valid: true,
+            touched: true
         },
         id_diag_presuntivo: {
             elementType: 'select',
@@ -606,7 +606,7 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         tratamiento: {
@@ -621,8 +621,8 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
-            touched: false
+            valid: true,
+            touched: true
         },
         id_pronostico: {
             elementType: 'select',
@@ -636,7 +636,7 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         id_diag_definitivo: {
@@ -651,7 +651,7 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
     },
@@ -668,8 +668,8 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
-            touched: false
+            valid: true,
+            touched: true
         }, 
         observaciones: {
             elementType: 'textarea',
@@ -683,8 +683,8 @@ export const StateNewConsulta = {
             validation: {
                 required: false
             },
-            valid: false,
-            touched: false
+            valid: true,
+            touched: true
         },
     },
     servicioClinica: null,

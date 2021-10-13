@@ -101,7 +101,7 @@ const dashboardRoutes = [
    
    
    {
-    accesos: [],
+    accesos: [200],
     path: "/itemsmenu",
     name: "Menu",
     rtlName: "DS",
@@ -372,6 +372,16 @@ const dashboardRoutes = [
       },
       {
         show:false,
+        accesos: [109],
+        path: "/signos",
+        name: "Signos y Sintomas",
+        rtlName: "SS",
+        icon: HealingIcon,
+        component: Signos,
+        layout: "/admin"
+      },
+      {
+        show:false,
         accesos: [107],
         path: "/servicios",
         name: "Servicios",
@@ -389,17 +399,7 @@ const dashboardRoutes = [
         icon: AssignmentIcon,
         component: Consultas,
         layout: "/admin"
-      },
-      {
-        show:false,
-        accesos: [109],
-        path: "/signos",
-        name: "Signos y Sintomas",
-        rtlName: "SS",
-        icon: HealingIcon,
-        component: Signos,
-        layout: "/admin"
-      },
+      },     
       {
         show:false,
         accesos: [110],

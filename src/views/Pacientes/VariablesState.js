@@ -70,7 +70,7 @@ export const StateEditPaciente = {
             validation: {
                 required: true
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         id_cliente: {
@@ -85,7 +85,7 @@ export const StateEditPaciente = {
             validation: {
                 required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         id_clase: {
@@ -100,7 +100,7 @@ export const StateEditPaciente = {
             validation: {
                 required: true
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         id_especie: {
@@ -115,7 +115,7 @@ export const StateEditPaciente = {
             validation: {
                 required: true
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         id_raza: {
@@ -128,9 +128,9 @@ export const StateEditPaciente = {
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         color: {
@@ -142,9 +142,9 @@ export const StateEditPaciente = {
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         id_sexo: {
@@ -157,9 +157,9 @@ export const StateEditPaciente = {
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         castrado: {
@@ -184,9 +184,9 @@ export const StateEditPaciente = {
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         id_habitos: {
@@ -199,9 +199,9 @@ export const StateEditPaciente = {
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },
         id_mascotas: {
@@ -214,9 +214,9 @@ export const StateEditPaciente = {
             },
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false,
+            valid: true,
             touched: true
         },    
         notas: {

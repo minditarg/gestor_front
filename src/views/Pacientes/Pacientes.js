@@ -148,7 +148,7 @@ class Pacientes extends Component {
         resultado = resultado.map(elem => {
           return {
             ...elem,
-            edad: ((elem.edad < 30) ? elem.edad + ' días' : ((elem.edad < 365) ? Math.floor(elem.edad / 30) + ' meses' : Math.floor(elem.edad / 365) + ' años')),
+            edad: (elem.edad != null)&&((elem.edad < 30) ? elem.edad + ' días' : ((elem.edad < 365) ? Math.floor(elem.edad / 30) + ' meses' : Math.floor(elem.edad / 365) + ' años')),
             castrado_mostrar: ((elem.castrado == 1) ? 'SI' : 'NO'),
           }
         })
