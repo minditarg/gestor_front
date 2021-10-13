@@ -248,80 +248,51 @@ export const StateEditPaciente = {
 export const StateNewPaciente = {
 
     newPacienteForm: {
-        nombre: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'text',
-                label: 'Nombre',
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: true
-            },
-            valid: false,
-            touched: true
-        },
-        id_cliente: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Dueño',
-                options: [
-                ],
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: false,
-            touched: true
-        },
-        id_clase: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Clase',
-                options: [
-                ],
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: true
-            },
-            valid: false,
-            touched: true
-        },
-        id_especie: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Especie',
-                options: [
-                ],
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: true
-            },
-            valid: false,
-            touched: true
-        },
-        id_raza: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Raza',
-                options: [
-                ],
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: true
-            },
-            valid: false,
-            touched: true
-        },
+        // id_clase: {
+        //     elementType: 'select',
+        //     elementConfig: {
+        //         label: 'Clase',
+        //         options: [
+        //         ],
+        //         fullWidth: true
+        //     },
+        //     value: '',
+        //     validation: {
+        //         required: true
+        //     },
+        //     valid: false,
+        //     touched: true
+        // },
+        // id_especie: {
+        //     elementType: 'select',
+        //     elementConfig: {
+        //         label: 'Especie',
+        //         options: [
+        //         ],
+        //         fullWidth: true
+        //     },
+        //     value: '',
+        //     validation: {
+        //         required: true
+        //     },
+        //     valid: false,
+        //     touched: true
+        // },
+        // id_raza: {
+        //     elementType: 'select',
+        //     elementConfig: {
+        //         label: 'Raza',
+        //         options: [
+        //         ],
+        //         fullWidth: true
+        //     },
+        //     value: '',
+        //     validation: {
+        //         required: true
+        //     },
+        //     valid: false,
+        //     touched: true
+        // },
         color: {
             elementType: 'input',
             elementConfig: {
@@ -424,6 +395,42 @@ export const StateNewPaciente = {
             touched: true
         },    
     },
+    newPacienteForm2: {
+        nombre: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Nombre',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },
+        id_cliente: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Dueño',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: true
+        },   
+    },
+    clase: null,
+    especie: null,
+    raza: null,
+    enabledEspecie: false,
+    enabledRaza: false,
     fechaAdopcion:null,
     fechaNacimiento:null,
     formIsValid: false,
