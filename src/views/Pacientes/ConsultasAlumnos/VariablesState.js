@@ -710,5 +710,5 @@ export const ColumnsListado = [
 { title: "Peso (Kg)", field: "peso" },
 { title: "Motivo de Consulta", field: "nombresigno" },
 { title: "Diagnóstico Presuntivo", field: "nombrepatologia" },
-{ title: "Diagnóstico Definitivo", field: "nombrepatologia" }
+{ title: "Diagnóstico Definitivo", field: "nombredefinitivo" }
 ];
