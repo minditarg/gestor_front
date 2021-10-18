@@ -131,6 +131,7 @@ class EditPaciente extends Component {
             editPacienteFormAlt.id_habitos.value = resultado.result[0].id_habitos;
             editPacienteFormAlt.id_mascotas.value = resultado.result[0].id_mascotas;
             editPacienteFormAlt.notas.value = resultado.result[0].notas;
+            editPacienteFormAlt.nro_historia_clinica.value = resultado.result[0].nro_historia_clinica;
             this.state.fechaNacimiento = resultado.result[0].fecha_nacimiento;
             this.state.fechaAdopcion = resultado.result[0].fecha_adopcion;
             for (let key in editPacienteFormAlt) {
@@ -333,7 +334,8 @@ class EditPaciente extends Component {
         id_mascotas: this.state.editPacienteForm.id_mascotas.value,
         notas: this.state.editPacienteForm.notas.value,
         fecha_nacimiento: this.state.fechaNacimiento,
-        fecha_adopcion: this.state.fechaAdopcion},this)
+        fecha_adopcion: this.state.fechaAdopcion,
+        nro_historia_clinica: this.state.editPacienteForm.nro_historia_clinica.value},this)
       .then(res => {
 
           this.setState({

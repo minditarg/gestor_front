@@ -88,6 +88,20 @@ export const StateEditPaciente = {
             valid: true,
             touched: true
         },
+        nro_historia_clinica: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Nº Historia Clínica',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        }, 
         id_clase: {
             elementType: 'select',
             elementConfig: {
@@ -233,7 +247,7 @@ export const StateEditPaciente = {
             },
             valid: true,
             touched: true
-        }, 
+        }  
     },
     fechaAdopcion:null,
     fechaNacimiento:null,
@@ -424,7 +438,21 @@ export const StateNewPaciente = {
             },
             valid: false,
             touched: true
-        },   
+        },
+        nro_historia_clinica: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Nº Historia Clínica',
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        }   
     },
     clase: null,
     especie: null,

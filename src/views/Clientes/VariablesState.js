@@ -132,20 +132,20 @@ export const StateEditCliente = {
             valid: false,
             touched: true
         },
-        nro_historia_clinica: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'text',
-                label: 'Nº Historia Clínica',
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: true
-        },
+        // nro_historia_clinica: {
+        //     elementType: 'input',
+        //     elementConfig: {
+        //         type: 'text',
+        //         label: 'Nº Historia Clínica',
+        //         fullWidth: true
+        //     },
+        //     value: '',
+        //     validation: {
+        //         required: false
+        //     },
+        //     valid: true,
+        //     touched: true
+        // },
         vet_derivante: {
             elementType: 'input',
             elementConfig: {
@@ -286,20 +286,20 @@ export const StateNewCliente = {
             valid: false,
             touched: true
         },
-        nro_historia_clinica: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'text',
-                label: 'Nº Historia Clínica',
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: true
-        },
+        // nro_historia_clinica: {
+        //     elementType: 'input',
+        //     elementConfig: {
+        //         type: 'text',
+        //         label: 'Nº Historia Clínica',
+        //         fullWidth: true
+        //     },
+        //     value: '',
+        //     validation: {
+        //         required: false
+        //     },
+        //     valid: true,
+        //     touched: true
+        // },
         vet_derivante: {
             elementType: 'input',
             elementConfig: {

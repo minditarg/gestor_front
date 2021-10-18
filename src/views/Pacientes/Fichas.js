@@ -286,7 +286,8 @@ class Fichas extends Component {
                 actions={[{
                   icon: 'edit',
                   tooltip: 'Editar Consulta',
-                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarficha/' + rowData.id)
+                  //onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarficha/' + rowData.id)
+                  onClick: (event, rowData) => this.props.history.push('/admin/consultas/editarconsulta/' + rowData.id)
                 },
                 {
                   icon: 'delete',

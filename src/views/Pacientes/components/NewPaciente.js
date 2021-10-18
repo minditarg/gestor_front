@@ -91,6 +91,7 @@ class NewPaciente extends Component {
 
     Database.post(`/insert-pacientes`, {nombre: this.state.newPacienteForm2.nombre.value, 
                                         id_cliente: this.state.newPacienteForm2.id_cliente.value,
+                                        nro_historia_clinica: this.state.newPacienteForm2.nro_historia_clinica.value,
                                         id_clase: i_clase,
                                         id_especie: i_especie,
                                         id_raza: i_raza,
@@ -245,6 +246,7 @@ class NewPaciente extends Component {
 
   resetespecie = () => {
     this.setState({ especie: null });
+    this.setState({ raza: null });
   }
 
   resetraza = () => {
