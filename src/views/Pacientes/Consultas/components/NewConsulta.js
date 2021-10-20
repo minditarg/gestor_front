@@ -93,11 +93,11 @@ class NewConsulta extends Component {
                                             id_signos: this.state.newConsultaForm3.id_signos.value,
                                             anamnesis: this.state.newConsultaForm3.anamnesis.value,
                                             examen_objetivo_particular: this.state.newConsultaForm4.examen_objetivo_particular.value,
-                                            diag_complementarios: this.state.newConsultaForm4.diag_complementarios.value,
-                                            id_diag_presuntivo: this.state.newConsultaForm4.id_diag_presuntivo.value,
-                                            tratamiento: this.state.newConsultaForm4.tratamiento.value,
-                                            id_pronostico: this.state.newConsultaForm4.id_pronostico.value,
-                                            id_diag_definitivo: this.state.newConsultaForm4.id_diag_definitivo.value,
+                                            diag_complementarios: this.state.newConsultaForm6.diag_complementarios.value,
+                                            id_diag_presuntivo: this.state.newConsultaForm7.id_diag_presuntivo.value,
+                                            tratamiento: this.state.newConsultaForm8.tratamiento.value,
+                                            id_pronostico: this.state.newConsultaForm9.id_pronostico.value,
+                                            id_diag_definitivo: this.state.newConsultaForm9.id_diag_definitivo.value,
                                             informe_diagnostico: this.state.newConsultaForm5.informe_diagnostico.value,
                                             observaciones: this.state.newConsultaForm5.observaciones.value,
                                             fecha: fecha},this)
@@ -115,6 +115,10 @@ class NewConsulta extends Component {
             this.resetNewForm3();
             this.resetNewForm4();
             this.resetNewForm5();
+            this.resetNewForm6();
+            this.resetNewForm7();
+            this.resetNewForm8();
+            this.resetNewForm9();
   
   
         },err => {
@@ -139,11 +143,11 @@ class NewConsulta extends Component {
                                             id_signos: this.state.newConsultaForm3.id_signos.value,
                                             anamnesis: this.state.newConsultaForm3.anamnesis.value,
                                             examen_objetivo_particular: this.state.newConsultaForm4.examen_objetivo_particular.value,
-                                            diag_complementarios: this.state.newConsultaForm4.diag_complementarios.value,
-                                            id_diag_presuntivo: this.state.newConsultaForm4.id_diag_presuntivo.value,
-                                            tratamiento: this.state.newConsultaForm4.tratamiento.value,
-                                            id_pronostico: this.state.newConsultaForm4.id_pronostico.value,
-                                            id_diag_definitivo: this.state.newConsultaForm4.id_diag_definitivo.value,
+                                            diag_complementarios: this.state.newConsultaForm6.diag_complementarios.value,
+                                            id_diag_presuntivo: this.state.newConsultaForm7.id_diag_presuntivo.value,
+                                            tratamiento: this.state.newConsultaForm8.tratamiento.value,
+                                            id_pronostico: this.state.newConsultaForm9.id_pronostico.value,
+                                            id_diag_definitivo: this.state.newConsultaForm9.id_diag_definitivo.value,
                                             informe_diagnostico: this.state.newConsultaForm5.informe_diagnostico.value,
                                             observaciones: this.state.newConsultaForm5.observaciones.value,
                                             fecha: fecha},this)
@@ -161,6 +165,10 @@ class NewConsulta extends Component {
             this.resetNewForm3();
             this.resetNewForm4();
             this.resetNewForm5();
+            this.resetNewForm6();
+            this.resetNewForm7();
+            this.resetNewForm8();
+            this.resetNewForm9();
 
 
         },err => {
@@ -202,7 +210,7 @@ class NewConsulta extends Component {
     })*/
   }
 
-  inputChangedHandler2 = (event, inputIdentifier) => {
+  inputChangedHandler2 = (event, inputIdentifier, formElement) => {
     let checkValid;
     const updatedOrderForm = {
       ...this.state.newConsultaForm2
@@ -224,7 +232,18 @@ class NewConsulta extends Component {
     }
     if (inputIdentifier == "id_servicio")
     {
-      if(event.target.value == 1)
+      var option = formElement.config.elementConfig.options;
+      for (let i =0; i < option.length;i++)
+      {
+        if (formElement.config.elementConfig.options[i].value === event.target.value)
+        {
+          var consulta = formElement.config.elementConfig.options[i].consulta;
+          var tratamiento = formElement.config.elementConfig.options[i].tratamiento;
+          break;
+        }
+      }
+      //if(event.target.value == 1)
+      /*if(consulta == 1)
       {
         this.setState({
           newConsultaForm2: updatedOrderForm,
@@ -239,7 +258,13 @@ class NewConsulta extends Component {
           formIsValid: formIsValidAlt,
           servicioClinica: null
         })
-      }
+      }*/
+      this.setState({
+        newConsultaForm2: updatedOrderForm,
+        formIsValid: formIsValidAlt,
+        servicioClinica: consulta,
+        servicioTratamiento: tratamiento
+      })
     } 
     else 
     {
@@ -326,6 +351,106 @@ class NewConsulta extends Component {
     }
     this.setState({
       newConsultaForm5: updatedOrderForm,
+      formIsValid: formIsValidAlt
+    })
+  }
+
+  inputChangedHandler6 = (event, inputIdentifier) => {
+    let checkValid;
+    const updatedOrderForm = {
+      ...this.state.newConsultaForm6
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    };
+    updatedFormElement.value = event.target.value;
+    checkValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = checkValid.isValid;
+    updatedFormElement.textValid = checkValid.textValid;
+    updatedFormElement.touched = true;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    let formIsValidAlt = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
+    }
+    this.setState({
+      newConsultaForm6: updatedOrderForm,
+      formIsValid: formIsValidAlt
+    })
+  }
+
+  inputChangedHandler7 = (event, inputIdentifier) => {
+    let checkValid;
+    const updatedOrderForm = {
+      ...this.state.newConsultaForm7
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    };
+    updatedFormElement.value = event.target.value;
+    checkValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = checkValid.isValid;
+    updatedFormElement.textValid = checkValid.textValid;
+    updatedFormElement.touched = true;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    let formIsValidAlt = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
+    }
+    this.setState({
+      newConsultaForm7: updatedOrderForm,
+      formIsValid: formIsValidAlt
+    })
+  }
+
+  inputChangedHandler8 = (event, inputIdentifier) => {
+    let checkValid;
+    const updatedOrderForm = {
+      ...this.state.newConsultaForm8
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    };
+    updatedFormElement.value = event.target.value;
+    checkValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = checkValid.isValid;
+    updatedFormElement.textValid = checkValid.textValid;
+    updatedFormElement.touched = true;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    let formIsValidAlt = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
+    }
+    this.setState({
+      newConsultaForm8: updatedOrderForm,
+      formIsValid: formIsValidAlt
+    })
+  }
+
+  inputChangedHandler9 = (event, inputIdentifier) => {
+    let checkValid;
+    const updatedOrderForm = {
+      ...this.state.newConsultaForm9
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    };
+    updatedFormElement.value = event.target.value;
+    checkValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = checkValid.isValid;
+    updatedFormElement.textValid = checkValid.textValid;
+    updatedFormElement.touched = true;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    let formIsValidAlt = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
+    }
+    this.setState({
+      newConsultaForm9: updatedOrderForm,
       formIsValid: formIsValidAlt
     })
   }
@@ -446,6 +571,66 @@ class NewConsulta extends Component {
     })
   }
 
+  resetNewForm6 = (all) => {
+    let newConsultaFormAlt = { ...this.state.newConsultaForm6 };
+    let successSubmit = this.state.successSubmit;
+    for (let key in newConsultaFormAlt) {
+      newConsultaFormAlt[key].value = ''
+    }
+    if (all)
+      successSubmit = false;
+
+    this.setState({
+      successSubmit: successSubmit,
+      formIsValid: false
+    })
+  }
+
+  resetNewForm7 = (all) => {
+    let newConsultaFormAlt = { ...this.state.newConsultaForm7 };
+    let successSubmit = this.state.successSubmit;
+    for (let key in newConsultaFormAlt) {
+      newConsultaFormAlt[key].value = ''
+    }
+    if (all)
+      successSubmit = false;
+
+    this.setState({
+      successSubmit: successSubmit,
+      formIsValid: false
+    })
+  }
+
+  resetNewForm8 = (all) => {
+    let newConsultaFormAlt = { ...this.state.newConsultaForm8 };
+    let successSubmit = this.state.successSubmit;
+    for (let key in newConsultaFormAlt) {
+      newConsultaFormAlt[key].value = ''
+    }
+    if (all)
+      successSubmit = false;
+
+    this.setState({
+      successSubmit: successSubmit,
+      formIsValid: false
+    })
+  }
+
+  resetNewForm9 = (all) => {
+    let newConsultaFormAlt = { ...this.state.newConsultaForm9 };
+    let successSubmit = this.state.successSubmit;
+    for (let key in newConsultaFormAlt) {
+      newConsultaFormAlt[key].value = ''
+    }
+    if (all)
+      successSubmit = false;
+
+    this.setState({
+      successSubmit: successSubmit,
+      formIsValid: false
+    })
+  }
+
   getServicio = () => {
     Database.get('/list-servicio', this)
       .then(res => {
@@ -454,6 +639,8 @@ class NewConsulta extends Component {
         let a = [];
         resultado.forEach(function (entry) {
           a.push({
+            consulta: entry.consulta,
+            tratamiento: entry.tratamiento,
             value: entry.id,
             displayValue: entry.codigo + " - " + entry.descripcion
           });
@@ -584,10 +771,10 @@ class NewConsulta extends Component {
             displayValue: entry.descripcion
           });
         })
-        let formulario = { ...this.state.newConsultaForm4 }
+        let formulario = { ...this.state.newConsultaForm7 }
         formulario.id_diag_presuntivo.elementConfig.options = [...a];
         this.setState({
-            newConsultaForm4: formulario
+            newConsultaForm7: formulario
         })
       }, err => {
         toast.error(err.message);
@@ -610,10 +797,10 @@ class NewConsulta extends Component {
             displayValue: entry.descripcion
           });
         })
-        let formulario = { ...this.state.newConsultaForm4 }
+        let formulario = { ...this.state.newConsultaForm9 }
         formulario.id_pronostico.elementConfig.options = [...a];
         this.setState({
-            newConsultaForm4: formulario
+            newConsultaForm9: formulario
         })
       }, err => {
         toast.error(err.message);
@@ -637,10 +824,10 @@ class NewConsulta extends Component {
             displayValue: entry.descripcion
           });
         })
-        let formulario = { ...this.state.newConsultaForm4 }
+        let formulario = { ...this.state.newConsultaForm9 }
         formulario.id_diag_definitivo.elementConfig.options = [...a];
         this.setState({
-            newConsultaForm4: formulario
+            newConsultaForm9: formulario
         })
       }, err => {
         toast.error(err.message);
@@ -768,6 +955,34 @@ class NewConsulta extends Component {
         config: this.state.newConsultaForm5[key]
       });
     }
+    const formElementsArray6 = [];
+    for (let key in this.state.newConsultaForm6) {
+      formElementsArray6.push({
+        id: key,
+        config: this.state.newConsultaForm6[key]
+      });
+    }
+    const formElementsArray7 = [];
+    for (let key in this.state.newConsultaForm7) {
+      formElementsArray7.push({
+        id: key,
+        config: this.state.newConsultaForm7[key]
+      });
+    }
+    const formElementsArray8 = [];
+    for (let key in this.state.newConsultaForm8) {
+      formElementsArray8.push({
+        id: key,
+        config: this.state.newConsultaForm8[key]
+      });
+    }
+    const formElementsArray9 = [];
+    for (let key in this.state.newConsultaForm9) {
+      formElementsArray9.push({
+        id: key,
+        config: this.state.newConsultaForm9[key]
+      });
+    }
     return (
 
       <form onSubmit={(event) => {
@@ -827,7 +1042,7 @@ class NewConsulta extends Component {
                   invalid={!formElement.config.valid}
                   shouldValidate={formElement.config.validation}
                   touched={formElement.config.touched}
-                  changed={(event) => this.inputChangedHandler2(event, formElement.id)}
+                  changed={(event) => this.inputChangedHandler2(event, formElement.id, formElement)}
                   />
               ))}
 
@@ -886,8 +1101,118 @@ class NewConsulta extends Component {
                     changed={(event) => this.inputChangedHandler4(event, formElement.id)}
                     />
                   ))}
+                  
+                  <br></br><br></br>
+                  <CardHeader color="primary">
+                  <h4 className={this.props.classes.cardTitleWhite}>DIAGNÓSTICO COMPLEMENTARIO</h4>
+                  </CardHeader>
+
+                  {formElementsArray6.map(formElement => (
+                  <Input
+                    key={"editconsulta-" + formElement.id}
+                    elementType={formElement.config.elementType}
+                    elementConfig={formElement.config.elementConfig}
+                    value={formElement.config.value}
+                    textValid={formElement.config.textValid}
+                    invalid={!formElement.config.valid}
+                    shouldValidate={formElement.config.validation}
+                    touched={formElement.config.touched}
+                    changed={(event) => this.inputChangedHandler6(event, formElement.id)}
+                    />
+                  ))}
+
+                  <br></br><br></br>
+                  <CardHeader color="primary">
+                  <h4 className={this.props.classes.cardTitleWhite}>DIAGNÓSTICO PRESUNTIVO</h4>
+                  </CardHeader>
+
+                  {formElementsArray7.map(formElement => (
+                  <Input
+                    key={"editconsulta-" + formElement.id}
+                    elementType={formElement.config.elementType}
+                    elementConfig={formElement.config.elementConfig}
+                    value={formElement.config.value}
+                    textValid={formElement.config.textValid}
+                    invalid={!formElement.config.valid}
+                    shouldValidate={formElement.config.validation}
+                    touched={formElement.config.touched}
+                    changed={(event) => this.inputChangedHandler7(event, formElement.id)}
+                    />
+                  ))}
+
+                  <br></br><br></br>
+                  <CardHeader color="primary">
+                  <h4 className={this.props.classes.cardTitleWhite}>TRATAMIENTO</h4>
+                  </CardHeader>
+
+                  {formElementsArray8.map(formElement => (
+                  <Input
+                    key={"editconsulta-" + formElement.id}
+                    elementType={formElement.config.elementType}
+                    elementConfig={formElement.config.elementConfig}
+                    value={formElement.config.value}
+                    textValid={formElement.config.textValid}
+                    invalid={!formElement.config.valid}
+                    shouldValidate={formElement.config.validation}
+                    touched={formElement.config.touched}
+                    changed={(event) => this.inputChangedHandler8(event, formElement.id)}
+                    />
+                  ))}
+
+                  <br></br><br></br>
+                  <CardHeader color="primary">
+                  <h4 className={this.props.classes.cardTitleWhite}>DIAGNÓSTICO DEFINITIVO</h4>
+                  </CardHeader>
+
+                  {formElementsArray9.map(formElement => (
+                  <Input
+                    key={"editconsulta-" + formElement.id}
+                    elementType={formElement.config.elementType}
+                    elementConfig={formElement.config.elementConfig}
+                    value={formElement.config.value}
+                    textValid={formElement.config.textValid}
+                    invalid={!formElement.config.valid}
+                    shouldValidate={formElement.config.validation}
+                    touched={formElement.config.touched}
+                    changed={(event) => this.inputChangedHandler9(event, formElement.id)}
+                    />
+                  ))}
                 </div>
-                :<div>
+                : this.state.servicioTratamiento ? <div>
+                
+                {formElementsArray5.map(formElement => (
+                  <Input
+                    key={"editconsulta-" + formElement.id}
+                    elementType={formElement.config.elementType}
+                    elementConfig={formElement.config.elementConfig}
+                    value={formElement.config.value}
+                    textValid={formElement.config.textValid}
+                    invalid={!formElement.config.valid}
+                    shouldValidate={formElement.config.validation}
+                    touched={formElement.config.touched}
+                    changed={(event) => this.inputChangedHandler5(event, formElement.id)}
+                    />
+                  ))}
+
+                <br></br><br></br>
+                  <CardHeader color="primary">
+                  <h4 className={this.props.classes.cardTitleWhite}>TRATAMIENTO</h4>
+                  </CardHeader>
+                
+                {formElementsArray8.map(formElement => (
+                  <Input
+                    key={"editconsulta-" + formElement.id}
+                    elementType={formElement.config.elementType}
+                    elementConfig={formElement.config.elementConfig}
+                    value={formElement.config.value}
+                    textValid={formElement.config.textValid}
+                    invalid={!formElement.config.valid}
+                    shouldValidate={formElement.config.validation}
+                    touched={formElement.config.touched}
+                    changed={(event) => this.inputChangedHandler8(event, formElement.id)}
+                    />
+                  ))}</div>
+                  :  <div>
                 {formElementsArray5.map(formElement => (
                   <Input
                     key={"editconsulta-" + formElement.id}

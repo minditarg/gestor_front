@@ -55,7 +55,7 @@ class NewServicio extends Component {
   handleSubmitNewServicio = (event) => {
     event.preventDefault();
 
-    Database.post(`/insert-servicios`, { codigo: this.state.newServicioForm.codigo.value, descripcion: this.state.newServicioForm.descripcion.value},this)
+    Database.post(`/insert-servicios`, { codigo: this.state.newServicioForm.codigo.value, descripcion: this.state.newServicioForm.descripcion.value, tratamiento: this.state.newServicioForm.tratamiento.value, consulta: this.state.newServicioForm.consulta.value},this)
       .then(res => {
 
           toast.success("El servicio se ha creado con exito!");
@@ -75,7 +75,7 @@ class NewServicio extends Component {
   }
 
 
-  inputChangedHandler = (event, inputIdentifier) => {
+  inputChangedHandler = (event, inputIdentifier, newValue) => {
     let checkValid;
     const updatedOrderForm = {
       ...this.state.newServicioForm
@@ -93,6 +93,20 @@ class NewServicio extends Component {
     let formIsValidAlt = true;
     for (let inputIdentifier in updatedOrderForm) {
       formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
+    }
+    if (inputIdentifier == "tratamiento") {
+      console.log("cambiando tratamiento: " + newValue);
+      if (newValue == true)
+        updatedOrderForm["tratamiento"].value = 1;
+      else
+        updatedOrderForm["tratamiento"].value = 0;
+    }
+    if (inputIdentifier == "consulta") {
+      console.log("cambiando consulta: " + newValue);
+      if (newValue == true)
+        updatedOrderForm["consulta"].value = 1;
+      else
+        updatedOrderForm["consulta"].value = 0;
     }
     this.setState({
       newServicioForm: updatedOrderForm,
@@ -191,7 +205,7 @@ class NewServicio extends Component {
                   invalid={!formElement.config.valid}
                   shouldValidate={formElement.config.validation}
                   touched={formElement.config.touched}
-                  changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                  changed={(event, newValue) => this.inputChangedHandler(event, formElement.id, newValue)}
                   />
               ))}
             </div>

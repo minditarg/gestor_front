@@ -243,82 +243,7 @@ export const StateEditConsulta = {
             },
             valid: true,
             touched: true
-        }, 
-        diag_complementarios: {
-            elementType: 'textarea',
-            elementConfig: {
-                type: 'text',
-                label: 'Diagnóstico Complementarios',
-                fullWidth: true,
-                rows: 4
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: true
-        },
-        id_diag_presuntivo: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Diagnóstico Presuntivo',
-                options: [
-                ],
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: true
-        },
-        tratamiento: {
-            elementType: 'textarea',
-            elementConfig: {
-                type: 'text',
-                label: 'Tratamiento',
-                fullWidth: true,
-                rows: 4
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: true
-        },
-        id_pronostico: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Pronóstico',
-                options: [
-                ],
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: true
-        },
-        id_diag_definitivo: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Diagnóstico Definitivo',
-                options: [
-                ],
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: true
-        }, 
+        } 
     },
     editConsultaForm5:{
         informe_diagnostico: {
@@ -352,7 +277,91 @@ export const StateEditConsulta = {
             touched: true
         },
     },
+    editConsultaForm6: {
+        diag_complementarios: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Diagnóstico Complementarios',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        },
+    },
+    editConsultaForm7: {
+        id_diag_presuntivo: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Diagnóstico Presuntivo',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        },
+    },
+    editConsultaForm8: {
+        tratamiento: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Tratamiento',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        },
+    },
+    editConsultaForm9: {
+        id_pronostico: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Pronóstico',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        },
+        id_diag_definitivo: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Diagnóstico Definitivo',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        }
+    },
     servicioClinica: null,
+    servicioTratamiento: null,
     files: [],
     url_archivo:null,
     openDeleteArchivo:false,
@@ -578,82 +587,7 @@ export const StateNewConsulta = {
             },
             valid: true,
             touched: true
-        }, 
-        diag_complementarios: {
-            elementType: 'textarea',
-            elementConfig: {
-                type: 'text',
-                label: 'Diagnóstico Complementarios',
-                fullWidth: true,
-                rows: 4
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: true
-        },
-        id_diag_presuntivo: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Diagnóstico Presuntivo',
-                options: [
-                ],
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: true
-        },
-        tratamiento: {
-            elementType: 'textarea',
-            elementConfig: {
-                type: 'text',
-                label: 'Tratamiento',
-                fullWidth: true,
-                rows: 4
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: true
-        },
-        id_pronostico: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Pronóstico',
-                options: [
-                ],
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: true
-        },
-        id_diag_definitivo: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Diagnóstico Definitivo',
-                options: [
-                ],
-                fullWidth: true
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: true
-        },
+        }
     },
     newConsultaForm5: {
         informe_diagnostico: {
@@ -687,7 +621,91 @@ export const StateNewConsulta = {
             touched: true
         },
     },
+    newConsultaForm6: {
+        diag_complementarios: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Diagnóstico Complementario',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        },
+    },
+    newConsultaForm7: {
+        id_diag_presuntivo: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Diagnóstico Presuntivo',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        },
+    },
+    newConsultaForm8: {
+        tratamiento: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Tratamiento',
+                fullWidth: true,
+                rows: 4
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        },
+    },
+    newConsultaForm9: {
+        id_pronostico: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Pronóstico',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        },
+        id_diag_definitivo: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Diagnóstico Definitivo',
+                options: [
+                ],
+                fullWidth: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        }
+    },
     servicioClinica: null,
+    servicioTratamiento: null,
     files: [],
     archivo_subido:null,
     url_archivo:null,
