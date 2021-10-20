@@ -60,7 +60,31 @@ export const StateEditServicio = {
             },
             valid: false,
             touched: false
-        } 
+        },
+        tratamiento: {
+            elementType: 'checkbox',
+            elementConfig: {
+                label: 'Tratamiento'
+            },
+            value: "0",
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        },
+        consulta: {
+            elementType: 'checkbox',
+            elementConfig: {
+                label: 'Consulta'
+            },
+            value: "0",
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        }
     },
     servicioEdit: null,
     editFormIsValid: false,
@@ -102,7 +126,31 @@ export const StateNewServicio = {
             },
             valid: false,
             touched: false
-        } 
+        },
+        tratamiento: {
+            elementType: 'checkbox',
+            elementConfig: {
+                label: 'Tratamiento'
+            },
+            value: "0",
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        },
+        consulta: {
+            elementType: 'checkbox',
+            elementConfig: {
+                label: 'Consulta'
+            },
+            value: "0",
+            validation: {
+                required: false
+            },
+            valid: true,
+            touched: true
+        }
     },
 
     formIsValid: false,

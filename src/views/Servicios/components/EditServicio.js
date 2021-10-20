@@ -110,6 +110,8 @@ class EditServicio extends Component {
             let editServicioFormAlt = { ...this.state.editServicioForm };
             editServicioFormAlt.codigo.value = resultado.result[0].codigo;
             editServicioFormAlt.descripcion.value = resultado.result[0].descripcion;
+            editServicioFormAlt.tratamiento.value = resultado.result[0].tratamiento;
+            editServicioFormAlt.consulta.value = resultado.result[0].consulta;
             for (let key in editServicioFormAlt) {
               editServicioFormAlt[key].touched = true;
               editServicioFormAlt[key].valid = true;
@@ -134,7 +136,7 @@ class EditServicio extends Component {
 
     event.preventDefault();
 
-    Database.post(`/update-servicio`, { id: this.props.match.params.idservicio, codigo: this.state.editServicioForm.codigo.value, descripcion: this.state.editServicioForm.descripcion.value},this)
+    Database.post(`/update-servicio`, { id: this.props.match.params.idservicio, codigo: this.state.editServicioForm.codigo.value, descripcion: this.state.editServicioForm.descripcion.value, tratamiento: this.state.editServicioForm.tratamiento.value, consulta: this.state.editServicioForm.consulta.value},this)
       .then(res => {
 
           this.setState({
@@ -156,7 +158,7 @@ class EditServicio extends Component {
   }
 
 
-  inputEditChangedHandler = (event, inputIdentifier) => {
+  inputEditChangedHandler = (event, inputIdentifier, newValue) => {
     let checkValid;
     const updatedOrderForm = {
       ...this.state.editServicioForm
@@ -174,6 +176,20 @@ class EditServicio extends Component {
     let formIsValidAlt = true;
     for (let inputIdentifier in updatedOrderForm) {
       formIsValidAlt = updatedOrderForm[inputIdentifier].valid && formIsValidAlt;
+    }
+    if (inputIdentifier == "tratamiento") {
+      console.log("cambiando tratamiento: " + newValue);
+      if (newValue == true)
+        updatedOrderForm["tratamiento"].value = 1;
+      else
+        updatedOrderForm["tratamiento"].value = 0;
+    }
+    if (inputIdentifier == "consulta") {
+      console.log("cambiando consulta: " + newValue);
+      if (newValue == true)
+        updatedOrderForm["consulta"].value = 1;
+      else
+        updatedOrderForm["consulta"].value = 0;
     }
     this.setState({
       editServicioForm: updatedOrderForm,
@@ -252,7 +268,7 @@ class EditServicio extends Component {
                   invalid={!formElement.config.valid}
                   shouldValidate={formElement.config.validation}
                   touched={formElement.config.touched}
-                  changed={(event) => this.inputEditChangedHandler(event, formElement.id)}
+                  changed={(event, newValue) => this.inputEditChangedHandler(event, formElement.id, newValue)}
                   />
               ))}
             </div>
