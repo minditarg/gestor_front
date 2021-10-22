@@ -16,7 +16,7 @@ onClose={props.handleClose}
 aria-labelledby="alert-dialog-title"
 aria-describedby="alert-dialog-description"
 >
-<DialogTitle id="alert-dialog-title">{props.deleteRowData && (`Eliminar consulta del paciente "${props.deleteRowData.nombrepaciente}"?` )}</DialogTitle>
+<DialogTitle id="alert-dialog-title">{props.deleteRowData && (`Eliminar consulta "${props.deleteRowData.nombreservicio}" de "${props.deleteRowData.nombrepaciente}"?` )}</DialogTitle>
 <DialogContent>
  <DialogContentText id="alert-dialog-description">
  Se eliminará la consulta seleccionada. Realmente desea eliminarla?

@@ -102,7 +102,7 @@ class NewPatologia extends Component {
   }
 
   getEspecie = () => {
-    Database.get('/list-especie', this)
+    Database.get('/list-especie-patologias', this)
       .then(res => {
 
         let resultado = [...res.result];

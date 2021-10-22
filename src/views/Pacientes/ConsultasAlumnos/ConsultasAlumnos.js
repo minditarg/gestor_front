@@ -16,6 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from "components/CustomButtons/Button.js";
 import AddIcon from '@material-ui/icons/Add';
+import ExportXLS from 'components/ExportXLS/ExportXLS';
 
 //import NewUser from "./components/NewConsulta";
 import EditConsulta from "./components/EditConsultaAlumno";
@@ -25,7 +26,7 @@ import { localization } from "variables/general.js";
 import { toast } from 'react-toastify';
 
 
-import { StateListConsultas, ColumnsListado } from "./VariablesState";
+import { StateListConsultas, ColumnsListado, ColumnsListadoFull } from "./VariablesState";
 
 import lightGreen from '@material-ui/core/colors/lightGreen';
 
@@ -260,6 +261,7 @@ class Consultas extends Component {
                       </p>
             </CardHeader>
             <CardBody>
+              <ExportXLS csvData={this.state.consultas} fileName={"Consultas - " + moment(Date.now()).format("DD_MM_YYYY")} header={ColumnsListadoFull} />
               <MaterialTable
                 isLoading={this.state.isLoading}
                 columns={ColumnsListado}
@@ -280,6 +282,8 @@ class Consultas extends Component {
                 }}
 
                 options={{
+                  filtering: true,
+                  emptyRowsWhenPaging: false,
                   actionsColumnIndex: -1,
                   exportButton: true,
                   exportAllData:true,

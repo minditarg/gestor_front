@@ -273,6 +273,8 @@ class Clientes extends Component {
                 }}
 
                 options={{
+                  filtering: true,
+                  emptyRowsWhenPaging: false,
                   actionsColumnIndex: -1,
                   exportButton: true,
                   exportAllData:true,

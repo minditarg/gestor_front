@@ -241,87 +241,7 @@ export const StateEditConsulta = {
             },
             valid: false,
             touched: false
-        }, 
-        diag_complementarios: {
-            elementType: 'textarea',
-            elementConfig: {
-                type: 'text',
-                label: 'Diagnóstico Complementarios',
-                fullWidth: true,
-                rows: 4 ,
-                disabled: true
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: false,
-            touched: false
-        },
-        id_diag_presuntivo: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Diagnóstico Presuntivo',
-                options: [
-                ],
-                fullWidth: true ,
-                disabled: true
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: false,
-            touched: true
-        },
-        tratamiento: {
-            elementType: 'textarea',
-            elementConfig: {
-                type: 'text',
-                label: 'Tratamiento',
-                fullWidth: true,
-                rows: 4 ,
-                disabled: true
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: false,
-            touched: false
-        },
-        id_pronostico: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Pronóstico',
-                options: [
-                ],
-                fullWidth: true ,
-                disabled: true
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: false,
-            touched: true
-        },
-        id_diag_definitivo: {
-            elementType: 'select',
-            elementConfig: {
-                label: 'Diagnóstico Definitivo',
-                options: [
-                ],
-                fullWidth: true ,
-                disabled: true
-            },
-            value: '',
-            validation: {
-                required: false
-            },
-            valid: false,
-            touched: true
-        }, 
+        }
     },
     editConsultaForm5:{
         informe_diagnostico: {
@@ -357,7 +277,96 @@ export const StateEditConsulta = {
             touched: false
         },
     },
+    editConsultaForm6:{
+        diag_complementarios: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Diagnóstico Complementario',
+                fullWidth: true,
+                rows: 4 ,
+                disabled: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        }
+    },
+    editConsultaForm7:{
+        id_diag_presuntivo: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Diagnóstico Presuntivo',
+                options: [
+                ],
+                fullWidth: true ,
+                disabled: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+    },
+    editConsultaForm8:{
+        tratamiento: {
+            elementType: 'textarea',
+            elementConfig: {
+                type: 'text',
+                label: 'Tratamiento',
+                fullWidth: true,
+                rows: 4 ,
+                disabled: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: false
+        },
+    },
+    editConsultaForm9:{
+        id_pronostico: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Pronóstico',
+                options: [
+                ],
+                fullWidth: true ,
+                disabled: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },
+        id_diag_definitivo: {
+            elementType: 'select',
+            elementConfig: {
+                label: 'Diagnóstico Definitivo',
+                options: [
+                ],
+                fullWidth: true ,
+                disabled: true
+            },
+            value: '',
+            validation: {
+                required: false
+            },
+            valid: false,
+            touched: true
+        },  
+    },
     servicioClinica: null,
+    servicioTratamiento: null,
     files: [],
     url_archivo:null,
     openDeleteArchivo:false,
@@ -712,3 +721,28 @@ export const ColumnsListado = [
 { title: "Diagnóstico Presuntivo", field: "nombrepatologia" },
 { title: "Diagnóstico Definitivo", field: "nombredefinitivo" }
 ];
+
+export const ColumnsListadoFull = [
+    { title: "Fecha", field: "fecha_mostrar" , customSort: (a, b) => parseInt(moment(a.inicio_licencia).format("YYYYMMDD")) - parseInt(moment(b.inicio_licencia).format("YYYYMMDD"))},
+    { title: "Nº Historia Clinica", field: "historiaclinica" },
+    { title: "Servicio", field: "nombreservicio" },
+    { title: "Motivo de Consulta", field: "nombresigno" },
+    { title: "Anamnesis", field: "anamnesis" },
+    { title: "Temperatura (ºC)", field: "temperatura" },
+    { title: "Peso (Kg)", field: "peso" },
+    { title: "Sensorio", field: "nombresensorio" },
+    { title: "Color de las Mucosas", field: "nombremucosa" },
+    { title: "Tiempo de Llenado Capilar", field: "tllc" },
+    { title: "Frecuencia Cardíaca", field: "frecuencia_cardiaca" },
+    { title: "Frecuencia Respiratoria", field: "frecuencia_respiratoria" },
+    { title: "Ganglios", field: "ganglios" },
+    { title: "Anexos Cutáneos", field: "anexos_cutaneos" },
+    { title: "Examen Objetivo Particular", field: "examen_objetivo_particular" },
+    { title: "Dianóstico Complementario", field: "diag_complementarios" },
+    { title: "Diagnóstico Presuntivo", field: "nombrepatologia" },
+    { title: "Tratamiento", field: "tratamiento" },
+    { title: "Pronóstico", field: "nombrepronostico" },
+    { title: "Diagnóstico Definitivo", field: "nombredefinitivo" },
+    { title: "Informe Diagnóstico", field: "informe_diagnostico" },
+    { title: "Observaciones", field: "observaciones" }
+    ];
