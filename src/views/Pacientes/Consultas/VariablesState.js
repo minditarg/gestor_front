@@ -707,6 +707,7 @@ export const StateNewConsulta = {
     servicioClinica: null,
     servicioTratamiento: null,
     files: [],
+    lastID: null,
     archivo_subido:null,
     url_archivo:null,
     openDeleteArchivo:false,

@@ -150,7 +150,7 @@ class NewConsulta extends Component {
                                             id_diag_definitivo: this.state.newConsultaForm9.id_diag_definitivo.value,
                                             informe_diagnostico: this.state.newConsultaForm5.informe_diagnostico.value,
                                             observaciones: this.state.newConsultaForm5.observaciones.value,
-                                            fecha: fecha},this)
+                                            fecha: fecha, idConsulta: this.state.lastID},this)
         .then(res => {
 
             toast.success("La consulta se ha creado con exito!");
@@ -478,9 +478,9 @@ class NewConsulta extends Component {
         // callback.bind(this)(file_name);
         console.log(res);
         this.setState({
-          archivo_subido: true
+          archivo_subido: true,
+          lastID: res.result[0][0]["LAST_INSERT_ID()"]
         })
-
       }, err => {
         //    setIsLoading(false);
         toast.error(err.message)
