@@ -218,62 +218,18 @@ class EditModule extends Component {
                   }}
                 />
               ))}
-              {
+              { //Footer -> Estático
                 this.state.module && this.state.module.id_type_module == 1 &&
                 < ModType3
                   module={this.state.module}
                   orderFormPrincipal={this.state.orderForm}
                   formIsValidPrincipal={this.state.formIsValid}
                   orderForm={{
-                    titulo: {
-                      elementType: 'input',
-                      elementConfig: {
-                        type: 'text',
-                        label: 'Titulo',
-                        fullWidth: true
-                      },
-                      value: '',
-                      validation: {
-                        required: false
-                      },
-                      valid: true,
-                      touched: false
-                    },
-                    texto: {
+                    texto_1: {
                       elementType: 'textarea',
                       elementConfig: {
                         type: 'text',
-                        label: 'Texto',
-                        fullWidth: true
-                      },
-                      value: '',
-                      validation: {
-                        required: false
-                      },
-                      valid: true,
-                      touched: false
-                    }
-
-                  }}
-                  archivo={false}
-                  htmlText={false}
-
-
-                />
-
-              }
-              {
-                this.state.module && this.state.module.id_type_module == 2 &&
-                < ModType3
-                  module={this.state.module}
-                  orderFormPrincipal={this.state.orderForm}
-                  formIsValidPrincipal={this.state.formIsValid}
-                  orderForm={{
-                    titulo: {
-                      elementType: 'input',
-                      elementConfig: {
-                        type: 'text',
-                        label: 'Titulo',
+                        label: 'Texto 1',
                         fullWidth: true
                       },
                       value: '',
@@ -283,41 +239,11 @@ class EditModule extends Component {
                       valid: true,
                       touched: false
                     },
-                    url: {
-                      elementType: 'input',
+                    texto_2: {
+                      elementType: 'textarea',
                       elementConfig: {
                         type: 'text',
-                        label: 'URL  ',
-                        fullWidth: true
-                      },
-                      value: '',
-                      validation: {
-                        required: false
-                      },
-                      valid: true,
-                      touched: false
-                    }
-
-                  }}
-                  archivo={false}
-                  htmlText={false}
-
-
-                />
-
-              }
-              {
-                this.state.module && this.state.module.id_type_module == 3 &&
-                < ModType3
-                  module={this.state.module}
-                  orderFormPrincipal={this.state.orderForm}
-                  formIsValidPrincipal={this.state.formIsValid}
-                  orderForm={{
-                    titulo: {
-                      elementType: 'input',
-                      elementConfig: {
-                        type: 'text',
-                        label: 'Titulo',
+                        label: 'Texto 2',
                         fullWidth: true
                       },
                       value: '',
@@ -327,68 +253,12 @@ class EditModule extends Component {
                       valid: true,
                       touched: false
                     },
-
-                    texto_linkedIn: {
-                      elementType: 'input',
+                   
+                    texto_3: {
+                      elementType: 'textarea',
                       elementConfig: {
                         type: 'text',
-                        label: 'Texto LinkedIn',
-                        fullWidth: true
-                      },
-                      value: '',
-                      validation: {
-                        required: false
-                      },
-                      valid: true,
-                      touched: false
-                    },
-                    url_linkedIn: {
-                      elementType: 'input',
-                      elementConfig: {
-                        type: 'text',
-                        label: 'URL LinkedIn',
-                        fullWidth: true
-                      },
-                      value: '',
-                      validation: {
-                        required: false
-                      },
-                      valid: true,
-                      touched: false
-                    },
-                    texto_instagram: {
-                      elementType: 'input',
-                      elementConfig: {
-                        type: 'text',
-                        label: 'Texto Instagram',
-                        fullWidth: true
-                      },
-                      value: '',
-                      validation: {
-                        required: false
-                      },
-                      valid: true,
-                      touched: false
-                    },
-                    url_instagram: {
-                      elementType: 'input',
-                      elementConfig: {
-                        type: 'text',
-                        label: 'URL Instagram',
-                        fullWidth: true
-                      },
-                      value: '',
-                      validation: {
-                        required: false
-                      },
-                      valid: true,
-                      touched: false
-                    },
-                    texto_facebook: {
-                      elementType: 'input',
-                      elementConfig: {
-                        type: 'text',
-                        label: 'Texto Facebook',
+                        label: 'Texto Inferior',
                         fullWidth: true
                       },
                       value: '',
@@ -412,11 +282,12 @@ class EditModule extends Component {
                       valid: true,
                       touched: false
                     },
-                    texto_telegram: {
+                   
+                    url_instagram: {
                       elementType: 'input',
                       elementConfig: {
                         type: 'text',
-                        label: 'Texto Telegram',
+                        label: 'URL Instagram',
                         fullWidth: true
                       },
                       value: '',
@@ -426,11 +297,11 @@ class EditModule extends Component {
                       valid: true,
                       touched: false
                     },
-                    url_telegram: {
+                    url_twitter: {
                       elementType: 'input',
                       elementConfig: {
                         type: 'text',
-                        label: 'URL Telegram',
+                        label: 'URL Twitter',
                         fullWidth: true
                       },
                       value: '',
@@ -440,11 +311,11 @@ class EditModule extends Component {
                       valid: true,
                       touched: false
                     },
-                    texto_youtube: {
+                    url_linkedin: {
                       elementType: 'input',
                       elementConfig: {
                         type: 'text',
-                        label: 'Texto Youtube',
+                        label: 'URL Linkedin',
                         fullWidth: true
                       },
                       value: '',
@@ -468,11 +339,11 @@ class EditModule extends Component {
                       valid: true,
                       touched: false
                     },
-                    texto_twitter: {
+                    direccion: {
                       elementType: 'input',
                       elementConfig: {
                         type: 'text',
-                        label: 'Texto Twitter',
+                        label: 'Dirección',
                         fullWidth: true
                       },
                       value: '',
@@ -482,11 +353,53 @@ class EditModule extends Component {
                       valid: true,
                       touched: false
                     },
-                    url_twitter: {
+                    direccion_unr: {
                       elementType: 'input',
                       elementConfig: {
                         type: 'text',
-                        label: 'URL Twitter',
+                        label: 'Dirección UNR',
+                        fullWidth: true
+                      },
+                      value: '',
+                      validation: {
+                        required: false
+                      },
+                      valid: true,
+                      touched: false
+                    },
+                    telefonos: {
+                      elementType: 'input',
+                      elementConfig: {
+                        type: 'text',
+                        label: 'Telefonos',
+                        fullWidth: true
+                      },
+                      value: '',
+                      validation: {
+                        required: false
+                      },
+                      valid: true,
+                      touched: false
+                    },
+                    telefonos_unr: {
+                      elementType: 'input',
+                      elementConfig: {
+                        type: 'text',
+                        label: 'Telefonos UNR',
+                        fullWidth: true
+                      },
+                      value: '',
+                      validation: {
+                        required: false
+                      },
+                      valid: true,
+                      touched: false
+                    },
+                    email: {
+                      elementType: 'input',
+                      elementConfig: {
+                        type: 'text',
+                        label: 'Email',
                         fullWidth: true
                       },
                       value: '',
@@ -496,6 +409,43 @@ class EditModule extends Component {
                       valid: true,
                       touched: false
                     }
+
+
+                  }}
+                  items={{
+                    orderForm: {
+                      link_interes: {
+                        elementType: 'input',
+                        elementConfig: {
+                          type: 'text',
+                          label: 'Link Interes',
+                          fullWidth: true
+                        },
+                        value: '',
+                        validation: {
+                          required: false
+                        },
+                        valid: true,
+                        touched: false
+                      },
+                      url_interes: {
+                        elementType: 'input',
+                        elementConfig: {
+                          type: 'text',
+                          label: 'URL Interes',
+                          fullWidth: true
+                        },
+                        value: '',
+                        validation: {
+                          required: false
+                        },
+                        valid: true,
+                        touched: false
+                      }
+
+                    },
+                    archivo: false,
+                    htmlText: false
 
 
                   }}
@@ -508,40 +458,62 @@ class EditModule extends Component {
               }
 
               {
-                this.state.module && this.state.module.id_type_module == 4 &&
+                //Galería
+                // ITEMS: Imágen,Título,Texto,URL  
+                this.state.module && this.state.module.id_type_module == 2 &&
                 < ModType3
                   module={this.state.module}
                   orderFormPrincipal={this.state.orderForm}
                   formIsValidPrincipal={this.state.formIsValid}
-                  orderForm={{
-                    titulo: {
-                      elementType: 'input',
-                      elementConfig: {
-                        type: 'text',
-                        label: 'Titulo',
-                        fullWidth: true
+                  items={{
+                    orderForm: {
+                      titulo: {
+                        elementType: 'input',
+                        elementConfig: {
+                          type: 'text',
+                          label: 'Titulo',
+                          fullWidth: true
+                        },
+                        value: '',
+                        validation: {
+                          required: false
+                        },
+                        valid: true,
+                        touched: false
                       },
-                      value: '',
-                      validation: {
-                        required: false
+                      texto: {
+                        elementType: 'textarea',
+                        elementConfig: {
+                          type: 'text',
+                          label: 'Texto',
+                          fullWidth: true
+                        },
+                        value: '',
+                        validation: {
+                          required: false
+                        },
+                        valid: true,
+                        touched: false
                       },
-                      valid: true,
-                      touched: false
+                      url: {
+                        elementType: 'input',
+                        elementConfig: {
+                          type: 'text',
+                          label: 'URL',
+                          fullWidth: true
+                        },
+                        value: '',
+                        validation: {
+                          required: false
+                        },
+                        valid: true,
+                        touched: false
+                      }
+
                     },
-                    mail: {
-                      elementType: 'input',
-                      elementConfig: {
-                        type: 'text',
-                        label: 'Email Contacto ',
-                        fullWidth: true
-                      },
-                      value: '',
-                      validation: {
-                        required: false
-                      },
-                      valid: true,
-                      touched: false
-                    }
+                    archivo: true,
+                    htmlText: false
+
 
                   }}
                   archivo={false}
@@ -551,6 +523,7 @@ class EditModule extends Component {
                 />
 
               }
+              
 
 
 
