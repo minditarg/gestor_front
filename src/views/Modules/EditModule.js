@@ -465,6 +465,37 @@ class EditModule extends Component {
                   module={this.state.module}
                   orderFormPrincipal={this.state.orderForm}
                   formIsValidPrincipal={this.state.formIsValid}
+                  orderForm={{
+                    width: {
+                      elementType: 'input',
+                      elementConfig: {
+                        type: 'text',
+                        label: 'Width',
+                        fullWidth: true
+                      },
+                      value: '',
+                      validation: {
+                        required: false
+                      },
+                      valid: true,
+                      touched: false
+                    },
+                    height: {
+                      elementType: 'input',
+                      elementConfig: {
+                        type: 'text',
+                        label: 'Height',
+                        fullWidth: true
+                      },
+                      value: '',
+                      validation: {
+                        required: false
+                      },
+                      valid: true,
+                      touched: false
+                    },
+
+                  }}
                   items={{
                     orderForm: {
                       titulo: {
@@ -508,6 +539,20 @@ class EditModule extends Component {
                         },
                         valid: true,
                         touched: false
+                      },
+                      archivo: {
+                        elementType: 'input',
+                        elementConfig: {
+                          type: 'text',
+                          label: 'Imagen',
+                          fullWidth: true
+                        },
+                        value: '',
+                        validation: {
+                          required: false
+                        },
+                        valid: true,
+                        touched: false
                       }
 
                     },
@@ -518,6 +563,23 @@ class EditModule extends Component {
                   }}
                   archivo={false}
                   htmlText={false}
+
+
+                />
+
+              }
+              
+
+              {
+                //Galería
+                // ITEMS: Imágen,Título,Texto,URL  
+                this.state.module && this.state.module.id_type_module == 3 &&
+                < ModType3
+                  module={this.state.module}
+                  orderFormPrincipal={this.state.orderForm}
+                  formIsValidPrincipal={this.state.formIsValid}
+                
+                  htmlEditorText={true}
 
 
                 />

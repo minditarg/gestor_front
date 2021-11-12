@@ -84,7 +84,9 @@ class EditPage extends Component {
       .then(resultado => {
 
         if (resultado.result.length > 0) {
-
+          console.log(resultado);
+          if(resultado.result[0].tipo != this.props.tipo)
+            this.props.history.replace('/');
 
           let orderFormCopy = { ...this.state.orderForm };
           for (let key in orderFormCopy) {

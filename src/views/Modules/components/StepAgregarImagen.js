@@ -83,6 +83,8 @@ export default function HorizontalLabelPositionBelowStepper(props) {
 
     const [urlImg, setUrlImg] = React.useState(null);
     const [img, setImg] = React.useState(null);
+    const [imgName, setImgName] = React.useState(null);
+    const [imgExt, setImgExt] = React.useState(null);
     const [sizeMsj, setSizeMsj] = React.useState(false);
 
     const steps = getSteps();
@@ -90,6 +92,12 @@ export default function HorizontalLabelPositionBelowStepper(props) {
 
     const onFilesChange = function (files) {
         setImg(URL.createObjectURL(files[0]));
+        let filenameWithoutExtension = files[0].name.split('.').slice(0, -1).join('.'); 
+        let fileName = filenameWithoutExtension.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        let extension = files[0].name.split('.').pop();
+        let fileNameComplete = [fileName,extension].join('.');
+        setImgName(fileNameComplete);
+        setImgExt(extension);
 
     }
 
@@ -106,17 +114,19 @@ export default function HorizontalLabelPositionBelowStepper(props) {
 
     const handleFile = (UrlFile, callback) => {
         setIsLoading(true);
-        Database.post('/insert-noticia-image', { extension: 'jpg' }, this)
-            .then(res => {
-                let file_name = res.result[0].file_name;
-                let file = urltoFile(UrlFile, file_name, 'image/png');
+      
+                let file = urltoFile(UrlFile, imgName, 'image/jpg');
                 setIsLoading(false);
                 file.then(file => {
 
                     const formData = new FormData();
-                    formData.append('userPhoto', file);
                     if (props.thumbs)
                         formData.append('thumbs', JSON.stringify(props.thumbs));
+                    if (props.module_id)
+                        formData.append('module_id', props.module_id);    
+                    
+                    formData.append('userPhoto', file);
+                   
 
                     Database.post('/insert-only-file', formData, this, false, {
                         headers: {
@@ -126,8 +136,10 @@ export default function HorizontalLabelPositionBelowStepper(props) {
 
                         .then(res => {
                             setIsLoading(false);
-                            toast.success("El archivo" + file.name + "se ha subido con exito!");
-                            callback.bind(this)(file_name);
+                            console.log(res);
+                            toast.success("El archivo" + res.file.filename + " se ha subido con exito!");
+        
+                            callback.bind(this)(res.file.filename);
 
 
                         }, err => {
@@ -142,14 +154,10 @@ export default function HorizontalLabelPositionBelowStepper(props) {
                 }, err => {
                     setIsLoading(false);
                     this.setState({ isLoading: false })
+                    toast.error(err.message);
                 })
 
-            }, err => {
-
-                setIsLoading(false);
-                toast.error(err.message);
-
-            })
+           
 
 
 
@@ -157,7 +165,7 @@ export default function HorizontalLabelPositionBelowStepper(props) {
 
     const handleSeleccionar = () => {
         if(cropper.current.getData().width >= props.width || aceptarBoolean) { 
-        let imageB64 = cropper.current.getCroppedCanvas({ minWidth: props.width, width: props.width, fillColor: '#fff' }).toDataURL('image/jpeg');
+        let imageB64 = cropper.current.getCroppedCanvas({ minWidth: props.width, width: props.width, fillColor: 'transparent' }).toDataURL('image/' + imgExt);
         handleFile(imageB64, function (filename) {
             let orderForm_Alt = { ...orderForm };
             if (orderForm_Alt && orderForm_Alt.archivo)
@@ -180,7 +188,6 @@ export default function HorizontalLabelPositionBelowStepper(props) {
 
 
     React.useEffect(() => {
-
 
         if (props.orderForm) {
             let orderFormCopy = JSON.parse(JSON.stringify(props.orderForm));

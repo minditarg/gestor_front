@@ -3,7 +3,10 @@ import Database from "variables/Database.js";
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import $ from 'jquery';
 import moment from "moment";
+import AceEditor from "react-ace";
 
+import "ace-builds/src-noconflict/mode-html";
+import "ace-builds/src-noconflict/theme-monokai";
 
 import Input from 'components/Input/Input';
 import ArrowBack from '@material-ui/icons/ArrowBack';
@@ -61,11 +64,11 @@ const styles = {
 };
 
 
-const SortableItem = sortableElement(({ value, deleteItem, editItem, orderForm }) => {
+const SortableItem = sortableElement(({ value, deleteItem, editItem, orderForm,module_id }) => {
     let imagen = null;
     let array = [];
     if (value.archivo && (value.archivo.endsWith('.jpg') || value.archivo.endsWith('.png') || value.archivo.endsWith('.jpeg') || value.archivo.endsWith('.gif')))
-        imagen = (<img src={'/' + process.env.REACT_APP_UPLOADS_FOLDER + '/thumbs/' + value.archivo} style={{ width: '75px' }} />);
+        imagen = (<img src={'/' + process.env.REACT_APP_UPLOADS_FOLDER + '/modules/' + module_id + '/thumbs/' + value.archivo} style={{ width: '75px' }} />);
     if (orderForm) {
         for (let key in orderForm) {
             array.push(value[key]);
@@ -201,6 +204,11 @@ class ModType3 extends Component {
 
         }
 
+        if (this.props.htmlEditorText) {
+            contenido.htmlEditorText = this.state.htmlEditorText;
+
+        }
+
 
         contenido = JSON.stringify(contenido);
 
@@ -261,10 +269,16 @@ class ModType3 extends Component {
         if (this.props.htmlText && contenido && contenido.htmlText)
             htmlText = contenido.htmlText
 
+        let htmlEditorText = '';
+        if (this.props.htmlEditorText && contenido && contenido.htmlEditorText)
+            htmlEditorText = contenido.htmlEditorText;  
+
+
         this.setState({
             orderForm: orderForm,
             formIsValid: formIsValid,
-            htmlText: htmlText
+            htmlText: htmlText,
+            htmlEditorText: htmlEditorText
         })
 
         if (this.props.items && module && module.contenido) {
@@ -330,6 +344,7 @@ class ModType3 extends Component {
 
     onClickItems = (rowData, newRowData) => {
         console.log(rowData);
+        console.log(newRowData)
         let items = [... this.state.items];
         if (rowData) {
             let indexFind = items.findIndex(elem => {
@@ -357,6 +372,12 @@ class ModType3 extends Component {
         this.setState({
             htmlText: content
         })
+    }
+
+    handleHtmlEditorChange = (content) => {
+      this.setState({
+          htmlEditorText:content
+      })
     }
 
 
@@ -451,6 +472,32 @@ class ModType3 extends Component {
                             />
                         </div>
                     }
+
+                    {this.props.htmlEditorText &&
+                        <div>
+                            <h4>HTML</h4>
+                            <AceEditor
+                        placeholder="Agregue codigo HTML aqui"
+                        mode="html"
+                        theme="monokai"
+                        name="blah2"
+                        onLoad={elem => console.log(elem)}
+                        onChange={elem => { this.handleHtmlEditorChange.bind(this)(elem) }}
+                        fontSize={14}
+                        value={ this.state.htmlEditorText }
+                        showPrintMargin={true}
+                        showGutter={true}
+                        highlightActiveLine={true}
+                        setOptions={{
+                        enableBasicAutocompletion: false,
+                        enableLiveAutocompletion: false,
+                        enableSnippets: false,
+                        showLineNumbers: true,
+                        tabSize: 2,
+                        }}/>
+                        </div>
+                    }
+
                     {this.props.items &&
                         <div>
 
@@ -458,7 +505,7 @@ class ModType3 extends Component {
                             <Button style={{}} color="primary" variant="contained" type="button" onClick={this.openDialogItems.bind(this)}  ><Save /> Agregar Item</Button>
                             <SortableContainer onSortEnd={this.onSortEnd} orderForm={this.props.items && this.props.items.orderForm} useDragHandle>
                                 {this.state.items.map((elem, index) => (
-                                    <SortableItem key={`item-${index}`} index={index} value={elem} deleteItem={this.deleteItem.bind(this)} editItem={this.editItem.bind(this)} orderForm={this.props.items && this.props.items.orderForm} />
+                                    <SortableItem key={`item-${index}`} index={index} value={elem} deleteItem={this.deleteItem.bind(this)} editItem={this.editItem.bind(this)} orderForm={this.props.items && this.props.items.orderForm} module_id={ this.props.module.id } />
                                 ))}
 
 
@@ -513,9 +560,10 @@ class ModType3 extends Component {
                                 },
                             }}
                             archivo={this.props.archivo}
-                            aspectRadio={ this.props.aspectRadio }
-                            width = { this.props.width }
+                            aspectRadio={ (this.props.orderForm.width && this.props.orderForm.height && (this.props.orderForm.width.value/this.state.orderForm.height.value)) || this.props.aspectRadio }
+                            width = { (this.props.orderForm.width && this.props.orderForm.width.value) || this.props.width }
                             onClickItem={this.onClick.bind(this)}
+                            module_id = {this.props.module.id}
                         />
                     }
                 </DialogContent>
@@ -540,10 +588,11 @@ class ModType3 extends Component {
                             rowItem={this.state.rowItem}
                             orderForm={this.props.items && this.props.items.orderForm}
                             archivo={this.props.items && this.props.items.archivo}
-                            aspectRadio={ this.props.aspectRadio }
-                            width = { this.props.width }
+                            aspectRadio={ (this.state.orderForm.width && this.state.orderForm.height && (this.state.orderForm.width.value/this.state.orderForm.height.value)) || this.props.aspectRadio }
+                            width = { (this.state.orderForm.width && this.state.orderForm.width.value) || this.props.width }
                             onClickItem={this.onClickItems.bind(this)}
                             htmlText={this.props.items && this.props.items.htmlText}
+                            module_id = {this.props.module.id}
                         />
                     }
                 </DialogContent>
