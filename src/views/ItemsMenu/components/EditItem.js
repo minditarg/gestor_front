@@ -208,7 +208,7 @@ class EditItem extends Component {
 
 
   getPages = () => {
-    Database.get(`/list-pages`, this)
+    Database.get(`/list-pages/tipo/D`, this)
       .then(res => {
 
         let resultado = res.result;

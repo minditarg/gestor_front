@@ -432,8 +432,8 @@ class ModType3 extends Component {
                                 <h4>Imagen</h4>
 
 
-                                {this.state.orderForm && this.state.orderForm.archivo && (this.state.orderForm.archivo.value.endsWith('.jpg') || this.state.orderForm.archivo.value.endsWith('.jpeg') || this.state.orderForm.archivo.value.endsWith('.gif') || this.state.orderForm.archivo.value.endsWith('.png')) &&
-                                    <img src={'/' + process.env.REACT_APP_UPLOADS_FOLDER + '/thumbs/' + this.state.orderForm.archivo.value} />
+                                {this.state.orderForm && this.state.orderForm.archivo && (this.state.orderForm.archivo.value.toLowerCase().endsWith('.jpg') || this.state.orderForm.archivo.value.toLowerCase().endsWith('.jpeg') || this.state.orderForm.archivo.value.toLowerCase().endsWith('.gif') || this.state.orderForm.archivo.value.toLowerCase().endsWith('.png')) &&
+                                    <img src={'/' + process.env.REACT_APP_UPLOADS_FOLDER + (this.props.module ? '/modules/' + this.props.module.id : '' ) +'/thumbs/' + this.state.orderForm.archivo.value} />
 
                                 }
 
