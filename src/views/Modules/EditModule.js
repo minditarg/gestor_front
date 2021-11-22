@@ -74,7 +74,7 @@ const styles = {
   }
 };
 
-const arrayModules = [Boton,Galeria,Html,ImagenTexto,InfoCantidades,ListaDesplegable,ListaTexto,ListaTextoEnriquecido,TextoEnriquecido,TextoParrafo,Videos]
+const arrayModules = [HomeFooter,Boton,Galeria,Html,ImagenTexto,InfoCantidades,ListaDesplegable,ListaTexto,ListaTextoEnriquecido,TextoEnriquecido,TextoParrafo,Videos]
 
 class EditModule extends Component {
   state = {
