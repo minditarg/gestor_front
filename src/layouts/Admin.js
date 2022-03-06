@@ -29,6 +29,8 @@ import ModalchangePass from './ModalChangePass';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { whiteColor } from "assets/jss/material-dashboard-react";
+import { red } from "@material-ui/core/colors";
 
 let ps;
 
@@ -123,6 +125,14 @@ export default function Admin({ ...rest }) {
   setUserOut = setUser;
   propsOut = rest;
 
+  var bgColors = { "Default": "#81b71a",
+                    "Blue": "#00B1E1",
+                    "Cyan": "#37BC9B",
+                    "Green": "#8CC152",
+                    "Red": "#E9573F",
+                    "Yellow": "#F6BB42",
+};
+
 
   function mapBreadscrumRoutes(array) {
     return array.find(elem => {
@@ -168,7 +178,13 @@ export default function Admin({ ...rest }) {
         path="/admin"
         exact
         render={() => {
-          return (<div><h2>Bienvenid@ a UNR GESTOR</h2><h4>Seleccione un Item del menú lateral para continuar</h4></div>)
+          return (<div style={{backgroundColor: whiteColor}}>
+            <h2 style={{color: bgColors.Red}}><b>IMPORTANTE</b></h2>
+            <h5>Chequear que cada sitio, imagen, enlace, posteo en general <span style={{color:bgColors.Red}}>proceda de espacios seguros, libres de virus,</span> en caso de dudas, <span style={{color:bgColors.Red}}><u>no utilizarlos en el gestor.</u></span>
+ &nbsp; Para evitar inconvenientes con imágenes foráneas, la Secretaría ecv-tic, ofrece un repositorio de imágenes propias, libres de virus que se encuentran en el sitio: <a target="_blank" href="https://drive.google.com/drive/folders/1RWNiQmRS-P5UO4osqI_jHHX7f9m0ubbg?usp=sharing"> https://drive.google.com/drive/folders/1RWNiQmRS-P5UO4osqI_jHHX7f9m0ubbg?usp=sharing </a>
+<br />Se solicita evocar cada vez, la fuente de cualquier sitio, imagen, enlace, posteo en general que no sea generado por la cátedra.
+</h5>
+            </div>)
 
         }}
 
