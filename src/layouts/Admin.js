@@ -181,8 +181,10 @@ export default function Admin({ ...rest }) {
           return (<div style={{backgroundColor: whiteColor}}>
             <h2 style={{color: bgColors.Red}}><b>IMPORTANTE</b></h2>
             <h5>Chequear que cada sitio, imagen, enlace, posteo en general <span style={{color:bgColors.Red}}>proceda de espacios seguros, libres de virus,</span> en caso de dudas, <span style={{color:bgColors.Red}}><u>no utilizarlos en el gestor.</u></span>
- &nbsp; Para evitar inconvenientes con imágenes foráneas, la Secretaría ecv-tic, ofrece un repositorio de imágenes propias, libres de virus que se encuentran en el sitio: <a target="_blank" href="https://drive.google.com/drive/folders/1RWNiQmRS-P5UO4osqI_jHHX7f9m0ubbg?usp=sharing"> https://drive.google.com/drive/folders/1RWNiQmRS-P5UO4osqI_jHHX7f9m0ubbg?usp=sharing </a>
+ &nbsp; Para evitar inconvenientes con imágenes foráneas, la Secretaría ecv-tic, ofrece un repositorio de imágenes propias, libres de virus que se encuentran en el sitio: <b><a target="_blank" href="https://drive.google.com/drive/folders/1RWNiQmRS-P5UO4osqI_jHHX7f9m0ubbg?usp=sharing"> Repositorio de Imágenes, click aquí </a></b>
 <br />Se solicita evocar cada vez, la fuente de cualquier sitio, imagen, enlace, posteo en general que no sea generado por la cátedra.
+<br />
+<br />Mas información sobre el gestor y su uso, <b><a target="_blank" href="https://drive.google.com/file/d/1jNUSvZmdJqmAbfgxCFajqcNSSa1PAghB/view">click aquí</a></b>
 </h5>
             </div>)
 

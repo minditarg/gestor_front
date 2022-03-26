@@ -736,18 +736,18 @@ class NewConsulta extends Component {
   getPaciente = (id) => {
     Database.get('/list-paciente/' + id)
       .then(resultado => {
-        console.log(resultado);
-        console.log("TESTING");
-        console.log(this);
+        // console.log(resultado);
+        // console.log("TESTING");
+        // console.log(this);
         if (resultado.result.length > 0) {
           this.setState({
             idEspecie: resultado.result[0][0].id_especie,
-            nombrePaciente: resultado.result[0][0].nombre.toUpperCase(),
-            nombreClase: resultado.result[0][0].nombreclase.toUpperCase(),
-            nombreDueno: resultado.result[0][0].nombredueno.toUpperCase(),
-            nombreEspecie: resultado.result[0][0].nombreespecie.toUpperCase(),
-            nombreRaza: resultado.result[0][0].nombreraza.toUpperCase(),
-            nombreSexo: resultado.result[0][0].nombresexo.toUpperCase(),
+            nombrePaciente: (resultado.result[0][0].nombre && resultado.result[0][0].nombre.toUpperCase()) || null,
+            nombreClase: (resultado.result[0][0].nombreclase && resultado.result[0][0].nombreclase.toUpperCase()) || null,
+            nombreDueno: (resultado.result[0][0].nombredueno && resultado.result[0][0].nombredueno.toUpperCase()) || null,
+            nombreEspecie: ( resultado.result[0][0].nombreespecie && resultado.result[0][0].nombreespecie.toUpperCase()) || null,
+            nombreRaza: (resultado.result[0][0].nombreraza && resultado.result[0][0].nombreraza.toUpperCase()) || null,
+            nombreSexo: (resultado.result[0][0].nombresexo && resultado.result[0][0].nombresexo.toUpperCase()) || null,
             idPaciente: id
           })
         }
