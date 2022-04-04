@@ -16,7 +16,7 @@ const muestra = {
 }
 
 const TextoEnriquecido = {
-    id_type_module:17,
+    id_type_module:19,
  
     archivo:false,
     htmlText:true,

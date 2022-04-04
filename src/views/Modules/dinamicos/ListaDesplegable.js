@@ -16,7 +16,7 @@ const muestra = {
 }
 
 const ListaDesplegable = {
-    id_type_module:3,
+    id_type_module:16,
     items:{
         orderForm: {
             titulo: {
