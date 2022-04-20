@@ -33,25 +33,10 @@ const ListaDesplegable = {
               valid: true,
               touched: false
             },
-            texto: {
-              elementType: 'textarea',
-              elementConfig: {
-                type: 'text',
-                label: 'Texto',
-                fullWidth: true,
-                rows: 6
-              },
-              value: '',
-              validation: {
-                required: false
-              },
-              valid: true,
-              touched: false
-            }
 
           },
           archivo: false,
-          htmlText: false
+          htmlText: true
 
     },
     archivo:false,
