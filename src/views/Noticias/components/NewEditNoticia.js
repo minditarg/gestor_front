@@ -925,11 +925,11 @@ class NewEditNoticia extends Component {
 
                 {(this.props.idTipoNoticia != 4 && this.props.idTipoNoticia != 5 && this.props.idTipoNoticia != 6)  &&
                   <div>
-                    <Button variant="contained" disabled={this.state.isloading} onClick={this.handleOpenImgInterior} >Imagen Interior +</Button>
+                    <Button variant="contained" disabled={this.state.isloading || !this.state.vistaPrevia} onClick={this.handleOpenImgInterior} >Imagen Interior +</Button>
                     <Button variant="contained" disabled={this.state.isloading} onClick={this.handleOpenAgregarTexto} >Texto +</Button>
-                    <Button variant="contained" disabled={this.state.isloading} onClick={this.handleOpenArchivoInterior} >Archivo +</Button>
+                    <Button variant="contained" disabled={this.state.isloading || !this.state.vistaPrevia} onClick={this.handleOpenArchivoInterior} >Archivo +</Button>
                     <Button variant="contained" color="secondary" disabled={this.state.isloading || !this.state.vistaPrevia} onClick={() => window.open(process.env.REACT_APP_SITE_URL + "/noticia_preview.php?id=" + this.props.match.params.idnoticia)} >Vista Previa</Button>
-
+                    {!this.state.vistaPrevia && <div><small>* Primero debe guardar el Documento para poder agregar archivos</small></div> }
                     <SortableContainer onSortEnd={this.onSortEnd} orderForm={this.state.orderFormItems} useDragHandle>
                       {this.state.items.map((elem, index) => (
                         <SortableItem key={`item-${index}`} index={index} value={elem} deleteItem={this.deleteItem.bind(this)} editItem={this.editItem.bind(this)} orderForm={this.state.orderFormItems} idnoticia={this.props.match.params.idnoticia} />
