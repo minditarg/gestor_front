@@ -260,12 +260,12 @@ class Clientes extends Component {
                   tooltip: 'Editar Cliente',
                   onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarcliente/' + rowData.id)
                 },
-                // {
-                //   icon: 'delete',
-                //   tooltip: 'Borrar Cliente',
-                //   onClick: (event, rowData) => this.handleDeleteButton(rowData)
+                {
+                  icon: 'delete',
+                  tooltip: 'Borrar Cliente',
+                  onClick: (event, rowData) => this.handleDeleteButton(rowData)
 
-                // }
+                }
               ]}
                 components={{
                   Container: props => (

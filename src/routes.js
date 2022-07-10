@@ -49,6 +49,7 @@ import FaltasPorEmpleados from 'views/ControlFaltas/FaltasPorEmpleados.js';
 import ControlFaltasEmpleados from 'views/ControlFaltasEmpleados/ControlFaltas.js';
 import CompensatoriosEmpleados from 'views/CompensatoriosEmpleados/Compensatorios.js';
 import Clientes from 'views/Clientes/Clientes.js';
+import ClientesFull from 'views/Clientes/ClientesFull.js';
 import Pacientes from 'views/Pacientes/Pacientes.js';
 import PacientesFull from 'views/Pacientes/PacientesFull.js';
 import Clases from 'views/Clases/Clases.js';
@@ -319,6 +320,16 @@ const dashboardRoutes = [
         rtlName: "CL",
         icon: Person,
         component: Clientes,
+        layout: "/admin"
+      },
+      {
+        show:false,
+        accesos: [112],
+        path: "/clientesfull",
+        name: "Clientes Full",
+        rtlName: "CL",
+        icon: Person,
+        component: ClientesFull,
         layout: "/admin"
       },
       {
