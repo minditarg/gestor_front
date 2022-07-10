@@ -284,13 +284,12 @@ class Pacientes extends Component {
                   tooltip: 'Ver Ficha',
                   onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/ficha/' + rowData.id)
                 },
-                // {
-                //   icon: 'delete',
-                //   tooltip: 'Borrar Paciente',
-                //   onClick: (event, rowData) => this.handleDeleteButton(rowData)
+                {
+                  icon: 'delete',
+                  tooltip: 'Borrar Paciente',
+                  onClick: (event, rowData) => this.handleDeleteButton(rowData)
 
-                // }
-              ]}
+                }]}
                 components={{
                   Container: props => (
                     <Paper elevation={0} {...props} />

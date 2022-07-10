@@ -50,6 +50,7 @@ import ControlFaltasEmpleados from 'views/ControlFaltasEmpleados/ControlFaltas.j
 import CompensatoriosEmpleados from 'views/CompensatoriosEmpleados/Compensatorios.js';
 import Clientes from 'views/Clientes/Clientes.js';
 import Pacientes from 'views/Pacientes/Pacientes.js';
+import PacientesFull from 'views/Pacientes/PacientesFull.js';
 import Clases from 'views/Clases/Clases.js';
 import Especies from 'views/Especies/Especies.js';
 import Razas from 'views/Razas/Razas.js';
@@ -330,6 +331,16 @@ const dashboardRoutes = [
         component: Pacientes,
         layout: "/admin"
       },
+      {
+        show:false,
+        accesos: [111],
+        path: "/pacientesfull",
+        name: "Pacientes Full",
+        rtlName: "PA",
+        icon: PetsIcon,
+        component: PacientesFull,
+        layout: "/admin"
+      },      
       {
         show:false,
         accesos: [105],
