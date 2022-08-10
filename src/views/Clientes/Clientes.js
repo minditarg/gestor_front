@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Database from "variables/Database.js";
 import moment from 'moment';
 
-import { Route, Switch} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 // core components
 import MaterialTable from "material-table";
 // import Typography from '@material-ui/core/Typography';
@@ -15,10 +15,11 @@ import Card from "components/Card/Card.js";
 import Paper from '@material-ui/core/Paper';
 import Button from "components/CustomButtons/Button.js";
 import AddIcon from '@material-ui/icons/Add';
+import SearchIcon from '@material-ui/icons/Search';
 
 import NewUser from "./components/NewCliente";
-import EditCliente from "./components/EditCliente";
-import ModalDelete from "./components/ModalDelete"
+import VerCliente from "./components/VerCliente";
+import ModalDelete from "./components/ModalDelete";
 import { localization } from "variables/general.js";
 
 import { toast } from 'react-toastify';
@@ -136,12 +137,12 @@ class Clientes extends Component {
       isLoading: true
     })
 
-    Database.get('/list-clientes',this,null,true)
+    Database.get('/list-clientes', this, null, true)
       .then(res => {
         let resultado = [...res.result];
         console.log(resultado);
         this.setState({
-          isLoading:false,
+          isLoading: false,
           clientes: resultado,
           checked: [],
           menuContext: null,
@@ -162,7 +163,7 @@ class Clientes extends Component {
         })
 
 
-      },err =>{
+      }, err => {
         toast.error(err.message);
 
       })
@@ -186,25 +187,25 @@ class Clientes extends Component {
 
   handleDeleteCliente = rowData => {
     console.log(rowData);
-    Database.post('/delete-cliente', { id: rowData.id },this).then(res => {
-        let clientes = [...this.state.clientes]
-        clientes = clientes.filter(elem => {
-          if (elem.id === rowData.id)
-            return false;
+    Database.post('/delete-cliente', { id: rowData.id }, this).then(res => {
+      let clientes = [...this.state.clientes]
+      clientes = clientes.filter(elem => {
+        if (elem.id === rowData.id)
+          return false;
 
-          return true
+        return true
 
-        })
+      })
 
-        this.setState({
-          clientes: clientes,
-          openDeleteDialog:false
-        },()=>{
-          toast.success("El cliente se ha eliminado con exito!");
-        })
+      this.setState({
+        clientes: clientes,
+        openDeleteDialog: false
+      }, () => {
+        toast.success("El cliente se ha eliminado con exito!");
+      })
 
 
-    },err => {
+    }, err => {
       toast.error(err.message);
     })
 
@@ -244,7 +245,7 @@ class Clientes extends Component {
               <h4 className={this.props.classes.cardTitleWhite} >Clientes</h4>
               <p className={this.props.classes.cardCategoryWhite} >
                 Listado de Clientes
-                      </p>
+              </p>
             </CardHeader>
             <CardBody>
               <Button style={{ marginTop: '25px' }} onClick={() => this.props.history.push(this.props.match.url + '/nuevocliente')} color="primary"><AddIcon /> Nuevo Cliente</Button>
@@ -256,17 +257,11 @@ class Clientes extends Component {
                 localization={localization}
 
                 actions={[{
-                  icon: 'edit',
-                  tooltip: 'Editar Cliente',
-                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarcliente/' + rowData.id)
+                  icon: SearchIcon,
+                  tooltip: 'Ver Cliente',
+                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/vercliente/' + rowData.id)
                 },
-                // {
-                //   icon: 'delete',
-                //   tooltip: 'Borrar Cliente',
-                //   onClick: (event, rowData) => this.handleDeleteButton(rowData)
-
-                // }
-              ]}
+                ]}
                 components={{
                   Container: props => (
                     <Paper elevation={0} {...props} />
@@ -278,15 +273,15 @@ class Clientes extends Component {
                   emptyRowsWhenPaging: false,
                   actionsColumnIndex: -1,
                   exportButton: true,
-                  exportAllData:true,
-                  exportFileName:"Clientes " + moment().format("DD-MM-YYYY"),
-                  exportDelimiter:";",
+                  exportAllData: true,
+                  exportFileName: "Clientes " + moment().format("DD-MM-YYYY"),
+                  exportDelimiter: ";",
                   headerStyle: {
                     backgroundColor: lightGreen[700],
                     color: '#FFF'
                   },
                 }}
-                />
+              />
             </CardBody>
           </Card>
 
@@ -299,28 +294,28 @@ class Clientes extends Component {
                 handleListNewUser={(rowData) => this.handleListNewUser(rowData)}
 
 
-                />}
-              />
+              />}
+            />
 
-            <Route path={this.props.match.url + "/editarcliente/:idcliente"} render={() =>
+            <Route path={this.props.match.url + "/vercliente/:idcliente"} render={() =>
 
-              <EditCliente
+              <VerCliente
                 orderForm={this.state.editClienteForm}
                 editFormIsValid={this.state.editFormIsValid}
                 successSubmitEdit={this.state.successSubmitEdit}
 
 
-                handleSubmitEditCliente={(event) => { this.handleSubmitEditCliente(event) } }
+                handleSubmitEditCliente={(event) => { this.handleSubmitEditCliente(event) }}
                 inputEditChangedHandler={(event, inputIdentifier) => this.inputEditChangedHandler(event, inputIdentifier)}
-                getUserEdit={(id) => { this.getUserEdit(id) } }
+                getUserEdit={(id) => { this.getUserEdit(id) }}
                 resetEditForm={this.resetEditForm}
                 reloadClientes={this.reloadClientes}
                 getClientesAdmin={() => this.getClientesAdmin()}
 
 
 
-                />}
-              />
+              />}
+            />
 
           </Switch>
 
@@ -331,7 +326,7 @@ class Clientes extends Component {
           deleteRowData={this.state.deleteRowData}
           handleClose={() => this.handleModalClose()}
           handleDelete={(rowData) => this.handleDeleteCliente(rowData)}
-          />
+        />
 
 
       </GridContainer>

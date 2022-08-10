@@ -15,10 +15,11 @@ import Card from "components/Card/Card.js";
 import Paper from '@material-ui/core/Paper';
 import Button from "components/CustomButtons/Button.js";
 import AddIcon from '@material-ui/icons/Add';
+import SearchIcon from '@material-ui/icons/Search';
 
 import NewUser from "./components/NewConsulta";
-import EditConsulta from "./components/EditConsulta";
-import ModalDelete from "./components/ModalDelete"
+import EditConsulta from "./components/VerConsulta";
+import ModalDelete from "./components/ModalDelete";
 import { localization } from "variables/general.js";
 
 import { toast } from 'react-toastify';
@@ -266,17 +267,23 @@ class Consultas extends Component {
                 title=""
                 localization={localization}
 
-                actions={[{
-                  icon: 'edit',
-                  tooltip: 'Editar Consulta',
-                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarconsulta/' + rowData.id)
-                },
-                {
-                  icon: 'delete',
-                  tooltip: 'Borrar Consulta',
-                  onClick: (event, rowData) => this.handleDeleteButton(rowData)
+                // actions={[{
+                //   icon: 'edit',
+                //   tooltip: 'Editar Consulta',
+                //   onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarconsulta/' + rowData.id)
+                // },
+                // {
+                //   icon: 'delete',
+                //   tooltip: 'Borrar Consulta',
+                //   onClick: (event, rowData) => this.handleDeleteButton(rowData)
 
-                }]}
+                // }]}
+                actions={[{
+                  icon: SearchIcon,
+                  tooltip: 'Ver Consulta',
+                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/verconsulta/' + rowData.id)
+                },
+                ]}
                 components={{
                   Container: props => (
                     <Paper elevation={0} {...props} />
@@ -312,7 +319,7 @@ class Consultas extends Component {
                 />}
               />
 
-            <Route path={this.props.match.url + "/editarconsulta/:idconsulta"} render={() =>
+            <Route path={this.props.match.url + "/verconsulta/:idconsulta"} render={() =>
 
               <EditConsulta
                 orderForm={this.state.editConsultaForm}

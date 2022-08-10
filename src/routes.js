@@ -58,6 +58,7 @@ import Razas from 'views/Razas/Razas.js';
 import Patologias from 'views/Patologias/Patologias.js';
 import Servicios from 'views/Servicios/Servicios.js';
 import Consultas from 'views/Pacientes/Consultas/Consultas.js';
+import ConsultasFull from 'views/Pacientes/Consultas/ConsultasFull.js';
 import Signos from 'views/Signos/Signos.js';
 import ConsultasAlumnos from 'views/Pacientes/ConsultasAlumnos/ConsultasAlumnos.js';
 
@@ -327,7 +328,7 @@ const dashboardRoutes = [
         accesos: [112],
         path: "/clientesfull",
         name: "Clientes Full",
-        rtlName: "CL",
+        rtlName: "CLF",
         icon: Person,
         component: ClientesFull,
         layout: "/admin"
@@ -347,7 +348,7 @@ const dashboardRoutes = [
         accesos: [111],
         path: "/pacientesfull",
         name: "Pacientes Full",
-        rtlName: "PA",
+        rtlName: "PAF",
         icon: PetsIcon,
         component: PacientesFull,
         layout: "/admin"
@@ -421,7 +422,18 @@ const dashboardRoutes = [
         icon: AssignmentIcon,
         component: Consultas,
         layout: "/admin"
-      },     
+      }, 
+      {
+        show:false,
+        accesos: [113],
+        path: "/consultasfull",
+        name: "Consultas Full",
+        rtlName: "CNF",
+        icon: AssignmentIcon,
+        component: ConsultasFull,
+        layout: "/admin"
+      }, 
+          
       {
         show:false,
         accesos: [110],
