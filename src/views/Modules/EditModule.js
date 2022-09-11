@@ -40,6 +40,8 @@ import { ListaTextoEnriquecido } from "./dinamicos/ListaTextoEnriquecido";
 import { TextoEnriquecido } from "./dinamicos/TextoEnriquecido";
 import { TextoParrafo } from "./dinamicos/TextoParrafo";
 import { Videos } from "./dinamicos/Videos";
+import { Indice } from "./dinamicos/Indice";
+import { Card as CardModule } from "./dinamicos/Card";
 
 import { HomeFooter } from "./estaticos/Home";
 
@@ -74,7 +76,7 @@ const styles = {
   }
 };
 
-const arrayModules = [HomeFooter,Boton,Galeria,Html,ImagenTexto,InfoCantidades,ListaDesplegable,ListaTexto,ListaTextoEnriquecido,TextoEnriquecido,TextoParrafo,Videos]
+const arrayModules = [HomeFooter,Boton,Galeria,Html,ImagenTexto,InfoCantidades,ListaDesplegable,ListaTexto,ListaTextoEnriquecido,TextoEnriquecido,TextoParrafo,Videos,Indice,CardModule]
 
 class EditModule extends Component {
   state = {
