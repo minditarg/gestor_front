@@ -57,7 +57,7 @@ const styles = {
 };
 
 
-class EditCliente extends Component {
+class VerCliente extends Component {
   state = JSON.parse(JSON.stringify(StateEditCliente));
 
   handleClickOpen = () => {
@@ -297,7 +297,8 @@ class EditCliente extends Component {
               ))}
             </div>
 
-            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.goBack()} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.editFormIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
+            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.goBack()} ><ArrowBack />Volver</Button>
+            {/* <Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.editFormIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button> */}
 
 
           </CardBody>
@@ -347,4 +348,4 @@ class EditCliente extends Component {
 
 };
 
-export default withRouter(withStyles(styles)(EditCliente));
+export default withRouter(withStyles(styles)(VerCliente));

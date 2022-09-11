@@ -455,9 +455,9 @@ class EditPaciente extends Component {
 
         <Card>
           <CardHeader color="primary">
-            <h4 className={this.props.classes.cardTitleWhite}>Editar Paciente</h4>
+            <h4 className={this.props.classes.cardTitleWhite}>Ver Paciente</h4>
             <p className={this.props.classes.cardCategoryWhite}>
-              Formulario para modificar los datos del paciente
+              Formulario para revisar los datos del paciente
       </p>
           </CardHeader>
           <CardBody>
@@ -517,7 +517,8 @@ class EditPaciente extends Component {
               </MuiPickersUtilsProvider>
             </div>
 
-            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.goBack()} ><ArrowBack />Volver</Button><Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.editFormIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button>
+            <Button style={{ marginTop: '25px' }} color="info" onClick={() => this.props.history.goBack()} ><ArrowBack />Volver</Button>
+            {/* <Button style={{ marginTop: '25px' }} color="primary" variant="contained" disabled={!this.state.editFormIsValid || this.state.disableAllButtons} type="submit" ><Save /> Guardar</Button> */}
 
 
           </CardBody>

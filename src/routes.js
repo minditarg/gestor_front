@@ -49,13 +49,16 @@ import FaltasPorEmpleados from 'views/ControlFaltas/FaltasPorEmpleados.js';
 import ControlFaltasEmpleados from 'views/ControlFaltasEmpleados/ControlFaltas.js';
 import CompensatoriosEmpleados from 'views/CompensatoriosEmpleados/Compensatorios.js';
 import Clientes from 'views/Clientes/Clientes.js';
+import ClientesFull from 'views/Clientes/ClientesFull.js';
 import Pacientes from 'views/Pacientes/Pacientes.js';
+import PacientesFull from 'views/Pacientes/PacientesFull.js';
 import Clases from 'views/Clases/Clases.js';
 import Especies from 'views/Especies/Especies.js';
 import Razas from 'views/Razas/Razas.js';
 import Patologias from 'views/Patologias/Patologias.js';
 import Servicios from 'views/Servicios/Servicios.js';
 import Consultas from 'views/Pacientes/Consultas/Consultas.js';
+import ConsultasFull from 'views/Pacientes/Consultas/ConsultasFull.js';
 import Signos from 'views/Signos/Signos.js';
 import ConsultasAlumnos from 'views/Pacientes/ConsultasAlumnos/ConsultasAlumnos.js';
 
@@ -322,6 +325,16 @@ const dashboardRoutes = [
       },
       {
         show:false,
+        accesos: [112],
+        path: "/clientesfull",
+        name: "Clientes Full",
+        rtlName: "CLF",
+        icon: Person,
+        component: ClientesFull,
+        layout: "/admin"
+      },
+      {
+        show:false,
         accesos: [102],
         path: "/pacientes",
         name: "Pacientes",
@@ -330,6 +343,16 @@ const dashboardRoutes = [
         component: Pacientes,
         layout: "/admin"
       },
+      {
+        show:false,
+        accesos: [111],
+        path: "/pacientesfull",
+        name: "Pacientes Full",
+        rtlName: "PAF",
+        icon: PetsIcon,
+        component: PacientesFull,
+        layout: "/admin"
+      },      
       {
         show:false,
         accesos: [105],
@@ -399,7 +422,18 @@ const dashboardRoutes = [
         icon: AssignmentIcon,
         component: Consultas,
         layout: "/admin"
-      },     
+      }, 
+      {
+        show:false,
+        accesos: [113],
+        path: "/consultasfull",
+        name: "Consultas Full",
+        rtlName: "CNF",
+        icon: AssignmentIcon,
+        component: ConsultasFull,
+        layout: "/admin"
+      }, 
+          
       {
         show:false,
         accesos: [110],

@@ -15,17 +15,20 @@ import Card from "components/Card/Card.js";
 import Paper from '@material-ui/core/Paper';
 import Button from "components/CustomButtons/Button.js";
 import AddIcon from '@material-ui/icons/Add';
-import SearchIcon from '@material-ui/icons/Search';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import FeaturedPlayListIcon from '@material-ui/icons/FeaturedPlayList';
 
-import NewUser from "./components/NewConsulta";
-import EditConsulta from "./components/VerConsulta";
+import NewUser from "./components/NewPaciente";
+import EditPaciente from "./components/EditPaciente";
 import ModalDelete from "./components/ModalDelete";
+import Ficha from './FichasFull';
+import NewConsulta from './Consultas/components/NewConsulta.js';
 import { localization } from "variables/general.js";
 
 import { toast } from 'react-toastify';
 
 
-import { StateListConsultas, ColumnsListado } from "./VariablesState";
+import { StateListPacientes, ColumnsListado } from "./VariablesState";
 
 import lightGreen from '@material-ui/core/colors/lightGreen';
 
@@ -62,12 +65,12 @@ const styles = {
 };
 
 
-class Consultas extends Component {
-  state = { ...StateListConsultas };
+class Pacientes extends Component {
+  state = { ...StateListPacientes };
 
 
   componentDidMount() {
-    this.getConsultasAdmin();
+    this.getPacientesAdmin();
   }
 
 
@@ -113,7 +116,7 @@ class Consultas extends Component {
         this.setState({
           menuContext: menuContext
         })
-        this.props.history.push(this.props.match.url + '/nuevoconsulta');
+        this.props.history.push(this.props.match.url + '/nuevopaciente');
       }
 
       if (value === 'editar' && this.state.checked.length === 1) {
@@ -121,7 +124,7 @@ class Consultas extends Component {
           menuContext: menuContext
         })
         let idUser = this.state.checked[0].id;
-        this.props.history.push(this.props.match.url + '/editarconsulta/' + idUser);
+        this.props.history.push(this.props.match.url + '/editarpaciente/' + idUser);
       }
     }
   }
@@ -131,17 +134,13 @@ class Consultas extends Component {
       menuContext: event.currentTarget
     })
   }
-  ////////////////////////
-  ////////////////////////
-  //METODOS PARA LISTADO DE BANCOS
-  ////////////////////////
-  ////////////////////////
-  getConsultasAdmin = () => {
+
+  getPacientesAdmin = () => {
     this.setState({
       isLoading: true
     })
 
-    Database.get('/list-consultas',this,null,true)
+    Database.get('/list-pacientes',this,null,true)
       .then(res => {
         let resultado = [...res.result[0]];
         console.log(resultado);
@@ -149,13 +148,14 @@ class Consultas extends Component {
         resultado = resultado.map(elem => {
           return {
             ...elem,
-            fecha_mostrar: (( moment(elem.fecha).isValid()) ? moment(elem.fecha).format("DD/MM/YYYY") : ''),
+            edad: (elem.edad != null)&&((elem.edad < 30) ? elem.edad + ' días' : ((elem.edad < 365) ? Math.floor(elem.edad / 30) + ' meses' : Math.floor(elem.edad / 365) + ' años')),
+            castrado_mostrar: ((elem.castrado == 1) ? 'SI' : 'NO'),
           }
         })
 
         this.setState({
           isLoading:false,
-          consultas: resultado,
+          pacientes: resultado,
           checked: [],
           menuContext: null,
           botonesAcciones: {
@@ -187,7 +187,7 @@ class Consultas extends Component {
 
 
   editSingleUser = value => {
-    this.props.history.push(this.props.match.url + '/editarconsulta/' + value);
+    this.props.history.push(this.props.match.url + '/editarpaciente/' + value);
   }
 
   handlePagination = offset => {
@@ -197,11 +197,11 @@ class Consultas extends Component {
 
   }
 
-  handleDeleteConsulta = rowData => {
-
-    Database.post('/delete-consulta', { id: rowData.id },this).then(res => {
-        let consultas = [...this.state.consultas]
-        consultas = consultas.filter(elem => {
+  handleDeletePaciente = rowData => {
+    console.log(rowData);
+    Database.post('/delete-paciente', { id: rowData.id },this).then(res => {
+        let pacientes = [...this.state.pacientes]
+        pacientes = pacientes.filter(elem => {
           if (elem.id === rowData.id)
             return false;
 
@@ -210,10 +210,10 @@ class Consultas extends Component {
         })
 
         this.setState({
-          consultas: consultas,
+          pacientes: pacientes,
           openDeleteDialog:false
         },()=>{
-          toast.success("La consulta se ha eliminado con exito!");
+          toast.success("El paciente se ha eliminado con exito!");
         })
 
 
@@ -246,6 +246,7 @@ class Consultas extends Component {
 
   render() {
     let style = {}
+    console.log(this.props);
     if (this.props.match.url !== this.props.location.pathname) {
       style = { display: 'none' }
     }
@@ -254,36 +255,41 @@ class Consultas extends Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card style={style}>
             <CardHeader color="primary">
-              <h4 className={this.props.classes.cardTitleWhite} >Consultas</h4>
+              <h4 className={this.props.classes.cardTitleWhite} >Pacientes</h4>
               <p className={this.props.classes.cardCategoryWhite} >
-                Listado de Consultas
+                Listado de Pacientes
                       </p>
             </CardHeader>
             <CardBody>
+              <Button style={{ marginTop: '25px' }} onClick={() => this.props.history.push(this.props.match.url + '/nuevopaciente')} color="primary"><AddIcon /> Nuevo Paciente</Button>
               <MaterialTable
                 isLoading={this.state.isLoading}
                 columns={ColumnsListado}
-                data={this.state.consultas}
+                data={this.state.pacientes}
                 title=""
                 localization={localization}
 
-                // actions={[{
-                //   icon: 'edit',
-                //   tooltip: 'Editar Consulta',
-                //   onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarconsulta/' + rowData.id)
-                // },
-                // {
-                //   icon: 'delete',
-                //   tooltip: 'Borrar Consulta',
-                //   onClick: (event, rowData) => this.handleDeleteButton(rowData)
-
-                // }]}
                 actions={[{
-                  icon: SearchIcon,
-                  tooltip: 'Ver Consulta',
-                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/verconsulta/' + rowData.id)
+                  icon: 'edit',
+                  tooltip: 'Editar Paciente',
+                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarpaciente/' + rowData.id)
                 },
-                ]}
+                {
+                  icon: AddIcon,
+                  tooltip: 'Agregar Consulta',
+                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/consultas/nuevoconsulta/' + rowData.id)
+                },
+                {
+                  icon: FeaturedPlayListIcon,
+                  tooltip: 'Ver Ficha',
+                  onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/ficha/' + rowData.id)
+                },
+                {
+                  icon: 'delete',
+                  tooltip: 'Borrar Paciente',
+                  onClick: (event, rowData) => this.handleDeleteButton(rowData)
+
+                }]}
                 components={{
                   Container: props => (
                     <Paper elevation={0} {...props} />
@@ -296,7 +302,7 @@ class Consultas extends Component {
                   actionsColumnIndex: -1,
                   exportButton: true,
                   exportAllData:true,
-                  exportFileName:"Consultas " + moment().format("DD-MM-YYYY"),
+                  exportFileName:"Pacientes " + moment().format("DD-MM-YYYY"),
                   exportDelimiter:";",
                   headerStyle: {
                     backgroundColor: lightGreen[700],
@@ -308,32 +314,61 @@ class Consultas extends Component {
           </Card>
 
           <Switch>
-            <Route path={this.props.match.url + "/nuevoconsulta"} render={() =>
+            <Route path={this.props.match.url + "/nuevopaciente"} render={() =>
 
               <NewUser
 
-                getConsultasAdmin={() => this.getConsultasAdmin()}
+                getPacientesAdmin={() => this.getPacientesAdmin()}
                 handleListNewUser={(rowData) => this.handleListNewUser(rowData)}
 
 
                 />}
               />
 
-            <Route path={this.props.match.url + "/verconsulta/:idconsulta"} render={() =>
+            <Route path={this.props.match.url + "/editarpaciente/:idpaciente"} render={() =>
 
-              <EditConsulta
-                orderForm={this.state.editConsultaForm}
+
+              <EditPaciente
+                orderForm={this.state.editPacienteForm}
                 editFormIsValid={this.state.editFormIsValid}
                 successSubmitEdit={this.state.successSubmitEdit}
 
 
-                handleSubmitEditConsulta={(event) => { this.handleSubmitEditConsulta(event) } }
+                handleSubmitEditPaciente={(event) => { this.handleSubmitEditPaciente(event) } }
                 inputEditChangedHandler={(event, inputIdentifier) => this.inputEditChangedHandler(event, inputIdentifier)}
                 getUserEdit={(id) => { this.getUserEdit(id) } }
                 resetEditForm={this.resetEditForm}
-                reloadConsultas={this.reloadConsultas}
-                getConsultasAdmin={() => this.getConsultasAdmin()}
+                reloadPacientes={this.reloadPacientes}
+                getPacientesAdmin={() => this.getPacientesAdmin()}
 
+
+
+                />
+              }
+              />
+              <Route path={this.props.match.url + "/ficha/:idpaciente"} render={() => 
+
+
+                <Ficha
+               
+                  orderForm={this.state.editPacienteForm}
+                  editFormIsValid={this.state.editFormIsValid}
+                  successSubmitEdit={this.state.successSubmitEdit}
+                  handleSubmitEditFicha={(event) => {this.handleSubmitEditFicha(event) }}
+                  inputEditChangedHandler={(event, inputIdentifier) => this.inputEditChangedHandler(event, inputIdentifier)}
+                  getUserEdit={(id) => { this.getUserEdit(id) }}
+                  resetEditForm={this.resetEditForm}
+                  reloadPaciente={this.reloadPaciente}
+                  getPacientesAdmin={() => this.getPacientesAdmin()}
+                />
+              }
+                />
+              <Route path={this.props.match.url + "/consultas/nuevoconsulta/:id"} render={() =>
+
+                <NewConsulta
+
+                //getPacientesAdmin={() => this.getPacientesAdmin()}
+                //handleListNewUser={(rowData) => this.handleListNewUser(rowData)}
 
 
                 />}
@@ -347,7 +382,7 @@ class Consultas extends Component {
           openDeleteDialog={this.state.openDeleteDialog}
           deleteRowData={this.state.deleteRowData}
           handleClose={() => this.handleModalClose()}
-          handleDelete={(rowData) => this.handleDeleteConsulta(rowData)}
+          handleDelete={(rowData) => this.handleDeletePaciente(rowData)}
           />
 
 
@@ -358,4 +393,4 @@ class Consultas extends Component {
 }
 
 
-export default withStyles(styles)(Consultas);
+export default withStyles(styles)(Pacientes);

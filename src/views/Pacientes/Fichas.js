@@ -13,6 +13,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import Card from "components/Card/Card.js";
 import Paper from '@material-ui/core/Paper';
+import SearchIcon from '@material-ui/icons/Search';
 //import Button from "components/CustomButtons/Button.js";
 //import AddIcon from '@material-ui/icons/Add';
 
@@ -20,6 +21,7 @@ import Paper from '@material-ui/core/Paper';
 //import EditFicha from "./components/EditFicha";
 import ModalDeleteFicha from "./components/ModalDeleteFicha";
 import { localization } from "variables/general.js";
+import EditConsulta from "./Consultas/components/VerConsulta"; //TODO: VOY POR ACA!!
 
 import { toast } from 'react-toastify';
 
@@ -284,17 +286,18 @@ class Fichas extends Component {
                 localization={localization}
 
                 actions={[{
-                  icon: 'edit',
-                  tooltip: 'Editar Consulta',
-                  //onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarficha/' + rowData.id)
-                  onClick: (event, rowData) => this.props.history.push('/admin/consultas/editarconsulta/' + rowData.id)
-                },
-                {
-                  icon: 'delete',
-                  tooltip: 'Borrar Consulta',
-                  onClick: (event, rowData) => this.handleDeleteButton(rowData)
+                  icon: SearchIcon,
+                  tooltip: 'Ver Consulta',
+                 // onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarconsulta/' + rowData.id)
+                  onClick: (event, rowData) => this.props.history.push('/admin/consultas/verconsulta/' + rowData.id)
+                }
+                // {
+                //   icon: 'delete',
+                //   tooltip: 'Borrar Consulta',
+                //   onClick: (event, rowData) => this.handleDeleteButton(rowData)
 
-                }]}
+                // }
+              ]}
                 components={{
                   Container: props => (
                     <Paper elevation={0} {...props} />
@@ -318,8 +321,27 @@ class Fichas extends Component {
             </CardBody>
           </Card>
 
-          {/* <Switch>
-            <Route path={this.props.match.url + "/nuevoficha"} render={() =>
+          <Switch>
+          <Route path={this.props.match.url + "/admin/consultas/verconsulta/:idconsulta"} render={() =>
+
+            <EditConsulta
+              orderForm={this.state.editConsultaForm}
+              editFormIsValid={this.state.editFormIsValid}
+              successSubmitEdit={this.state.successSubmitEdit}
+
+
+              handleSubmitEditConsulta={(event) => { this.handleSubmitEditConsulta(event) } }
+              inputEditChangedHandler={(event, inputIdentifier) => this.inputEditChangedHandler(event, inputIdentifier)}
+              getUserEdit={(id) => { this.getUserEdit(id) } }
+              resetEditForm={this.resetEditForm}
+              reloadConsultas={this.reloadConsultas}
+              getConsultasAdmin={() => this.getConsultasAdmin()}
+
+
+
+              />}
+          />
+          {/*   <Route path={this.props.match.url + "/nuevoficha"} render={() =>
 
               <NewUser
 
@@ -329,7 +351,6 @@ class Fichas extends Component {
 
                 />}
               />
-
             <Route path={this.props.match.url + "/editarficha/:idficha"} render={() =>
 
               <EditFicha
@@ -383,8 +404,8 @@ class Fichas extends Component {
 
                 />}
               />
-
-          </Switch> */}
+*/}
+          </Switch> 
 
 
         </GridItem>

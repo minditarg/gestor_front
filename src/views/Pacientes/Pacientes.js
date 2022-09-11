@@ -16,10 +16,11 @@ import Paper from '@material-ui/core/Paper';
 import Button from "components/CustomButtons/Button.js";
 import AddIcon from '@material-ui/icons/Add';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import SearchIcon from '@material-ui/icons/Search';
 import FeaturedPlayListIcon from '@material-ui/icons/FeaturedPlayList';
 
 import NewUser from "./components/NewPaciente";
-import EditPaciente from "./components/EditPaciente";
+import VerPaciente from "./components/VerPaciente";
 import ModalDelete from "./components/ModalDelete";
 import Ficha from './Fichas';
 import NewConsulta from './Consultas/components/NewConsulta.js';
@@ -270,8 +271,8 @@ class Pacientes extends Component {
                 localization={localization}
 
                 actions={[{
-                  icon: 'edit',
-                  tooltip: 'Editar Paciente',
+                  icon: SearchIcon,
+                  tooltip: 'Ver Paciente',
                   onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/editarpaciente/' + rowData.id)
                 },
                 {
@@ -284,12 +285,13 @@ class Pacientes extends Component {
                   tooltip: 'Ver Ficha',
                   onClick: (event, rowData) => this.props.history.push(this.props.match.url + '/ficha/' + rowData.id)
                 },
-                {
-                  icon: 'delete',
-                  tooltip: 'Borrar Paciente',
-                  onClick: (event, rowData) => this.handleDeleteButton(rowData)
+                // {
+                //   icon: 'delete',
+                //   tooltip: 'Borrar Paciente',
+                //   onClick: (event, rowData) => this.handleDeleteButton(rowData)
 
-                }]}
+                // }
+              ]}
                 components={{
                   Container: props => (
                     <Paper elevation={0} {...props} />
@@ -328,7 +330,7 @@ class Pacientes extends Component {
             <Route path={this.props.match.url + "/editarpaciente/:idpaciente"} render={() =>
 
 
-              <EditPaciente
+              <VerPaciente
                 orderForm={this.state.editPacienteForm}
                 editFormIsValid={this.state.editFormIsValid}
                 successSubmitEdit={this.state.successSubmitEdit}
